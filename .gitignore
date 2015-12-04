@@ -12,11 +12,7 @@
 # WebStorm
 /.idea
 
-# Typescript
-/*.js
-/*.js.map
-/*.d.ts
-
+# Javascript exports
 /js
 /js/**/*.js
 /js/**/*.js.map
