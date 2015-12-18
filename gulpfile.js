@@ -11,9 +11,15 @@ var WATCH = false;
 
 var banner = [
     "/**",
-    " * <%= pkg.name %> v.<%= pkg.version %> - <%= pkg.description %>",
+    " * Silverback Game Engine v.<%= pkg.version %> - <%= pkg.description %>",
     " * Copyright (c) 2015 <%= pkg.author %>",
-    " * <%= pkg.license %>",
+    " *",
+    " * This program is free software; you can redistribute it and/or modify",
+    " * it under the terms of the GNU General Public License as published by",
+    " * the Free Software Foundation; either version 3 of the License, or",
+    " * (at your option) any later version.",
+    " * ",
+    " * Visit http://www.silverbackengine.org for documentation, updates and examples.",
     " */", ""
 ].join("\n");
 
@@ -30,7 +36,8 @@ var CONFIG = {
 };
 
 var OPTS = {
-    sortOutput: true
+    sortOutput: true,
+    source: [CONFIG.srcFiles, CONFIG.testFiles]
 };
 
 /**
@@ -52,7 +59,8 @@ gulp.task('dist', function () {
     PROD = true;
     OPTS = {
         sortOutput: true,
-        out: CONFIG.releasePath + '/silverback.min.js'
+        source: [CONFIG.srcFiles],
+        out:  CONFIG.releasePath + '/silverback.min.js'
     };
     return gulp.start('ts');
 });
@@ -72,11 +80,11 @@ gulp.task('lint', function () {
 gulp.task('ts', function () {
     var tsProject = g.typescript.createProject('tsconfig.json', OPTS);
 
-    var tsResult = gulp.src([CONFIG.srcFiles, CONFIG.testFiles])
+    var tsResult = gulp.src(OPTS.source)
         .pipe(g.sourcemaps.init())
         .pipe(g.typescript(tsProject));
 
-    tsResult.dts.pipe(gulp.dest(CONFIG.tsOutputPath));
+    g.if(!PROD,tsResult.dts.pipe(gulp.dest(CONFIG.tsOutputPath)));
 
     return tsResult.js
         .pipe(g.if(PROD, g.uglify().on('error', g.util.log)))
@@ -101,7 +109,6 @@ gulp.task('clean', function (cb) {
 
 gulp.task('watch', function () {
     WATCH = true;
-    //g.livereload.listen({ port: '9090' });
     gulp.watch([CONFIG.srcFiles, CONFIG.testFiles], ['ts']);
 });
 
