@@ -3,13 +3,26 @@
 var gulp = require('gulp');
 var g = require('gulp-load-plugins')();
 var del = require('del');
+var Server = require('karma').Server;
+var pkg = require("./package.json");
+
 var PROD = false;
 var WATCH = false;
+
+var banner = [
+    "/**",
+    " * <%= pkg.name %> v.<%= pkg.version %> - <%= pkg.description %>",
+    " * Copyright (c) 2015 <%= pkg.author %>",
+    " * <%= pkg.license %>",
+    " */", ""
+].join("\n");
 
 var CONFIG = {
     tsOutputPath: './js',
     releasePath: '../lib',
     srcFiles: './src/**/*.ts',
+    testFiles: './test/**/*.ts',
+    testJsFiles: './js/test/**/*.js',
 
     typings: './typings/',
     libraryTypeScriptDefinitions: './typings/**/*.ts',
@@ -48,7 +61,9 @@ gulp.task('dist', function () {
  * Lint all custom TypeScript files.
  */
 gulp.task('lint', function () {
-    return gulp.src(CONFIG.srcFiles).pipe(g.tslint()).pipe(g.tslint.report('prose'));
+    return gulp.src([CONFIG.srcFiles, CONFIG.testFiles])
+        .pipe(g.tslint())
+        .pipe(g.tslint.report('prose'));
 });
 
 /**
@@ -57,7 +72,7 @@ gulp.task('lint', function () {
 gulp.task('ts', function () {
     var tsProject = g.typescript.createProject('tsconfig.json', OPTS);
 
-    var tsResult = gulp.src([CONFIG.srcFiles])
+    var tsResult = gulp.src([CONFIG.srcFiles, CONFIG.testFiles])
         .pipe(g.sourcemaps.init())
         .pipe(g.typescript(tsProject));
 
@@ -65,6 +80,8 @@ gulp.task('ts', function () {
 
     return tsResult.js
         .pipe(g.if(PROD, g.uglify().on('error', g.util.log)))
+        .pipe(g.if(PROD, g.header(banner, { pkg: pkg })))
+
         .pipe(g.sourcemaps.write('.'))
         .pipe(gulp.dest(CONFIG.tsOutputPath));
 });
@@ -85,7 +102,18 @@ gulp.task('clean', function (cb) {
 gulp.task('watch', function () {
     WATCH = true;
     //g.livereload.listen({ port: '9090' });
-    gulp.watch([CONFIG.srcFiles], ['ts']);
+    gulp.watch([CONFIG.srcFiles, CONFIG.testFiles], ['ts']);
 });
+
+/**
+ * This task runs the test cases using karma.
+ */
+gulp.task('test',['ts'], function (done) {
+    return new Server({
+        configFile: __dirname + '/karma.conf.js',
+        singleRun: true
+    }, done).start();
+});
+
 
 gulp.task('default', ['lint', 'ts']);
