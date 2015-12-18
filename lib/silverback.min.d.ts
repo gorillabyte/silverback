@@ -1,4 +1,4 @@
-/// <reference path="../cc.silverback/typings/tsd.d.ts" />
+/// <reference path="../SBE/typings/tsd.d.ts" />
 declare module silverback.utils {
     interface IDictionary {
     }
@@ -209,16 +209,6 @@ declare module silverback.core {
     }
 }
 declare module silverback.core {
-    class SystemList {
-        head: silverback.core.System;
-        tail: silverback.core.System;
-        add(system: silverback.core.System): void;
-        remove(system: silverback.core.System): void;
-        removeAll(): void;
-        get(type: any): silverback.core.System;
-    }
-}
-declare module silverback.core {
     class ComponentMatchingFamily implements silverback.core.IFamily {
         private _nodes;
         private _entities;
@@ -236,5 +226,15 @@ declare module silverback.core {
         removeIfMatch(entity: silverback.core.Entity): void;
         private _releaseNodePoolCache();
         cleanUp(): void;
+    }
+}
+declare module silverback.core {
+    class SystemList {
+        head: silverback.core.System;
+        tail: silverback.core.System;
+        add(system: silverback.core.System): void;
+        remove(system: silverback.core.System): void;
+        removeAll(): void;
+        get(type: any): silverback.core.System;
     }
 }
