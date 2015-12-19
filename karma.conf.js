@@ -13,28 +13,45 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'public/scripts/silverback.js',
+            'src/**/*.ts',
             'test/**/*.ts'
+        ],
+
+        plugins: [
+            'karma-jasmine',
+            'karma-coverage',
+            'karma-browserify',
+            'karma-phantomjs-launcher',
+            'karma-spec-reporter'
         ],
 
         // level of logging: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
         logLevel: config.LOG_WARN,
 
-        // create coverage report
-        coverageReporter: {
-            type: 'html',
-            dir: './coverage/'
-        },
         preprocessors: {
-            /*'src/!**!/!*.ts': ['browserify'],*/
+            'src/**/*.ts': ['browserify' ,'coverage'],
             'test/**/*.ts': ['browserify']
         },
 
         browserify: {
             debug: true,
+            transform: [
+                require('browserify-istanbul')
+            ],
             extensions: ['.js', '.ts'],
             plugin: [
                 ['tsify', {target: 'es5'}]
+            ]
+        },
+
+        // create coverage report
+        coverageReporter: {
+            dir: './coverage/',
+            reporters:[
+                {type: 'html', subdir: 'html'},
+                {type: 'lcov', subdir: '.'},
+                {type: 'text', subdir: '.', file: 'text.txt'},
+                {type: 'text-summary', subdir: '.', file: 'text-summary.txt'}
             ]
         },
 
