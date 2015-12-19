@@ -1,8 +1,9 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
-// Test
-describe('First test', function(){
-    it('should exit without error', function(){
-        console.info('Here');
+import {Engine} from '../../src/core/Engine';
+
+describe('First test', function() {
+    it('should create an instance of silverback engine', function() {
+        var e = new Engine();
     });
 });

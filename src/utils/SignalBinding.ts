@@ -12,177 +12,177 @@
 *	@author		Robert Penner, AS Signals
 *
 */
-module silverback.utils {
-    export class SignalBinding {
+import {Signal} from './Signal';
 
-        /**
-        * Object that represents a binding between a Signal and a listener function.
-        * <br />- <strong>This is an internal constructor and shouldn't be called by regular users.</strong>
-        * <br />- inspired by Joa Ebert AS3 SignalBinding and Robert Penner's Slot classes.
-        * @author Miller Medeiros
-        * @constructor
-        * @internal
-        * @name SignalBinding
-        * @param {Signal} signal Reference to Signal object that listener is currently bound to.
-        * @param {Function} listener Handler function bound to the signal.
-        * @param {booleanean} isOnce If binding should be executed just once.
-        * @param {Object} [listenerContext] Context on which listener will be executed (object that should represent
-         * the `this` variable inside listener function).
-        * @param {Number} [priority] The priority level of the event listener. (default = 0).
-        */
-        constructor(signal:Signal, listener, isOnce: boolean, listenerContext, priority: number = 0) {
+export class SignalBinding {
 
-            this._listener = listener;
-            this._isOnce = isOnce;
-            this.context = listenerContext;
-            this._signal = signal;
-            this.priority = priority || 0;
+    /**
+     * Object that represents a binding between a Signal and a listener function.
+     * <br />- <strong>This is an internal constructor and shouldn't be called by regular users.</strong>
+     * <br />- inspired by Joa Ebert AS3 SignalBinding and Robert Penner's Slot classes.
+     * @author Miller Medeiros
+     * @constructor
+     * @internal
+     * @name SignalBinding
+     * @param {Signal} signal Reference to Signal object that listener is currently bound to.
+     * @param {Function} listener Handler function bound to the signal.
+     * @param {booleanean} isOnce If binding should be executed just once.
+     * @param {Object} [listenerContext] Context on which listener will be executed (object that should represent
+     * the `this` variable inside listener function).
+     * @param {Number} [priority] The priority level of the event listener. (default = 0).
+     */
+    constructor(signal:Signal, listener, isOnce:boolean, listenerContext, priority:number = 0) {
 
-        }
+        this._listener = listener;
+        this._isOnce = isOnce;
+        this.context = listenerContext;
+        this._signal = signal;
+        this.priority = priority || 0;
 
-        /**
-        * Handler function bound to the signal.
-        * @type Function
-        * @private
-        */
-        private _listener;
+    }
 
-        /**
-        * If binding should be executed just once.
-        * @type booleanean
-        * @private
-        */
-        private _isOnce: boolean;
+    /**
+     * Handler function bound to the signal.
+     * @type Function
+     * @private
+     */
+    private _listener;
 
-        /**
-        * Context on which listener will be executed (object that should represent the `this` variable inside
-         * listener function).
-        * @memberOf SignalBinding.prototype
-        * @name context
-        * @type Object|undefined|null
-        */
-        public context;
+    /**
+     * If binding should be executed just once.
+     * @type booleanean
+     * @private
+     */
+    private _isOnce:boolean;
 
-        /**
-        * Reference to Signal object that listener is currently bound to.
-        * @type Signal
-        * @private
-        */
-        private _signal: Signal;
+    /**
+     * Context on which listener will be executed (object that should represent the `this` variable inside
+     * listener function).
+     * @memberOf SignalBinding.prototype
+     * @name context
+     * @type Object|undefined|null
+     */
+    public context;
 
-        /**
-        * Listener priority
-        * @type Number
-        */
-        public priority: number;
+    /**
+     * Reference to Signal object that listener is currently bound to.
+     * @type Signal
+     * @private
+     */
+    private _signal:Signal;
 
-        /**
-        * If binding is active and should be executed.
-        * @type booleanean
-        */
-        public active: boolean = true;
+    /**
+     * Listener priority
+     * @type Number
+     */
+    public priority:number;
 
-        /**
-        * Default parameters passed to listener during `Signal.dispatch` and `SignalBinding.execute`.
-         * (curried parameters)
-        * @type Array|null
-        */
-        public params:any = null;
+    /**
+     * If binding is active and should be executed.
+     * @type booleanean
+     */
+    public active:boolean = true;
 
-        /**
-        * Call listener passing arbitrary parameters.
-        * <p>If binding was added using `Signal.addOnce()` it will be automatically removed from signal dispatch queue,
-         * this method is used internally for the signal dispatch.</p>
-        * @param {Array} [paramsArr] Array of parameters that should be passed to the listener
-        * @return {*} Value returned by the listener.
-        */
-        public execute(paramsArr?: any[]) {
+    /**
+     * Default parameters passed to listener during `Signal.dispatch` and `SignalBinding.execute`.
+     * (curried parameters)
+     * @type Array|null
+     */
+    public params:any = null;
 
-            var handlerReturn;
-            var params;
+    /**
+     * Call listener passing arbitrary parameters.
+     * <p>If binding was added using `Signal.addOnce()` it will be automatically removed from signal dispatch queue,
+     * this method is used internally for the signal dispatch.</p>
+     * @param {Array} [paramsArr] Array of parameters that should be passed to the listener
+     * @return {*} Value returned by the listener.
+     */
+    public execute(paramsArr?:any[]) {
 
-            if(this.active && !!this._listener) {
+        var handlerReturn;
+        var params;
 
-                params = this.params ? this.params.concat(paramsArr) : paramsArr;
+        if (this.active && !!this._listener) {
 
-                handlerReturn = this._listener.apply(this.context, params);
+            params = this.params ? this.params.concat(paramsArr) : paramsArr;
 
-                if (this._isOnce) {
-                    this.detach();
-                }
+            handlerReturn = this._listener.apply(this.context, params);
+
+            if (this._isOnce) {
+                this.detach();
             }
-
-            return handlerReturn;
-
         }
 
-        /**
-        * Detach binding from signal.
-        * - alias to: mySignal.remove(myBinding.getListener());
-        * @return {Function|null} Handler function bound to the signal or `null` if binding was previously detached.
-        */
-        public detach() {
+        return handlerReturn;
 
-            return this.isBound() ? this._signal.remove(this._listener, this.context) : null;
+    }
 
-        }
+    /**
+     * Detach binding from signal.
+     * - alias to: mySignal.remove(myBinding.getListener());
+     * @return {Function|null} Handler function bound to the signal or `null` if binding was previously detached.
+     */
+    public detach() {
 
-        /**
-        * @return {boolean} `true` if binding is still bound to the signal and have a listener.
-        */
-        public isBound(): boolean {
+        return this.isBound() ? this._signal.remove(this._listener, this.context) : null;
 
-            return (!!this._signal && !!this._listener);
+    }
 
-        }
+    /**
+     * @return {boolean} `true` if binding is still bound to the signal and have a listener.
+     */
+    public isBound():boolean {
 
-        /**
-        * @return {boolean} If SignalBinding will only be executed once.
-        */
-        public isOnce(): boolean {
+        return (!!this._signal && !!this._listener);
 
-            return this._isOnce;
+    }
 
-        }
+    /**
+     * @return {boolean} If SignalBinding will only be executed once.
+     */
+    public isOnce():boolean {
 
-        /**
-        * @return {Function} Handler function bound to the signal.
-        */
-        public getListener() {
+        return this._isOnce;
 
-            return this._listener;
+    }
 
-        }
+    /**
+     * @return {Function} Handler function bound to the signal.
+     */
+    public getListener() {
 
-        /**
-        * @return {Signal} Signal that listener is currently bound to.
-        */
-        public getSignal() {
+        return this._listener;
 
-            return this._signal;
+    }
 
-        }
+    /**
+     * @return {Signal} Signal that listener is currently bound to.
+     */
+    public getSignal() {
 
-        /**
-        * Delete instance properties
-        * @private
-        */
-        public _destroy() {
+        return this._signal;
 
-            delete this._signal;
-            delete this._listener;
-            delete this.context;
+    }
 
-        }
+    /**
+     * Delete instance properties
+     * @private
+     */
+    public _destroy() {
 
-        /**
-        * @return {string} String representation of the object.
-        */
-        public toString(): string {
+        delete this._signal;
+        delete this._listener;
+        delete this.context;
 
-            return '[SignalBinding isOnce:' + this._isOnce + ', isBound:' + this.isBound() + ', active:'
-                + this.active + ']';
+    }
 
-        }
+    /**
+     * @return {string} String representation of the object.
+     */
+    public toString():string {
+
+        return '[SignalBinding isOnce:' + this._isOnce + ', isBound:' + this.isBound() + ', active:'
+            + this.active + ']';
+
     }
 }
