@@ -2,7 +2,7 @@ module.exports = function(config) {
     config.set({
 
         // testing framework to use
-        frameworks: ['jasmine'],
+        frameworks: ['browserify', 'jasmine'],
 
         // test results reporter to use
         reporters: ['spec', 'coverage'],
@@ -13,7 +13,8 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'js/test/**/*.js'
+            'public/scripts/silverback.js',
+            'test/**/*.ts'
         ],
 
         // level of logging: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
@@ -23,6 +24,18 @@ module.exports = function(config) {
         coverageReporter: {
             type: 'html',
             dir: './coverage/'
+        },
+        preprocessors: {
+            /*'src/!**!/!*.ts': ['browserify'],*/
+            'test/**/*.ts': ['browserify']
+        },
+
+        browserify: {
+            debug: true,
+            extensions: ['.js', '.ts'],
+            plugin: [
+                ['tsify', {target: 'es5'}]
+            ]
         },
 
         // enable or disable colors in the output (reporters and logs).

@@ -3,10 +3,11 @@
 var gulp = require('gulp');
 var g = require('gulp-load-plugins')();
 var del = require('del');
+var browserify = require('browserify');
+var tsify = require('tsify');
 var Server = require('karma').Server;
+var source = require('vinyl-source-stream');
 var pkg = require("./package.json");
-
-var PROD = false;
 var WATCH = false;
 
 var banner = [
@@ -25,44 +26,61 @@ var banner = [
 
 var CONFIG = {
     tsOutputPath: './js',
-    releasePath: '../lib',
+    releasePath: './lib',
     srcFiles: './src/**/*.ts',
+    outputJsFiles: './js/**/*.js',
     testFiles: './test/**/*.ts',
-    testJsFiles: './js/test/**/*.js',
 
     typings: './typings/',
-    libraryTypeScriptDefinitions: './typings/**/*.ts',
-    appTypeScriptReferences: './typings/silverback.d.ts'
-};
+    appTsReferences: './typings/silverback.d.ts',
+    releaseFile: 'silverback.min.js',
 
-var OPTS = {
-    sortOutput: true,
-    source: [CONFIG.srcFiles, CONFIG.testFiles]
+    options: {
+        browserify: {
+            entries: './src/index.ts',
+            extensions: ['.ts'],
+            debug: true
+        },
+        tsify: {
+            target: 'es5',
+            removeComments: true
+        }
+    }
 };
 
 /**
  * Generates the silverback.d.ts references file dynamically from all application *.ts files.
  */
 gulp.task('refs', function () {
-    var target = gulp.src(CONFIG.appTypeScriptReferences);
-    var sources = gulp.src([CONFIG.srcFiles], { read: false });
+    var target = gulp.src(CONFIG.appTsReferences);
+    var sources = gulp.src([CONFIG.outputJsFiles], { read: false });
     return target.pipe(g.inject(sources, {
         starttag: '//{',
         endtag: '//}',
         transform: function (filepath) {
-            return '/// <reference path="..' + filepath + '" />';
+            return '/// <reference path="..' + filepath.slice(0, -3) + '.d.ts' + '" />';
         }
     })).pipe(gulp.dest(CONFIG.typings));
 });
 
+/**
+ * Generates and bundles the silverback.min.js file
+ */
 gulp.task('dist', function () {
-    PROD = true;
-    OPTS = {
-        sortOutput: true,
-        source: [CONFIG.srcFiles],
-        out:  CONFIG.releasePath + '/silverback.min.js'
-    };
-    return gulp.start('ts');
+    var b = browserify(CONFIG.options.browserify)
+        .plugin(tsify, CONFIG.options.tsify);
+
+    return b.bundle()
+        .on('error', function (err) {
+            console.log(err.message);
+        })
+        .pipe(source(CONFIG.releaseFile))
+        .pipe(g.buffer())
+        .pipe(g.sourcemaps.init({loadMaps: true}))
+        .pipe(g.uglify()).on('error', g.util.log)
+        .pipe(g.header(banner, { pkg: pkg }))
+        .pipe(g.sourcemaps.write('.'))
+        .pipe(gulp.dest(CONFIG.releasePath));
 });
 
 /**
@@ -78,18 +96,14 @@ gulp.task('lint', function () {
  * Compile TypeScript and include references to library and app .d.ts files.
  */
 gulp.task('ts', function () {
-    var tsProject = g.typescript.createProject('tsconfig.json', OPTS);
-
-    var tsResult = gulp.src(OPTS.source)
+    var tsProject = g.typescript.createProject('tsconfig.json', {sortOutput: true});
+    var tsResult = gulp.src([CONFIG.srcFiles])
         .pipe(g.sourcemaps.init())
         .pipe(g.typescript(tsProject));
 
-    g.if(!PROD,tsResult.dts.pipe(gulp.dest(CONFIG.tsOutputPath)));
+    tsResult.dts.pipe(gulp.dest(CONFIG.tsOutputPath));
 
     return tsResult.js
-        .pipe(g.if(PROD, g.uglify().on('error', g.util.log)))
-        .pipe(g.if(PROD, g.header(banner, { pkg: pkg })))
-
         .pipe(g.sourcemaps.write('.'))
         .pipe(gulp.dest(CONFIG.tsOutputPath));
 });
@@ -102,20 +116,21 @@ gulp.task('clean', function (cb) {
         CONFIG.tsOutputPath + '/**/*.js',
         CONFIG.tsOutputPath + '/**/*.js.map'
     ];
-
-    // delete the files
     del(typeScriptGenFiles, cb);
 });
 
+/**
+ * This task watches for file changes and recompile.
+ */
 gulp.task('watch', function () {
     WATCH = true;
-    gulp.watch([CONFIG.srcFiles, CONFIG.testFiles], ['ts']);
+    gulp.watch([CONFIG.srcFiles], ['ts']);
 });
 
 /**
  * This task runs the test cases using karma.
  */
-gulp.task('test',['ts'], function (done) {
+gulp.task('test', function (done) {
     return new Server({
         configFile: __dirname + '/karma.conf.js',
         singleRun: true
