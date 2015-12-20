@@ -77,7 +77,7 @@ gulp.task('dist', function () {
         .pipe(source(CONFIG.releaseFile))
         .pipe(g.buffer())
         .pipe(g.sourcemaps.init({loadMaps: true}))
-        //.pipe(g.uglify()).on('error', g.util.log)
+        .pipe(g.uglify()).on('error', g.util.log)
         .pipe(g.header(banner, { pkg: pkg }))
         .pipe(g.sourcemaps.write('.'))
         .pipe(gulp.dest(CONFIG.releasePath));
@@ -136,11 +136,13 @@ gulp.task("doc", function() {
         .pipe(g.typedoc({
             module: 'commonjs',
             target: 'es5',
+            mode: 'file',
             out: 'docs/',
             name: 'Silverback Engine - Documentation',
             readme: './README.md'
         }));
 });
+
 /**
  * This task runs the test cases using karma.
  */
@@ -151,5 +153,13 @@ gulp.task('test', function (done) {
     }, done).start();
 });
 
+/**
+ * Watch for file changes and re-run tests on each change
+ */
+gulp.task('tdd', function (done) {
+    new Server({
+        configFile: __dirname + '/karma.conf.js'
+    }, done).start();
+});
 
 gulp.task('default', ['lint', 'ts']);

@@ -13,8 +13,7 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'src/**/*.ts',
-            'test/**/*.ts'
+            'src/**/*.ts'
         ],
 
         plugins: [
@@ -26,11 +25,11 @@ module.exports = function(config) {
         ],
 
         // level of logging: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
-        logLevel: config.LOG_WARN,
+        logLevel: config.LOG_INFO,
 
         preprocessors: {
             'src/**/*.ts': ['browserify' ,'coverage'],
-            'test/**/*.ts': ['browserify']
+            'src/**/*.spec.ts': ['browserify']
         },
 
         browserify: {
