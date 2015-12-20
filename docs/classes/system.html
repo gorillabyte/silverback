@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>SystemList | Silverback Engine - Documentation</title>
+	<title>System | Silverback Engine - Documentation</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,24 +57,35 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_core_systemlist_.html">&quot;core/SystemList&quot;</a>
-				</li>
-				<li>
-					<a href="_core_systemlist_.systemlist.html">SystemList</a>
+					<a href="system.html">System</a>
 				</li>
 			</ul>
-			<h1>Class SystemList</h1>
+			<h1>Class System</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>The base class for a system.</p>
+					</div>
+					<p>A system is part of the core functionality of the game. After a system is added to the engine, its
+						update method will be called on every frame of the engine. When the system is removed from the engine,
+					the update method is no longer called.</p>
+					<p>The aggregate of all systems in the engine is the functionality of the game, with the update
+						methods of those systems collectively constituting the engine update loop. Systems generally operate on
+						node lists - collections of nodes. Each node contains the components from an entity in the engine
+					that match the node.</p>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">SystemList</span>
+						<span class="target">System</span>
 					</li>
 				</ul>
 			</section>
@@ -85,17 +96,18 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_core_systemlist_.systemlist.html#head" class="tsd-kind-icon">head</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_core_systemlist_.systemlist.html#tail" class="tsd-kind-icon">tail</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="system.html#next" class="tsd-kind-icon">next</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="system.html#previous" class="tsd-kind-icon">previous</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="system.html#priority" class="tsd-kind-icon">priority</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_core_systemlist_.systemlist.html#add" class="tsd-kind-icon">add</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_core_systemlist_.systemlist.html#get" class="tsd-kind-icon">get</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_core_systemlist_.systemlist.html#remove" class="tsd-kind-icon">remove</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_core_systemlist_.systemlist.html#removeall" class="tsd-kind-icon">remove<wbr>All</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="system.html#addtoengine" class="tsd-kind-icon">add<wbr>ToEngine</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="system.html#is" class="tsd-kind-icon">is</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="system.html#removefromengine" class="tsd-kind-icon">remove<wbr>From<wbr>Engine</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="system.html#update" class="tsd-kind-icon">update</a></li>
 							</ul>
 						</section>
 					</div>
@@ -104,45 +116,80 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="head" class="tsd-anchor"></a>
-					<h3>head</h3>
-					<div class="tsd-signature tsd-kind-icon">head<span class="tsd-signature-symbol">:</span> <a href="_core_system_.system.html" class="tsd-signature-type">System</a></div>
+					<a name="next" class="tsd-anchor"></a>
+					<h3>next</h3>
+					<div class="tsd-signature tsd-kind-icon">next<span class="tsd-signature-symbol">:</span> <a href="system.html" class="tsd-signature-type">System</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in core/SystemList.ts:11</li>
+							<li>Defined in core/System.ts:24</li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Used internally to manage the list of systems within the engine. The next system in the list.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="tail" class="tsd-anchor"></a>
-					<h3>tail</h3>
-					<div class="tsd-signature tsd-kind-icon">tail<span class="tsd-signature-symbol">:</span> <a href="_core_system_.system.html" class="tsd-signature-type">System</a></div>
+					<a name="previous" class="tsd-anchor"></a>
+					<h3>previous</h3>
+					<div class="tsd-signature tsd-kind-icon">previous<span class="tsd-signature-symbol">:</span> <a href="system.html" class="tsd-signature-type">System</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in core/SystemList.ts:12</li>
+							<li>Defined in core/System.ts:20</li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Used internally to manage the list of systems within the engine. The previous system in the list.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="priority" class="tsd-anchor"></a>
+					<h3>priority</h3>
+					<div class="tsd-signature tsd-kind-icon">priority<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in core/System.ts:29</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Used internally to hold the priority of this system within the system list. This is
+							used to order the systems so they are updated in the correct order.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="add" class="tsd-anchor"></a>
-					<h3>add</h3>
+					<a name="addtoengine" class="tsd-anchor"></a>
+					<h3>add<wbr>ToEngine</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">add<span class="tsd-signature-symbol">(</span>system<span class="tsd-signature-symbol">: </span><a href="_core_system_.system.html" class="tsd-signature-type">System</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>ToEngine<span class="tsd-signature-symbol">(</span>engine<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/SystemList.ts:14</li>
+									<li>Defined in core/System.ts:38</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Called just after the system is added to the engine, before any calls to the update method.
+									Override this method to add your own functionality.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>system: <a href="_core_system_.system.html" class="tsd-signature-type">System</a></h5>
+									<h5>engine: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The engine the system was added to.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -150,16 +197,16 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="get" class="tsd-anchor"></a>
-					<h3>get</h3>
+					<a name="is" class="tsd-anchor"></a>
+					<h3>is</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_core_system_.system.html" class="tsd-signature-type">System</a></li>
+						<li class="tsd-signature tsd-kind-icon">is<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/SystemList.ts:70</li>
+									<li>Defined in core/System.ts:66</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -168,27 +215,36 @@
 									<h5>type: <span class="tsd-signature-type">any</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="_core_system_.system.html" class="tsd-signature-type">System</a></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="remove" class="tsd-anchor"></a>
-					<h3>remove</h3>
+					<a name="removefromengine" class="tsd-anchor"></a>
+					<h3>remove<wbr>From<wbr>Engine</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">remove<span class="tsd-signature-symbol">(</span>system<span class="tsd-signature-symbol">: </span><a href="_core_system_.system.html" class="tsd-signature-type">System</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>From<wbr>Engine<span class="tsd-signature-symbol">(</span>engine<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/SystemList.ts:43</li>
+									<li>Defined in core/System.ts:48</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Called just after the system is removed from the engine, after all calls to the update method.
+									Override this method to add your own functionality.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>system: <a href="_core_system_.system.html" class="tsd-signature-type">System</a></h5>
+									<h5>engine: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The engine the system was removed from.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -196,18 +252,36 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="removeall" class="tsd-anchor"></a>
-					<h3>remove<wbr>All</h3>
+					<a name="update" class="tsd-anchor"></a>
+					<h3>update</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">remove<wbr>All<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">update<span class="tsd-signature-symbol">(</span>time<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/SystemList.ts:60</li>
+									<li>Defined in core/System.ts:62</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>After the system is added to the engine, this method is called every frame until the system
+									is removed from the engine. Override this method to add your own functionality.</p>
+								</div>
+								<p>If you need to perform an action outside of the update loop (e.g. you need to change the
+									systems in the engine and you don&#39;t want to do it while they&#39;re updating) add a listener to
+								the engine&#39;s updateComplete signal to be notified when the update loop completes.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>time: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The duration, in seconds, of the frame.</p>
+									</div>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -220,85 +294,85 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_core_componentmatchingfamily_.html">"core/<wbr>Component<wbr>Matching<wbr>Family"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_core_engine_.html">"core/<wbr>Engine"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_core_entity_.html">"core/<wbr>Entity"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_core_entitylist_.html">"core/<wbr>Entity<wbr>List"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_core_ifamily_.html">"core/IFamily"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_core_node_.html">"core/<wbr>Node"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_core_nodelist_.html">"core/<wbr>Node<wbr>List"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_core_nodepool_.html">"core/<wbr>Node<wbr>Pool"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_core_scene_.html">"core/<wbr>Scene"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_core_scenelist_.html">"core/<wbr>Scene<wbr>List"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_core_system_.html">"core/<wbr>System"</a>
-					</li>
-					<li class="current tsd-kind-external-module">
-						<a href="../modules/_core_systemlist_.html">"core/<wbr>System<wbr>List"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_index_.html">"index"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_utils_dictionary_.html">"utils/<wbr>Dictionary"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_utils_signal_.html">"utils/<wbr>Signal"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_utils_signalbinding_.html">"utils/<wbr>Signal<wbr>Binding"</a>
-					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class">
+						<a href="componentmatchingfamily.html" class="tsd-kind-icon">Component<wbr>Matching<wbr>Family</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="dictionary.html" class="tsd-kind-icon">Dictionary</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="engine.html" class="tsd-kind-icon">Engine</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="entity.html" class="tsd-kind-icon">Entity</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="entitylist.html" class="tsd-kind-icon">Entity<wbr>List</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="familymock.html" class="tsd-kind-icon">Family<wbr>Mock</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="node.html" class="tsd-kind-icon">Node</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="nodelist.html" class="tsd-kind-icon">Node<wbr>List</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="nodepool.html" class="tsd-kind-icon">Node<wbr>Pool</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="scene.html" class="tsd-kind-icon">Scene</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="scenelist.html" class="tsd-kind-icon">Scene<wbr>List</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="signal.html" class="tsd-kind-icon">Signal</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="signalbinding.html" class="tsd-kind-icon">Signal<wbr>Binding</a>
+					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_core_systemlist_.systemlist.html" class="tsd-kind-icon">System<wbr>List</a>
+					<li class="current tsd-kind-class">
+						<a href="system.html" class="tsd-kind-icon">System</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_core_systemlist_.systemlist.html#head" class="tsd-kind-icon">head</a>
+								<a href="system.html#next" class="tsd-kind-icon">next</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_core_systemlist_.systemlist.html#tail" class="tsd-kind-icon">tail</a>
+								<a href="system.html#previous" class="tsd-kind-icon">previous</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="system.html#priority" class="tsd-kind-icon">priority</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_core_systemlist_.systemlist.html#add" class="tsd-kind-icon">add</a>
+								<a href="system.html#addtoengine" class="tsd-kind-icon">add<wbr>ToEngine</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_core_systemlist_.systemlist.html#get" class="tsd-kind-icon">get</a>
+								<a href="system.html#is" class="tsd-kind-icon">is</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_core_systemlist_.systemlist.html#remove" class="tsd-kind-icon">remove</a>
+								<a href="system.html#removefromengine" class="tsd-kind-icon">remove<wbr>From<wbr>Engine</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_core_systemlist_.systemlist.html#removeall" class="tsd-kind-icon">remove<wbr>All</a>
+								<a href="system.html#update" class="tsd-kind-icon">update</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-class">
+						<a href="systemlist.html" class="tsd-kind-icon">System<wbr>List</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/ifamily.html" class="tsd-kind-icon">IFamily</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
