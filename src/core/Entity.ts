@@ -29,15 +29,23 @@ export class Entity {
     /**
      * Optional, give the entity a name. This can help with debugging and with serialising the entity.
      */
-    public name:string;
+    private _name:string;
+
     /**
      * This signal is dispatched when a component is added to the entity.
      */
     public componentAdded:Signal;
+
     /**
      * This signal is dispatched when a component is removed from the entity.
      */
     public componentRemoved:Signal;
+
+    /**
+     * Dispatched when the name of the entity changes.
+     * Used internally by the engine to track entities based on their names.
+     */
+    public nameChanged:Signal;
 
     public previous:Entity;
     public next:Entity;
@@ -48,11 +56,27 @@ export class Entity {
         this._components = new Dictionary();
         this.componentAdded = new Signal();
         this.componentRemoved = new Signal();
+        this.nameChanged = new Signal();
 
         if(name) {
-            this.name = name;
+            this._name = name;
         } else {
-            this.name = '_entity' + (++Entity.nameCount);
+            this._name = '_entity' + (++Entity.nameCount);
+        }
+    }
+
+    /**
+     * All entities have a name. If no name is set, a default name is used. Names are used to
+     * fetch specific entities from the engine, and can also help to identify an entity when debugging.
+     */
+    public get name():string {
+        return this._name;
+    }
+    public set name(value:string ) {
+        if( this._name !== value ) {
+            var previous:string = this._name;
+            this._name = value;
+            this.nameChanged.dispatch( this, previous );
         }
     }
 

@@ -1,29 +1,10 @@
-/*
- * Engine
- * Visit http://www.silverbackengine.org for documentation, updates and examples.
- *
- * Copyright (c) 2015 Gorillabyte
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+/**
+ * @module Silverback
  */
 
 /// <reference path="../../typings/tsd.d.ts" />
+///<reference path="IFamily.ts"/>
 
-/**
- * The Engine class is the central point for creating and managing your game state. Add
- * entities and systems to the engine, and fetch families of nodes from the engine.
- */
 import {Entity} from './Entity';
 import {EntityList} from './EntityList';
 import {Scene} from './Scene';
@@ -32,17 +13,23 @@ import {SystemList} from './SystemList';
 import {NodeList} from './NodeList';
 import {Dictionary} from '../utils/Dictionary';
 import {Signal} from '../utils/Signal';
-import {IFamily} from './IFamily';
 import {System} from './System';
 import {ComponentMatchingFamily} from './ComponentMatchingFamily';
+import {IFamily} from './IFamily';
 
+/**
+ * The Engine class is the central point for creating and managing your game state. Add
+ * entities and systems to the engine, and fetch families of nodes from the engine.
+ */
 export class Engine {
 
+    private _entityNames:Dictionary;
     private _entityList:EntityList;
     private _sceneList:SceneList;
     private _systemList:SystemList;
     private _families:Dictionary;
 
+    private _tempArray;
     /**
      * Indicates if the engine is currently in its update loop.
      */
@@ -62,17 +49,20 @@ export class Engine {
      *
      * The class must implement the Family interface.
      */
-    public familyClass = ComponentMatchingFamily;
+    public familyClass;
 
     constructor() {
         this._entityList = new EntityList();
+        this._entityNames = new Dictionary();
         this._sceneList = new SceneList();
         this._systemList = new SystemList();
         this._families = new Dictionary();
         this.updateComplete = new Signal();
+
+        this.familyClass = ComponentMatchingFamily;
     }
 
-    public get entites():any {
+    public get entities():Array<Entity> {
         var tmpEntities = [];
         for(var entity = this._entityList.head; entity; entity = entity.next) {
             tmpEntities.push(entity);
@@ -80,7 +70,7 @@ export class Engine {
         return tmpEntities;
     }
 
-    public get scenes():any {
+    public get scenes():Array<Scene> {
         var tmpScenes = [];
         for(var scene = this._sceneList.head; scene; scene = scene.next) {
             tmpScenes.push(scene);
@@ -88,7 +78,7 @@ export class Engine {
         return tmpScenes;
     }
 
-    public get systems():any {
+    public get systems():Array<System> {
         var tmpSystems = [];
         for (var system = this._systemList.head; system; system = system.next) {
             tmpSystems.push(system);
@@ -102,9 +92,15 @@ export class Engine {
      * @param entity The entity to add.
      */
     public addEntity(entity:Entity):void {
+        if( this._entityNames[ entity.name ] ) {
+            throw new Error( 'The entity name ' + entity.name + ' is already in use by another entity.' );
+        }
         this._entityList.add( entity );
+        this._entityNames[entity.name] = entity;
         entity.componentAdded.add(this._componentAdded, this);
         entity.componentRemoved.add(this._componentRemoved, this);
+        entity.nameChanged.add( this.entityNameChanged );
+
         this._families.forEach(
             (nodeObject, family:IFamily) => {
                 family.newEntity(entity);
@@ -120,14 +116,22 @@ export class Engine {
     public removeEntity(entity: Entity):void {
         entity.componentAdded.remove(this._componentAdded, this);
         entity.componentRemoved.remove(this._componentRemoved, this);
+        entity.nameChanged.remove( this.entityNameChanged );
 
         this._families.forEach(
             function (nodeObject, family: IFamily) {
                 family.removeEntity(entity);
             }
         );
-
+        delete this._entityNames[entity.name];
         this._entityList.remove( entity );
+    }
+
+    private entityNameChanged(entity:Entity, oldName:string ):void {
+        if( this._entityNames[ oldName ] === entity ) {
+            delete this._entityNames[ oldName ];
+            this._entityNames[ entity.name ] = entity;
+        }
     }
 
     /**
@@ -213,7 +217,7 @@ export class Engine {
         if(this._families.has(nodeClass)) {
             return this._families.getValue(nodeClass)._nodes;
         }
-        var family:IFamily = new this.familyClass(nodeClass, this);
+        var family = new this.familyClass(nodeClass, this);
         this._families.add(nodeClass, family);
         for (var entity:Entity = this._entityList.head; entity; entity = entity.next) {
             family.newEntity(entity);
@@ -288,6 +292,16 @@ export class Engine {
     public removeSystem(system:System) {
         this._systemList.remove( system );
         system.removeFromEngine( this );
+    }
+
+    /**
+     * Get an entity based n its name.
+     *
+     * @param name The name of the entity
+     * @return The entity, or null if no entity with that name exists on the engine
+     */
+    public getEntityByName(name:string):Entity {
+        return this._entityNames[name];
     }
 
     /**

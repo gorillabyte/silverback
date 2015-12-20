@@ -30,7 +30,7 @@ export class ComponentMatchingFamily implements IFamily {
      * @param nodeClass The type of node to create and manage a NodeList for.
      * @param engine The engine that this family is managing teh NodeList for.
      */
-    constructor(nodeClass, engine:Engine) {
+    constructor(nodeClass:any, engine:Engine) {
         this._nodeClass = nodeClass;
         this._engine = engine;
 
