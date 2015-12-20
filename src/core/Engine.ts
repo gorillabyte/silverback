@@ -92,14 +92,14 @@ export class Engine {
      * @param entity The entity to add.
      */
     public addEntity(entity:Entity):void {
-        if( this._entityNames[ entity.name ] ) {
-            throw new Error( 'The entity name ' + entity.name + ' is already in use by another entity.' );
+        if(this._entityNames.has(entity.name)) {
+            throw new Error('The entity name ' + entity.name + ' is already in use by another entity.');
         }
-        this._entityList.add( entity );
-        this._entityNames[entity.name] = entity;
+        this._entityList.add(entity);
+        this._entityNames.add(entity.name, entity);
         entity.componentAdded.add(this._componentAdded, this);
         entity.componentRemoved.add(this._componentRemoved, this);
-        entity.nameChanged.add( this.entityNameChanged );
+        entity.nameChanged.add(this.entityNameChanged, this);
 
         this._families.forEach(
             (nodeObject, family:IFamily) => {
@@ -116,21 +116,21 @@ export class Engine {
     public removeEntity(entity: Entity):void {
         entity.componentAdded.remove(this._componentAdded, this);
         entity.componentRemoved.remove(this._componentRemoved, this);
-        entity.nameChanged.remove( this.entityNameChanged );
+        entity.nameChanged.remove(this.entityNameChanged, this);
 
         this._families.forEach(
             function (nodeObject, family: IFamily) {
                 family.removeEntity(entity);
             }
         );
-        delete this._entityNames[entity.name];
-        this._entityList.remove( entity );
+        this._entityNames.remove(entity.name);
+        this._entityList.remove(entity);
     }
 
     private entityNameChanged(entity:Entity, oldName:string ):void {
-        if( this._entityNames[ oldName ] === entity ) {
-            delete this._entityNames[ oldName ];
-            this._entityNames[ entity.name ] = entity;
+        if(this._entityNames.has(oldName)) {
+            this._entityNames.remove(oldName);
+            this._entityNames.add(entity.name, entity);
         }
     }
 
@@ -301,7 +301,10 @@ export class Engine {
      * @return The entity, or null if no entity with that name exists on the engine
      */
     public getEntityByName(name:string):Entity {
-        return this._entityNames[name];
+        if(this._entityNames.has(name)) {
+            return this._entityNames.getValue(name);
+        }
+        return null;
     }
 
     /**

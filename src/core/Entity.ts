@@ -58,7 +58,7 @@ export class Entity {
         this.componentRemoved = new Signal();
         this.nameChanged = new Signal();
 
-        if(name) {
+        if(name.length > 0) {
             this._name = name;
         } else {
             this._name = '_entity' + (++Entity.nameCount);
@@ -72,11 +72,11 @@ export class Entity {
     public get name():string {
         return this._name;
     }
-    public set name(value:string ) {
-        if( this._name !== value ) {
+    public set name(value:string) {
+        if(this._name !== value) {
             var previous:string = this._name;
             this._name = value;
-            this.nameChanged.dispatch( this, previous );
+            this.nameChanged.dispatch(this, previous);
         }
     }
 
