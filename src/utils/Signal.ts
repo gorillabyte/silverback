@@ -98,7 +98,7 @@ export class Signal {
 
     /**
      * @method _addBinding
-     * @param {mSignalBinding.SignalBinding} binding
+     * @param {SignalBinding} binding
      * @private
      */
     private _addBinding(binding:SignalBinding) {
@@ -118,6 +118,7 @@ export class Signal {
     /**
      * @method _indexOfListener
      * @param {Function} listener
+     * @param {Function} context
      * @return {number}
      * @private
      */
@@ -133,9 +134,7 @@ export class Signal {
                 return n;
             }
         }
-
         return -1;
-
     }
 
     /**
@@ -145,9 +144,7 @@ export class Signal {
      * @return {booleanean} if Signal has the specified listener.
      */
     public has(listener, context:any = null):boolean {
-
         return this._indexOfListener(listener, context) !== -1;
-
     }
 
     /**
@@ -161,11 +158,8 @@ export class Signal {
      * @return {SignalBinding} An Object representing the binding between the Signal and listener.
      */
     public add(listener, listenerContext:any = null, priority:number = 0):SignalBinding {
-
         this.validateListener(listener, 'add');
-
         return this._registerListener(listener, false, listenerContext, priority);
-
     }
 
     /**
@@ -179,11 +173,8 @@ export class Signal {
      * @return {SignalBinding} An Object representing the binding between the Signal and listener.
      */
     public addOnce(listener, listenerContext:any = null, priority:number = 0):SignalBinding {
-
         this.validateListener(listener, 'addOnce');
-
         return this._registerListener(listener, true, listenerContext, priority);
-
     }
 
     /**
@@ -194,9 +185,7 @@ export class Signal {
      * @return {Function} Listener handler function.
      */
     public remove(listener, context:any = null) {
-
         this.validateListener(listener, 'remove');
-
         var i:number = this._indexOfListener(listener, context);
 
         if (i !== -1) {
@@ -240,7 +229,7 @@ export class Signal {
 
     /**
      * Dispatch/Broadcast Signal to all listeners added to the queue.
-     * @param {...*} [params] Parameters that should be passed to each handler.
+     * @param {...*} [paramsArr] Parameters that should be passed to each handler.
      */
     public dispatch(...paramsArr:any[]) {
 
@@ -277,9 +266,7 @@ export class Signal {
      * @see Signal.memorize
      */
     public forget() {
-
         this._prevParams = null;
-
     }
 
     /**
@@ -291,18 +278,15 @@ export class Signal {
 
         this.removeAll();
 
-        delete this._bindings;
-        delete this._prevParams;
-
+        this._bindings = null;
+        this._prevParams = null;
     }
 
     /**
      * @return {string} String representation of the object.
      */
     public toString():string {
-
         return '[Signal active:' + this.active + ' numListeners:' + this.getNumListeners() + ']';
-
     }
 
 }

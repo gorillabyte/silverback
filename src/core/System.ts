@@ -18,10 +18,12 @@ export class System {
      * Used internally to manage the list of systems within the engine. The previous system in the list.
      */
     public previous:System = null;
+
     /**
      * Used internally to manage the list of systems within the engine. The next system in the list.
      */
     public next:System = null;
+
     /**
      * Used internally to hold the priority of this system within the system list. This is
      * used to order the systems so they are updated in the correct order.

@@ -108,7 +108,7 @@ export class Engine {
         this._entityNames.add(entity.name, entity);
         entity.componentAdded.add(this._componentAdded, this);
         entity.componentRemoved.add(this._componentRemoved, this);
-        entity.nameChanged.add(this.entityNameChanged, this);
+        entity.nameChanged.add(this._entityNameChanged, this);
 
         this._families.forEach((nodeObject, family:IFamily) => {
                 family.newEntity(entity);
@@ -124,7 +124,7 @@ export class Engine {
     public removeEntity(entity: Entity):void {
         entity.componentAdded.remove(this._componentAdded, this);
         entity.componentRemoved.remove(this._componentRemoved, this);
-        entity.nameChanged.remove(this.entityNameChanged, this);
+        entity.nameChanged.remove(this._entityNameChanged, this);
 
         this._families.forEach((nodeObject, family: IFamily) => {
                 family.removeEntity(entity);
@@ -132,13 +132,6 @@ export class Engine {
         );
         this._entityNames.remove(entity.name);
         this._entityList.remove(entity);
-    }
-
-    private entityNameChanged(entity:Entity, oldName:string ):void {
-        if(this._entityNames.has(oldName)) {
-            this._entityNames.remove(oldName);
-            this._entityNames.add(entity.name, entity);
-        }
     }
 
     /**
@@ -316,6 +309,16 @@ export class Engine {
         }
         this.updating = false;
         this.updateComplete.dispatch();
+    }
+
+    /**
+     * @private
+     */
+    private _entityNameChanged(entity:Entity, oldName:string ):void {
+        if(this._entityNames.has(oldName)) {
+            this._entityNames.remove(oldName);
+            this._entityNames.add(entity.name, entity);
+        }
     }
 
     /**
