@@ -16,6 +16,10 @@ module.exports = function(config) {
             'src/**/*.ts'
         ],
 
+        exclude: [
+            'src/**/*.bench.ts'
+        ],
+
         plugins: [
             'karma-jasmine',
             'karma-coverage',
