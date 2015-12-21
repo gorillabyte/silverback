@@ -6,6 +6,8 @@ import {FamilyMock} from './FamilyMock';
 import {NodeMock, NodeMock2, Vec2D} from './NodeMock';
 import {System} from '../System';
 import {SystemMock} from './SystemMock';
+import {Scene} from '../Scene';
+import {SceneMock} from './SceneMock';
 
 describe('Engine', () => {
     var engine:Engine;
@@ -126,6 +128,14 @@ describe('Engine', () => {
             expect(FamilyMock.instances[0].cleanUpCalls).toEqual(1);
         });
 
+        it('should throw an error, if the releaseNodeList fails', () => {
+            engine.getNodeList(NodeMock);
+            expect(() => {
+                engine.releaseNodeList(NodeMock2);
+            }).toThrow(
+                new Error('The given nodeClass was not found and can not be released.'));
+        });
+
         it('should obtain an entity by name', () => {
             var entity:Entity = new Entity('anything');
             engine.addEntity(entity);
@@ -157,6 +167,15 @@ describe('Engine', () => {
                 engine.addEntity(entity2);
             }).toThrow(
                 new Error('The entity name anything is already in use by another entity.'));
+        });
+
+        it('should return an error, if the entity name changes and it was not found in the entity list', () => {
+            var entity:Entity = new Entity('anything');
+            engine.addEntity(entity);
+            expect(() => {
+                entity.nameChanged.dispatch(this, 'noResultFound');
+            }).toThrow(
+                new Error('The given name was not found in the entity list.'));
         });
     });
 
@@ -197,6 +216,74 @@ describe('Engine', () => {
             engine.addSystem(system, 0);
             engine.update(10);
             expect(system.updateCalls).toEqual(1);
+        });
+    });
+
+    describe('- Scene', () => {
+        it('should add a scene correctly to the engine', () => {
+            var scene:Scene = new Scene();
+            engine.addScene(scene);
+            expect(engine.scenes.length).toEqual(1);
+        });
+
+        it('should remove a scene correctly to the engine', () => {
+            var scene = new Scene();
+            var scene2 = new Scene();
+            engine.addScene(scene);
+            engine.addScene(scene2);
+            engine.removeScene(scene2);
+            expect(engine.scenes.length).toEqual(1);
+        });
+
+        it('should remove all scenes from the engine', () => {
+            var scene = new Scene();
+            var scene2 = new Scene();
+            engine.addScene(scene);
+            engine.addScene(scene2);
+            engine.removeAllScenes();
+            expect(engine.scenes.length).toEqual(0);
+        });
+
+        it('should get a scene by its type from the engine', () => {
+            var scene:Scene = new Scene();
+            engine.addScene(scene);
+            expect(engine.getScene(Scene)).toEqual(scene);
+        });
+
+        it('should return the correct scene by name', () => {
+            var scene:Scene = new Scene();
+            scene.name = 'someScene';
+            engine.addScene(scene);
+            var scene2:Scene = new Scene();
+            scene2.name = 'otherScene';
+            engine.addScene(scene2);
+            expect(engine.getSceneByName('otherScene')).toEqual(scene2);
+        });
+
+        it('should return null, if getSceneByName found not result', () => {
+            var scene:Scene = new Scene();
+            scene.name = 'someScene';
+            engine.addScene(scene);
+            expect(engine.getSceneByName('wrongName')).toBeNull();
+        });
+
+        it('should obtain an scene by name after renaming', () => {
+            var scene:Scene = new Scene();
+            scene.name = 'someScene';
+            engine.addScene(scene);
+            scene.name = 'newNameScene';
+            var other:Scene = engine.getSceneByName('newNameScene');
+            expect(other).toEqual(scene);
+        });
+
+        it('should return an error, if the scene name changes and it was not found in the scene list', () => {
+            var scene:Scene = new Scene();
+            scene.name = 'someScene';
+            engine.addScene(scene);
+            expect(() => {
+                scene.nameChanged.dispatch(this, 'noResultFound');
+            }).toThrow(
+                new Error('The given name was not found in the scene list.'));
         });
     });
 

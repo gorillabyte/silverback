@@ -8,17 +8,25 @@ export class Scene {
 
     private static nameCount = 0;
     /**
-     * Optional, give the entity a name. This can help with debugging and with serialising the entity.
+     * Optional, give the scene a name. This can help with debugging and with serialising the scenes.
      */
     private _name:string;
+
     /**
-     * This signal is dispatched when a entity is added to the entity.
+     * This signal is dispatched when a entity is added to the scene.
      */
     public entityAdded:Signal;
+
     /**
-     * This signal is dispatched when a entity is removed from the entity.
+     * This signal is dispatched when a entity is removed from the scene.
      */
     public entityRemoved:Signal;
+
+    /**
+     * Dispatched when the name of the scene changes.
+     * Used internally by the engine to track entities based on their names.
+     */
+    public nameChanged:Signal;
 
     public previous:Scene;
     public next:Scene;
@@ -31,6 +39,7 @@ export class Scene {
         this.entityAdded = new Signal();
         this.entityRemoved = new Signal();
         this._entityList = new EntityList();
+        this.nameChanged = new Signal();
 
         if (name) {
             this._name = name;
@@ -40,7 +49,22 @@ export class Scene {
     }
 
     /**
-     * Add a entity to the entity.
+     * All scenes have a name. If no name is set, a default name is used. Names are used to
+     * fetch specific scenes from the engine, and can also help to identify an entity when debugging.
+     */
+    public get name():string {
+        return this._name;
+    }
+    public set name(value:string) {
+        if(this._name !== value) {
+            var previous:string = this._name;
+            this._name = value;
+            this.nameChanged.dispatch(this, previous);
+        }
+    }
+
+    /**
+     * Add a entity to the scene.
      *
      * @param entity The entity object to add.
      * @param entityClass The class of the entity. This is only necessary if the entity
@@ -119,7 +143,7 @@ export class Scene {
     /**
      * Get all entities from the scene.
      *
-     * @return An array containing all the entities that are on the entity.
+     * @return An array containing all the entities that are on the scene.
      */
     public getAllEntity():any[] {
         var entityArray = [];

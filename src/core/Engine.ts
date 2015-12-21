@@ -26,6 +26,7 @@ export class Engine {
     private _entityNames:Dictionary;
     private _entityList:EntityList;
     private _sceneList:SceneList;
+    private _sceneNames:Dictionary;
     private _systemList:SystemList;
     private _families:Dictionary;
 
@@ -54,6 +55,7 @@ export class Engine {
     constructor() {
         this._entityList = new EntityList();
         this._entityNames = new Dictionary();
+        this._sceneNames = new Dictionary();
         this._sceneList = new SceneList();
         this._systemList = new SystemList();
         this._families = new Dictionary();
@@ -159,35 +161,34 @@ export class Engine {
     /**
      * Add an scene to the engine.
      *
-     * @param scene The entity to add.
+     * @param scene The scene to add.
      */
     public addScene(scene:Scene):void {
-        this._sceneList.add( scene );
-       /* scene.entityAdded.add(this._entityAdded, this);
-        scene.entityRemoved.add(this._entityRemoved, this);*/
+        this._sceneList.add(scene);
+        this._sceneNames.add(scene.name, scene);
+        scene.nameChanged.add(this._sceneNameChanged, this);
+
     }
 
     /**
-     * Remove an entity from the engine.
+     * Remove an scene from the engine.
      *
      * @param scene The scene to remove.
      */
     public removeScene(scene:Scene):void {
-        /*scene.entityAdded.remove(this._entityAdded, this);
-        scene.entityRemoved.remove(this._entityRemoved, this);*/
-
         this._sceneList.remove( scene );
+        this._sceneNames.remove(scene.name);
+        scene.nameChanged.remove(this._sceneNameChanged, this);
     }
 
     /**
-     * Remove all entities from the engine.
+     * Remove all scenes from the engine.
      */
     public removeAllScenes():void {
         while (this._sceneList.head) {
             this.removeScene(this._sceneList.head);
         }
     }
-
 
     /**
      * Get an scene based on its name.
@@ -196,13 +197,19 @@ export class Engine {
      * @return The scene, or null if no scene with that name exists on the engine
      */
     public getSceneByName(name:string):Scene {
-       /* if(this._entityNames.has(name)) {
-            return this._entityNames.getValue(name);
-        }*/
+        if(this._sceneNames.has(name)) {
+            return this._sceneNames.getValue(name);
+        }
         return null;
     }
 
-
+    /**
+     * Get the scene instance of a particular type from within the engine.
+     *
+     * @param type The type of scene
+     * @return The instance of the scene type that is in the engine, or
+     * null if no scene of this type are in the engine.
+     */
     public getScene(type):Scene {
         return this._sceneList.get(type);
     }
@@ -242,8 +249,10 @@ export class Engine {
      * @param nodeClass The type of the node class if the list to be released.
      */
     public releaseNodeList(nodeClass) {
-        if (this._families.has(nodeClass)) {
+        if(this._families.has(nodeClass)) {
             this._families.getValue(nodeClass).cleanUp();
+        } else {
+            throw new Error('The given nodeClass was not found and can not be released.');
         }
         this._families.remove(nodeClass);
     }
@@ -314,10 +323,24 @@ export class Engine {
     /**
      * @private
      */
-    private _entityNameChanged(entity:Entity, oldName:string ):void {
+    private _entityNameChanged(entity:Entity, oldName:string):void {
         if(this._entityNames.has(oldName)) {
             this._entityNames.remove(oldName);
             this._entityNames.add(entity.name, entity);
+        } else {
+            throw new Error('The given name was not found in the entity list.');
+        }
+    }
+
+    /**
+     * @private
+     */
+    private _sceneNameChanged(scene:Scene, oldName:string):void {
+        if(this._sceneNames.has(oldName)) {
+            this._sceneNames.remove(oldName);
+            this._sceneNames.add(scene.name, scene);
+        } else {
+            throw new Error('The given name was not found in the scene list.');
         }
     }
 
