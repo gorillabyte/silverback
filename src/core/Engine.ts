@@ -1,9 +1,9 @@
 /**
  * @module Silverback
+ * @class Engine
  */
 
 /// <reference path="../../typings/tsd.d.ts" />
-///<reference path="IFamily.ts"/>
 
 import {Entity} from './Entity';
 import {EntityList} from './EntityList';
@@ -62,6 +62,9 @@ export class Engine {
         this.familyClass = ComponentMatchingFamily;
     }
 
+    /**
+     * Returns an array containing all the entities in the engine.
+     */
     public get entities():Array<Entity> {
         var tmpEntities = [];
         for(var entity = this._entityList.head; entity; entity = entity.next) {
@@ -70,6 +73,9 @@ export class Engine {
         return tmpEntities;
     }
 
+    /**
+     * Returns an array containing all the scenes in the engine.
+     */
     public get scenes():Array<Scene> {
         var tmpScenes = [];
         for(var scene = this._sceneList.head; scene; scene = scene.next) {
@@ -78,6 +84,9 @@ export class Engine {
         return tmpScenes;
     }
 
+    /**
+     * Returns an array containing all the systems in the engine.
+     */
     public get systems():Array<System> {
         var tmpSystems = [];
         for (var system = this._systemList.head; system; system = system.next) {
@@ -101,8 +110,7 @@ export class Engine {
         entity.componentRemoved.add(this._componentRemoved, this);
         entity.nameChanged.add(this.entityNameChanged, this);
 
-        this._families.forEach(
-            (nodeObject, family:IFamily) => {
+        this._families.forEach((nodeObject, family:IFamily) => {
                 family.newEntity(entity);
             }
         );
@@ -118,8 +126,7 @@ export class Engine {
         entity.componentRemoved.remove(this._componentRemoved, this);
         entity.nameChanged.remove(this.entityNameChanged, this);
 
-        this._families.forEach(
-            function (nodeObject, family: IFamily) {
+        this._families.forEach((nodeObject, family: IFamily) => {
                 family.removeEntity(entity);
             }
         );
@@ -132,6 +139,19 @@ export class Engine {
             this._entityNames.remove(oldName);
             this._entityNames.add(entity.name, entity);
         }
+    }
+
+    /**
+     * Get an entity based on its name.
+     *
+     * @param name The name of the entity
+     * @return The entity, or null if no entity with that name exists on the engine
+     */
+    public getEntityByName(name:string):Entity {
+        if(this._entityNames.has(name)) {
+            return this._entityNames.getValue(name);
+        }
+        return null;
     }
 
     /**
@@ -175,30 +195,23 @@ export class Engine {
         }
     }
 
+
+    /**
+     * Get an scene based on its name.
+     *
+     * @param name The name of the scene
+     * @return The scene, or null if no scene with that name exists on the engine
+     */
+    public getSceneByName(name:string):Scene {
+       /* if(this._entityNames.has(name)) {
+            return this._entityNames.getValue(name);
+        }*/
+        return null;
+    }
+
+
     public getScene(type):Scene {
         return this._sceneList.get(type);
-    }
-
-    /**
-     * @private
-     */
-    private _componentAdded(entity: Entity, componentClass:() => any):void {
-        this._families.forEach(
-            function (nodeObject, family:IFamily) {
-                family.componentAddedToEntity(entity, componentClass);
-            }
-        );
-    }
-
-    /**
-     * @private
-     */
-    private _componentRemoved(entity: Entity, componentClass:() => any):void {
-        this._families.forEach(
-            function (nodeObject, family:IFamily) {
-                family.componentRemovedFromEntity(entity, componentClass);
-            }
-        );
     }
 
     /**
@@ -256,8 +269,8 @@ export class Engine {
      */
     public addSystem(system:System, priority:number) {
         system.priority = priority;
-        system.addToEngine( this );
-        this._systemList.add( system );
+        system.addToEngine(this);
+        this._systemList.add(system);
     }
 
     /**
@@ -268,21 +281,8 @@ export class Engine {
      * null if no systems of this type are in the engine.
      */
     public getSystem(type):System {
-        return this._systemList.get( type );
+        return this._systemList.get(type);
     }
-
-    /**
-     * Returns a vector containing all the systems in the engine.
-     */
-    //public get systems() : Vector.<System>
-    //{
-    //	var systems : Vector.<System> = new Vector.<System>();
-    //	for (var system: MSystem.ash.core.System = systemList.head; system; system = system.next )
-    //	{
-    //		systems.push( system );
-    //	}
-    //	return systems;
-    //}
 
     /**
      * Remove a system from the engine.
@@ -290,29 +290,16 @@ export class Engine {
      * @param system The system to remove from the engine.
      */
     public removeSystem(system:System) {
-        this._systemList.remove( system );
-        system.removeFromEngine( this );
-    }
-
-    /**
-     * Get an entity based n its name.
-     *
-     * @param name The name of the entity
-     * @return The entity, or null if no entity with that name exists on the engine
-     */
-    public getEntityByName(name:string):Entity {
-        if(this._entityNames.has(name)) {
-            return this._entityNames.getValue(name);
-        }
-        return null;
+        this._systemList.remove(system);
+        system.removeFromEngine(this);
     }
 
     /**
      * Remove all systems from the engine.
      */
-    public removeAllSystems() {
-        while( this._systemList.head ) {
-            this.removeSystem(this._systemList.head );
+    public removeAllSystems():void {
+        while(this._systemList.head) {
+            this.removeSystem(this._systemList.head);
         }
     }
 
@@ -322,12 +309,32 @@ export class Engine {
      *
      * @time The duration, in seconds, of this update step.
      */
-    public update(time:number) {
+    public update(time:number):void {
         this.updating = true;
         for (var system:System = this._systemList.head; system; system = system.next) {
             system.update(time);
         }
         this.updating = false;
         this.updateComplete.dispatch();
+    }
+
+    /**
+     * @private
+     */
+    private _componentAdded(entity:Entity, componentClass:() => any):void {
+        this._families.forEach((nodeObject, family:IFamily) => {
+                family.componentAddedToEntity(entity, componentClass);
+            }
+        );
+    }
+
+    /**
+     * @private
+     */
+    private _componentRemoved(entity:Entity, componentClass:() => any):void {
+        this._families.forEach((nodeObject, family:IFamily) => {
+                family.componentRemovedFromEntity(entity, componentClass);
+            }
+        );
     }
 }
