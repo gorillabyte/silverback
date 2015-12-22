@@ -10,8 +10,16 @@
     "type": "git",
     "url": "repo.gorillabyte.com:cos/silverback.git"
   },
-  "author": "Gorillabyte",
-  "license": "LGPL-3.0",
+  "author": "Stefan Herndlbauer <sherndlbauer@gorillabyte.com>",
+  "license": "MIT",
+  "keywords": [
+    "typescript",
+    "game",
+    "entity",
+    "silverback",
+    "framework",
+    "engine"
+  ],
   "devDependencies": {
     "browserify": "^12.0.1",
     "browserify-istanbul": "^0.2.1",
