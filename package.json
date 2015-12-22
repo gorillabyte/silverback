@@ -55,5 +55,8 @@
     "typescript": "^1.6.2",
     "typescript-dotnet": "^2.5.19",
     "vinyl-source-stream": "^1.1.0"
+  },
+  "dependencies": {
+    "mini-signals": "^1.1.0"
   }
 }

@@ -16,3 +16,5 @@
 /// <reference path="../js/utils/Signal.d.ts" />
 /// <reference path="../js/utils/SignalBinding.d.ts" />
 //}
+
+declare var require;

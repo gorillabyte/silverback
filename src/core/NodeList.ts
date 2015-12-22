@@ -20,7 +20,7 @@
  */
 
 import {Node} from './Node';
-import {Signal} from '../utils/Signal';
+const MiniSignal = require('../../node_modules/mini-signals');
 
 export class NodeList {
     /**
@@ -37,17 +37,17 @@ export class NodeList {
      *
      * <p>The signal will pass a single parameter to the listeners - the node that was added.</p>
      */
-    public nodeAdded:Signal;
+    public nodeAdded;
     /**
      * A signal that is dispatched whenever a node is removed from the node list.
      *
      * <p>The signal will pass a single parameter to the listeners - the node that was removed.</p>
      */
-    public nodeRemoved:Signal;
+    public nodeRemoved;
 
     constructor() {
-        this.nodeAdded = new Signal();
-        this.nodeRemoved = new Signal();
+        this.nodeAdded = new MiniSignal();
+        this.nodeRemoved = new MiniSignal();
     }
 
     public add(node:Node):void {

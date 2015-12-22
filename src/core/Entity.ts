@@ -20,8 +20,9 @@
  */
 
 import {Scene} from './Scene';
-import {Signal} from '../utils/Signal';
+//import {Signal} from '../utils/Signal';
 import {Dictionary} from '../utils/Dictionary';
+const MiniSignal = require('../../node_modules/mini-signals');
 
 export class Entity {
 
@@ -34,18 +35,18 @@ export class Entity {
     /**
      * This signal is dispatched when a component is added to the entity.
      */
-    public componentAdded:Signal;
+    public componentAdded;
 
     /**
      * This signal is dispatched when a component is removed from the entity.
      */
-    public componentRemoved:Signal;
+    public componentRemoved;
 
     /**
      * Dispatched when the name of the entity changes.
      * Used internally by the engine to track entities based on their names.
      */
-    public nameChanged:Signal;
+    public nameChanged;
 
     public previous:Entity;
     public next:Entity;
@@ -54,9 +55,9 @@ export class Entity {
 
     constructor(name:string = '') {
         this._components = new Dictionary();
-        this.componentAdded = new Signal();
-        this.componentRemoved = new Signal();
-        this.nameChanged = new Signal();
+        this.componentAdded = new MiniSignal();
+        this.componentRemoved = new MiniSignal();
+        this.nameChanged = new MiniSignal();
 
         if(name.length > 0) {
             this._name = name;

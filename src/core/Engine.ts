@@ -12,7 +12,7 @@ import {SceneList} from './SceneList';
 import {SystemList} from './SystemList';
 import {NodeList} from './NodeList';
 import {Dictionary} from '../utils/Dictionary';
-import {Signal} from '../utils/Signal';
+const MiniSignal = require('../../node_modules/mini-signals');
 import {System} from './System';
 import {ComponentMatchingFamily} from './ComponentMatchingFamily';
 import {IFamily} from './IFamily';
@@ -41,7 +41,7 @@ export class Engine {
      * engine it is usually best not to do so during the update loop. To avoid this you can
      * listen for this signal and make the change when the signal is dispatched.
      */
-    public updateComplete:Signal;
+    public updateComplete:MiniSignal;
 
     /**
      * The class used to manage node lists. In most cases the default class is sufficient
@@ -59,7 +59,7 @@ export class Engine {
         this._sceneList = new SceneList();
         this._systemList = new SystemList();
         this._families = new Dictionary();
-        this.updateComplete = new Signal();
+        this.updateComplete = new MiniSignal();
 
         this.familyClass = ComponentMatchingFamily;
     }
@@ -124,9 +124,12 @@ export class Engine {
      * @param entity The entity to remove.
      */
     public removeEntity(entity: Entity):void {
-        entity.componentAdded.remove(this._componentAdded, this);
+        /*entity.componentAdded.remove(this._componentAdded, this);
         entity.componentRemoved.remove(this._componentRemoved, this);
-        entity.nameChanged.remove(this._entityNameChanged, this);
+        entity.nameChanged.remove(this._entityNameChanged, this);*/
+        entity.componentAdded.detachAll();
+        entity.componentRemoved.detachAll();
+        entity.nameChanged.detachAll();
 
         this._families.forEach((nodeObject, family: IFamily) => {
                 family.removeEntity(entity);
@@ -178,7 +181,7 @@ export class Engine {
     public removeScene(scene:Scene):void {
         this._sceneList.remove( scene );
         this._sceneNames.remove(scene.name);
-        scene.nameChanged.remove(this._sceneNameChanged, this);
+        scene.nameChanged.detachAll();
     }
 
     /**

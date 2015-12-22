@@ -207,7 +207,7 @@ export class ComponentMatchingFamily implements IFamily {
      * be reused.
      */
     private _releaseNodePoolCache() {
-        this._engine.updateComplete.remove(this._releaseNodePoolCache);
+        this._engine.updateComplete.detachAll();
         this._nodePool.releaseCache();
     }
 

@@ -6,6 +6,7 @@
     "removeComments": true,
     "noLib": false,
     "preserveConstEnums": true,
+    "moduleResolution": "node",
     "declaration": true,
     "suppressImplicitAnyIndexErrors": true,
     "outDir": "js"
