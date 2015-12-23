@@ -182,14 +182,14 @@ describe('Engine', () => {
     describe('- System', () => {
 
         it('should add a system correctly to the engine', () => {
-            var system:System = new System();
+            var system:System = new SystemMock();
             engine.addSystem(system, 0);
             expect(engine.systems.length).toEqual(1);
         });
 
         it('should remove a system correctly from the engine', () => {
-            var system:System = new System();
-            var system2:System = new System();
+            var system:System = new SystemMock();
+            var system2:System = new SystemMock();
             engine.addSystem(system, 0);
             engine.addSystem(system2, 1);
             engine.removeSystem(system);
@@ -197,8 +197,8 @@ describe('Engine', () => {
         });
 
         it('should remove all system from the engine', () => {
-            var system:System = new System();
-            var system2:System = new System();
+            var system:System = new SystemMock();
+            var system2:System = new SystemMock();
             engine.addSystem(system, 0);
             engine.addSystem(system2, 1);
             engine.removeAllSystems();

@@ -1,6 +1,6 @@
 import {System} from '../System';
 
-export class SystemMock extends System{
+export class SystemMock extends System {
 
     public removeFromEngineCalls = 0;
     public addToEngineCalls = 0;
