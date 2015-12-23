@@ -145,44 +145,20 @@ export class ComponentsFamily implements IFamily {
      */
     public addIfMatch(entity:Entity) {
         if (!this._entities.has(entity)) {
-            var componentClass;
-            if (
-                !this._components.forEach(function (componentClass, componentName) {
-                    if (!entity.has(componentClass)) {
-                        return 'return';
-                    }
-                })
-            ) {
-                return;
-            }
+            this._components.forEach((componentClass) => {
+                if (!entity.has(componentClass)) {
+                    return;
+                }
+            });
+
             var node = this._nodePool.get();
             node.entity = entity;
             this._components.forEach(function (componentClass, componentName) {
                 node[componentName] = entity.get(componentClass);
             });
             this._entities.add(entity, node);
-            entity.componentRemoved.add(this.componentRemovedFromEntity, this);
             this._nodes.add(node);
         }
-        /*if (!this._entities.getValue(entity))
-         {
-         var componentClass : any;
-         for (componentClass in this._components )
-         {
-         if ( !entity.has( componentClass ) )
-         {
-         return;
-         }
-         }
-         var node: silverback.core.Node = this._nodePool.get();
-         node.entity = entity;
-         for (componentClass in this._components )
-         {
-         node[this._components[componentClass]] = entity.get( componentClass );
-         }
-         this._entities.add(entity, node);
-         this._nodes.add( node );
-         }*/
     }
 
     /**

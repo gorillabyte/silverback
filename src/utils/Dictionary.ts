@@ -11,7 +11,8 @@ export class Dictionary {
     }
 
     public add(key, value) {
-        var keyIndex = this.getIndex(key);
+        let keyIndex = this.getIndex(key);
+
         if (keyIndex >= 0) {
             this._values[keyIndex] = value;
         } else {
@@ -20,8 +21,9 @@ export class Dictionary {
         }
     }
 
-    public remove(key): any {
-        var keyIndex = this.getIndex(key);
+    public remove(key):any {
+        let keyIndex = this.getIndex(key);
+
         if (keyIndex >= 0) {
             var removedValue = this._values[keyIndex];
             this._keys.splice(keyIndex, 1);
@@ -33,8 +35,9 @@ export class Dictionary {
     }
 
     public getValue(key) {
-        var value = null;
-        var keyIndex = this.getIndex(key);
+        let value = null;
+        let keyIndex = this.getIndex(key);
+
         if (keyIndex >= 0) {
             value = this._values[keyIndex];
         }
@@ -42,10 +45,10 @@ export class Dictionary {
     }
 
     public getIndex(testKey) {
-        var i = 0,
-            len = this._keys.length,
-            key;
-        for (; i < len; ++i) {
+        let len = this._keys.length;
+        let key;
+
+        for (let i = 0; i < len; ++i) {
             key = this._keys[i];
             if (key === testKey) {
                 return i;
@@ -55,10 +58,10 @@ export class Dictionary {
     }
 
     public has(testKey) {
-        var i = 0,
-            len = this._keys.length,
-            key;
-        for (i; i < len; ++i) {
+        let len = this._keys.length;
+        let key;
+
+        for (let i = 0; i < len; ++i) {
             key = this._keys[i];
             if (key === testKey) {
                 return true;
@@ -68,13 +71,12 @@ export class Dictionary {
     }
 
     public values(): any[] {
-        var i = 0,
-            len = this._keys.length,
-            key,
-            value;
-        var arValue: any[] = [];
+        let len = this._keys.length;
+        let key;
+        let value;
+        let arValue: any[] = [];
 
-        for (; i < len; ++i) {
+        for (let i = 0; i < len; ++i) {
             key = this._keys[i];
             value = this._values[i];
             arValue.push(value);
@@ -83,12 +85,11 @@ export class Dictionary {
     }
 
     public forEach(action) {
-        var i = 0,
-            len = this._keys.length,
-            key,
-            value;
+        let len = this._keys.length;
+        let key;
+        let value;
 
-        for (; i < len; ++i) {
+        for (let i = 0; i < len; ++i) {
             key = this._keys[i];
             value = this._values[i];
             var breakHere = action(key, value);
