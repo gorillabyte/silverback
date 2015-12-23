@@ -12,7 +12,7 @@ import {NodeList} from './NodeList';
 import {Dictionary} from '../utils/Dictionary';
 import {LinkedList} from '../utils/LinkedList';
 import {System} from './System';
-import {ComponentMatchingFamily} from './ComponentMatchingFamily';
+import {ComponentsFamily} from './ComponentsFamily';
 import {IFamily} from './IFamily';
 
 const MiniSignal = require('../../node_modules/mini-signals');
@@ -61,7 +61,7 @@ export class Engine {
         this._families = new Dictionary();
         this.updateComplete = new MiniSignal();
 
-        this.familyClass = ComponentMatchingFamily;
+        this.familyClass = ComponentsFamily;
     }
 
     /**

@@ -15,7 +15,7 @@ import {Entity} from './Entity';
 import {IFamily} from './IFamily';
 import {Dictionary} from '../utils/Dictionary';
 
-export class ComponentMatchingFamily implements IFamily {
+export class ComponentsFamily implements IFamily {
     private _nodes:NodeList;
     private _entities:Dictionary;
     private _nodeClass;
@@ -24,7 +24,7 @@ export class ComponentMatchingFamily implements IFamily {
     private _engine:Engine;
 
     /**
-     * The constructor. Creates a ComponentMatchingFamily to provide a NodeList for the
+     * The constructor. Creates a ComponentsFamily to provide a NodeList for the
      * given node class.
      *
      * @param nodeClass The type of node to create and manage a NodeList for.
