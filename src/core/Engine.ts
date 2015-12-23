@@ -29,7 +29,7 @@ export class Engine {
     private _entityList:EntityList;
     private _sceneList:LinkedList;
     private _sceneNames:Dictionary;
-    private _systemList:SystemList;
+    private _systemList:LinkedList;
     private _families:Dictionary;
 
     private _tempArray;
@@ -59,7 +59,7 @@ export class Engine {
         this._entityNames = new Dictionary();
         this._sceneNames = new Dictionary();
         this._sceneList = new LinkedList();
-        this._systemList = new SystemList();
+        this._systemList = new LinkedList();
         this._families = new Dictionary();
         this.updateComplete = new MiniSignal();
 
@@ -93,11 +93,12 @@ export class Engine {
      * Returns an array containing all the systems in the engine.
      */
     public get systems():Array<System> {
-        var tmpSystems = [];
+        return this._systemList.toArray();
+        /*var tmpSystems = [];
         for (var system = this._systemList.head; system; system = system.next) {
             tmpSystems.push(system);
         }
-        return tmpSystems;
+        return tmpSystems;*/
     }
 
     /**
@@ -306,9 +307,18 @@ export class Engine {
      * Remove a system from the engine.
      *
      * @param system The system to remove from the engine.
+     * @param index The system index in the system list.
      */
-    public removeSystem(system:System) {
-        this._systemList.remove(system);
+    public removeSystem(system:System, index?:number) {
+        if(typeof index === 'undefined') {
+            for (let i = 0; i < this._systemList.size(); i++) {
+                if(this._systemList.item(i) === system) {
+                    this._systemList.remove(i);
+                }
+            }
+        } else {
+            this._systemList.remove(index);
+        }
         system.removeFromEngine(this);
     }
 
@@ -316,8 +326,9 @@ export class Engine {
      * Remove all systems from the engine.
      */
     public removeAllSystems():void {
-        while(this._systemList.head) {
-            this.removeSystem(this._systemList.head);
+        let listSize = this._systemList.size() - 1;
+        for (let i = listSize; i >= 0; i--) {
+            this.removeSystem(this._systemList.item(i), i);
         }
     }
 
@@ -329,8 +340,9 @@ export class Engine {
      */
     public update(time:number):void {
         this.updating = true;
-        for (var system:System = this._systemList.head; system; system = system.next) {
-            system.update(time);
+        let systemSize = this._systemList.size();
+        for (let i = 0; i < systemSize; i++) {
+            this._systemList.item(i).update(time);
         }
         this.updating = false;
         this.updateComplete.dispatch();
