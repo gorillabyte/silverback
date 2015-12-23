@@ -1,6 +1,6 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
-import {EntityList} from './EntityList';
+import {LinkedList} from '../utils/LinkedList';
 import {Dictionary} from '../utils/Dictionary';
 const MiniSignal = require('../../node_modules/mini-signals');
 
@@ -32,13 +32,13 @@ export class Scene {
     public next:Scene;
 
     private _entities:Dictionary;
-    private _entityList:EntityList;
+    private _entityList:LinkedList;
 
     constructor(name:string = '') {
         this._entities = new Dictionary();
         this.entityAdded = new MiniSignal();
         this.entityRemoved = new MiniSignal();
-        this._entityList = new EntityList();
+        this._entityList = new LinkedList();
         this.nameChanged = new MiniSignal();
 
         if (name) {
@@ -115,9 +115,9 @@ export class Scene {
      */
     public getEntityWithName(entityName:any):any {
         //return this._entities.getValue(entityClass);
-        for (var entity:any = this._entityList.head; entity; entity = entity.next) {
-            if (entity.name === entityName) {
-                return entity;
+        for (let i = 0; i < this._entityList.size(); i++) {
+            if (this._entityList.item(i).name === entityName) {
+                return this._entityList.item(i);
             }
         }
     }
@@ -130,10 +130,10 @@ export class Scene {
      */
     public getEntityWithComponent(_component:any, _componentClass:any):any {
 
-        for (var entity:any = this._entityList.head; entity; entity = entity.next) {
-            if (entity.has(_componentClass)) {
-                if (entity.get(_componentClass).displayObject === _component) {
-                    return entity;
+        for (let i = 0; i < this._entityList.size(); i++) {
+            if (this._entityList.item(i).has(_componentClass)) {
+                if (this._entityList.item(i).get(_componentClass).displayObject === _component) {
+                    return this._entityList.item(i);
                 }
             }
         }

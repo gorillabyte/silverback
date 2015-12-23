@@ -6,7 +6,6 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
 import {Entity} from './Entity';
-import {EntityList} from './EntityList';
 import {Scene} from './Scene';
 import {NodeList} from './NodeList';
 import {Dictionary} from '../utils/Dictionary';
@@ -23,14 +22,13 @@ const MiniSignal = require('../../node_modules/mini-signals');
  */
 export class Engine {
 
-    private _entityNames:Dictionary;
-    private _entityList:EntityList;
-    private _sceneList:LinkedList;
-    private _sceneNames:Dictionary;
     private _systemList:LinkedList;
+    private _entityList:LinkedList;
+    private _sceneList:LinkedList;
+    private _entityNames:Dictionary;
+    private _sceneNames:Dictionary;
     private _families:Dictionary;
 
-    private _tempArray;
     /**
      * Indicates if the engine is currently in its update loop.
      */
@@ -53,11 +51,11 @@ export class Engine {
     public familyClass;
 
     constructor() {
-        this._entityList = new EntityList();
+        this._systemList = new LinkedList();
+        this._entityList = new LinkedList();
+        this._sceneList = new LinkedList();
         this._entityNames = new Dictionary();
         this._sceneNames = new Dictionary();
-        this._sceneList = new LinkedList();
-        this._systemList = new LinkedList();
         this._families = new Dictionary();
         this.updateComplete = new MiniSignal();
 
@@ -68,11 +66,7 @@ export class Engine {
      * Returns an array containing all the entities in the engine.
      */
     public get entities():Array<Entity> {
-        var tmpEntities = [];
-        for(var entity = this._entityList.head; entity; entity = entity.next) {
-            tmpEntities.push(entity);
-        }
-        return tmpEntities;
+        return this._entityList.toArray();
     }
 
     /**
@@ -80,11 +74,6 @@ export class Engine {
      */
     public get scenes():Array<Scene> {
         return this._sceneList.toArray();
-        /*var tmpScenes = [];
-        for(var scene = this._sceneList.head; scene; scene = scene.next) {
-            tmpScenes.push(scene);
-        }
-        return tmpScenes;*/
     }
 
     /**
@@ -92,11 +81,6 @@ export class Engine {
      */
     public get systems():Array<System> {
         return this._systemList.toArray();
-        /*var tmpSystems = [];
-        for (var system = this._systemList.head; system; system = system.next) {
-            tmpSystems.push(system);
-        }
-        return tmpSystems;*/
     }
 
     /**
@@ -124,8 +108,9 @@ export class Engine {
      * Remove an entity from the engine.
      *
      * @param entity The entity to remove.
+     * @param index The index of the entity list.
      */
-    public removeEntity(entity: Entity):void {
+    public removeEntity(entity: Entity, index?:number):void {
         /*entity.componentAdded.remove(this._componentAdded, this);
         entity.componentRemoved.remove(this._componentRemoved, this);
         entity.nameChanged.remove(this._entityNameChanged, this);*/
@@ -138,7 +123,7 @@ export class Engine {
             }
         );
         this._entityNames.remove(entity.name);
-        this._entityList.remove(entity);
+        this._entityList.remove(index);
     }
 
     /**
@@ -158,8 +143,9 @@ export class Engine {
      * Remove all entities from the engine.
      */
     public removeAllEntities():void {
-        while (this._entityList.head) {
-            this.removeEntity(this._entityList.head);
+        let listSize = this._entityList.size() - 1;
+        for (let i = listSize; i >= 0; i--) {
+            this.removeEntity(this._entityList.item(i), i);
         }
     }
 
@@ -247,8 +233,8 @@ export class Engine {
         }
         var family = new this.familyClass(nodeClass, this);
         this._families.add(nodeClass, family);
-        for (var entity:Entity = this._entityList.head; entity; entity = entity.next) {
-            family.newEntity(entity);
+        for (let i = 0; i < this._entityList.size(); i++) {
+            family.newEntity(this._entityList.item(i));
         }
         return family.nodeList;
     }
