@@ -12,10 +12,12 @@ import {SceneList} from './SceneList';
 import {SystemList} from './SystemList';
 import {NodeList} from './NodeList';
 import {Dictionary} from '../utils/Dictionary';
-const MiniSignal = require('../../node_modules/mini-signals');
+import {LinkedList} from '../utils/LinkedList';
 import {System} from './System';
 import {ComponentMatchingFamily} from './ComponentMatchingFamily';
 import {IFamily} from './IFamily';
+
+const MiniSignal = require('../../node_modules/mini-signals');
 
 /**
  * The Engine class is the central point for creating and managing your game state. Add
@@ -25,7 +27,7 @@ export class Engine {
 
     private _entityNames:Dictionary;
     private _entityList:EntityList;
-    private _sceneList:SceneList;
+    private _sceneList:LinkedList;
     private _sceneNames:Dictionary;
     private _systemList:SystemList;
     private _families:Dictionary;
@@ -56,7 +58,7 @@ export class Engine {
         this._entityList = new EntityList();
         this._entityNames = new Dictionary();
         this._sceneNames = new Dictionary();
-        this._sceneList = new SceneList();
+        this._sceneList = new LinkedList();
         this._systemList = new SystemList();
         this._families = new Dictionary();
         this.updateComplete = new MiniSignal();
@@ -79,11 +81,12 @@ export class Engine {
      * Returns an array containing all the scenes in the engine.
      */
     public get scenes():Array<Scene> {
-        var tmpScenes = [];
+        return this._sceneList.toArray();
+        /*var tmpScenes = [];
         for(var scene = this._sceneList.head; scene; scene = scene.next) {
             tmpScenes.push(scene);
         }
-        return tmpScenes;
+        return tmpScenes;*/
     }
 
     /**
@@ -177,9 +180,18 @@ export class Engine {
      * Remove an scene from the engine.
      *
      * @param scene The scene to remove.
+     * @param index The scene index in the sceneList
      */
-    public removeScene(scene:Scene):void {
-        this._sceneList.remove( scene );
+    public removeScene(scene:Scene, index?:number):void {
+        if(typeof index === 'undefined') {
+            for (let i = 0; i < this._sceneList.size(); i++) {
+                if(this._sceneList.item(i) === scene) {
+                    this._sceneList.remove(i);
+                }
+            }
+        } else {
+            this._sceneList.remove(index);
+        }
         this._sceneNames.remove(scene.name);
         scene.nameChanged.detachAll();
     }
@@ -188,8 +200,9 @@ export class Engine {
      * Remove all scenes from the engine.
      */
     public removeAllScenes():void {
-        while (this._sceneList.head) {
-            this.removeScene(this._sceneList.head);
+        let listSize = this._sceneList.size() - 1;
+        for (let i = listSize; i >= 0; i--) {
+            this.removeScene(this._sceneList.item(i), i);
         }
     }
 
