@@ -8,6 +8,9 @@ import {System} from '../System';
 import {SystemMock} from './SystemMock';
 import {Scene} from '../Scene';
 import {SceneMock} from './SceneMock';
+import chai = require('chai');
+
+var expect = chai.expect;
 
 describe('Engine', () => {
     var engine:Engine;
@@ -28,8 +31,9 @@ describe('Engine', () => {
             engine.addEntity(entity1);
             var entity2:Entity = new Entity();
             engine.addEntity(entity2);
-            expect(engine.entities.length).toBe(2);
-            expect(engine.entities).toContain(entity1, entity2);
+            expect(engine.entities.length).to.deep.equal(2);
+            expect(engine.entities).to.include(entity1);
+            expect(engine.entities).to.include(entity2);
         });
 
         it('should return the correct entity by name', () => {
@@ -39,7 +43,7 @@ describe('Engine', () => {
             var entity2:Entity = new Entity();
             entity2.name = 'myEntity';
             engine.addEntity(entity2);
-            expect(engine.getEntityByName('myEntity')).toEqual(entity2);
+            expect(engine.getEntityByName('myEntity')).to.deep.equal(entity2);
         });
 
         it('should return null, if getEntitiyByName found not result', () => {
@@ -49,7 +53,7 @@ describe('Engine', () => {
             var entity2:Entity = new Entity();
             entity2.name = 'myEntity';
             engine.addEntity(entity2);
-            expect(engine.getEntityByName('wrongName')).toBeNull();
+            expect(engine.getEntityByName('wrongName')).to.be.null;
         });
 
         it('should add an entity and checks with all families', () => {
@@ -57,8 +61,8 @@ describe('Engine', () => {
             engine.getNodeList(NodeMock2);
             var entity:Entity = new Entity();
             engine.addEntity(entity);
-            expect(FamilyMock.instances[0].newEntityCalls).toEqual(1);
-            expect(FamilyMock.instances[1].newEntityCalls).toEqual(1);
+            expect(FamilyMock.instances[0].newEntityCalls).to.deep.equal(1);
+            expect(FamilyMock.instances[1].newEntityCalls).to.deep.equal(1);
         });
 
         it('should remove an entity and checks with all families', () => {
@@ -67,8 +71,8 @@ describe('Engine', () => {
             var entity:Entity = new Entity();
             engine.addEntity(entity);
             engine.removeEntity(entity);
-            expect(FamilyMock.instances[0].removeEntityCalls).toEqual(1);
-            expect(FamilyMock.instances[1].removeEntityCalls).toEqual(1);
+            expect(FamilyMock.instances[0].removeEntityCalls).to.deep.equal(1);
+            expect(FamilyMock.instances[1].removeEntityCalls).to.deep.equal(1);
         });
 
         it('should remove all entities with all families', () => {
@@ -79,14 +83,14 @@ describe('Engine', () => {
             engine.addEntity(entity);
             engine.addEntity(entity2);
             engine.removeAllEntities();
-            expect(FamilyMock.instances[0].removeEntityCalls).toEqual(2);
-            expect(FamilyMock.instances[1].removeEntityCalls).toEqual(2);
+            expect(FamilyMock.instances[0].removeEntityCalls).to.deep.equal(2);
+            expect(FamilyMock.instances[1].removeEntityCalls).to.deep.equal(2);
         });
 
         it('should select a NodeList, if an appropriate NodeList was already created', () => {
             var nodeList = engine.getNodeList(NodeMock);
             var nodeList2 = engine.getNodeList(NodeMock);
-            expect(nodeList).toEqual(nodeList2);
+            expect(nodeList).to.deep.equal(nodeList2);
         });
 
         it('should add a component and checks with all families', () => {
@@ -95,8 +99,8 @@ describe('Engine', () => {
             var entity:Entity = new Entity();
             engine.addEntity(entity);
             entity.add(new Vec2D(0, 0));
-            expect(FamilyMock.instances[0].componentAddedCalls).toEqual(1);
-            expect(FamilyMock.instances[1].componentAddedCalls).toEqual(1);
+            expect(FamilyMock.instances[0].componentAddedCalls).to.deep.equal(1);
+            expect(FamilyMock.instances[1].componentAddedCalls).to.deep.equal(1);
         });
 
         it('should remove a component and checks with all families', () => {
@@ -106,41 +110,40 @@ describe('Engine', () => {
             engine.addEntity(entity);
             entity.add(new Vec2D(0, 0));
             entity.remove(Vec2D);
-            expect(FamilyMock.instances[0].componentRemovedCalls).toEqual(1);
-            expect(FamilyMock.instances[1].componentRemovedCalls).toEqual(1);
+            expect(FamilyMock.instances[0].componentRemovedCalls).to.deep.equal(1);
+            expect(FamilyMock.instances[1].componentRemovedCalls).to.deep.equal(1);
         });
 
         it('should get the nodeList and creates the family', () => {
             engine.getNodeList(NodeMock);
-            expect(FamilyMock.instances.length).toEqual(1);
+            expect(FamilyMock.instances.length).to.deep.equal(1);
         });
 
         it('should get the nodeList and checks all entities', () => {
             engine.addEntity(new Entity());
             engine.addEntity(new Entity());
             engine.getNodeList(NodeMock);
-            expect(FamilyMock.instances[0].newEntityCalls).toEqual(2);
+            expect(FamilyMock.instances[0].newEntityCalls).to.deep.equal(2);
         });
 
         it('should release the nodeList and calls cleanUp', () => {
             engine.getNodeList(NodeMock);
             engine.releaseNodeList(NodeMock);
-            expect(FamilyMock.instances[0].cleanUpCalls).toEqual(1);
+            expect(FamilyMock.instances[0].cleanUpCalls).to.deep.equal(1);
         });
 
         it('should throw an error, if the releaseNodeList fails', () => {
             engine.getNodeList(NodeMock);
             expect(() => {
                 engine.releaseNodeList(NodeMock2);
-            }).toThrow(
-                new Error('The given nodeClass was not found and can not be released.'));
+            }).to.throw('The given nodeClass was not found and can not be released.');
         });
 
         it('should obtain an entity by name', () => {
             var entity:Entity = new Entity('anything');
             engine.addEntity(entity);
             var other:Entity = engine.getEntityByName('anything');
-            expect(other).toEqual(entity);
+            expect(other).to.deep.equal(entity);
         });
 
         it('should obtain an entity by name after renaming', () => {
@@ -148,7 +151,7 @@ describe('Engine', () => {
             engine.addEntity(entity);
             entity.name = 'otherName';
             var other:Entity = engine.getEntityByName('otherName');
-            expect(other).toEqual(entity);
+            expect(other).to.deep.equal(entity);
         });
 
         it('should return null, if the entity cannot be obtained by old name after renaming', () => {
@@ -156,7 +159,7 @@ describe('Engine', () => {
             engine.addEntity(entity);
             entity.name = 'otherName';
             var other:Entity = engine.getEntityByName('anything');
-            expect(other).toBeNull();
+            expect(other).to.be.null;
         });
 
         it('should return an error, if a new entity use a name which is already in use', () => {
@@ -165,8 +168,7 @@ describe('Engine', () => {
             engine.addEntity(entity);
             expect(() => {
                 engine.addEntity(entity2);
-            }).toThrow(
-                new Error('The entity name anything is already in use by another entity.'));
+            }).to.throw('The entity name anything is already in use by another entity.');
         });
 
         it('should return an error, if the entity name changes and it was not found in the entity list', () => {
@@ -174,8 +176,7 @@ describe('Engine', () => {
             engine.addEntity(entity);
             expect(() => {
                 entity.nameChanged.dispatch(this, 'noResultFound');
-            }).toThrow(
-                new Error('The given name was not found in the entity list.'));
+            }).to.throw('The given name was not found in the entity list.');
         });
     });
 
@@ -184,7 +185,7 @@ describe('Engine', () => {
         it('should add a system correctly to the engine', () => {
             var system:System = new SystemMock();
             engine.addSystem(system, 0);
-            expect(engine.systems.length).toEqual(1);
+            expect(engine.systems.length).to.deep.equal(1);
         });
 
         it('should remove a system correctly from the engine', () => {
@@ -193,7 +194,7 @@ describe('Engine', () => {
             engine.addSystem(system, 0);
             engine.addSystem(system2, 1);
             engine.removeSystem(system);
-            expect(engine.systems.length).toEqual(1);
+            expect(engine.systems.length).to.deep.equal(1);
         });
 
         it('should remove all system from the engine', () => {
@@ -202,20 +203,20 @@ describe('Engine', () => {
             engine.addSystem(system, 0);
             engine.addSystem(system2, 1);
             engine.removeAllSystems();
-            expect(engine.systems.length).toEqual(0);
+            expect(engine.systems.length).to.deep.equal(0);
         });
 
         it('should get a system by its type from the engine', () => {
             var system:SystemMock = new SystemMock();
             engine.addSystem(system, 1);
-            expect(engine.getSystem(SystemMock)).toEqual(system);
+            expect(engine.getSystem(SystemMock)).to.deep.equal(system);
         });
 
         it('should call update on all systems while the update loop', () => {
             var system:SystemMock = new SystemMock();
             engine.addSystem(system, 0);
             engine.update(10);
-            expect(system.updateCalls).toEqual(1);
+            expect(system.updateCalls).to.deep.equal(1);
         });
     });
 
@@ -223,7 +224,7 @@ describe('Engine', () => {
         it('should add a scene correctly to the engine', () => {
             var scene:Scene = new Scene();
             engine.addScene(scene);
-            expect(engine.scenes.length).toEqual(1);
+            expect(engine.scenes.length).to.deep.equal(1);
         });
 
         it('should remove a scene correctly to the engine', () => {
@@ -232,7 +233,7 @@ describe('Engine', () => {
             engine.addScene(scene);
             engine.addScene(scene2);
             engine.removeScene(scene2);
-            expect(engine.scenes.length).toEqual(1);
+            expect(engine.scenes.length).to.deep.equal(1);
         });
 
         it('should remove all scenes from the engine', () => {
@@ -241,13 +242,13 @@ describe('Engine', () => {
             engine.addScene(scene);
             engine.addScene(scene2);
             engine.removeAllScenes();
-            expect(engine.scenes.length).toEqual(0);
+            expect(engine.scenes.length).to.deep.equal(0);
         });
 
         it('should get a scene by its type from the engine', () => {
             var scene:Scene = new Scene();
             engine.addScene(scene);
-            expect(engine.getScene(Scene)).toEqual(scene);
+            expect(engine.getScene(Scene)).to.deep.equal(scene);
         });
 
         it('should return the correct scene by name', () => {
@@ -257,14 +258,14 @@ describe('Engine', () => {
             var scene2:Scene = new Scene();
             scene2.name = 'otherScene';
             engine.addScene(scene2);
-            expect(engine.getSceneByName('otherScene')).toEqual(scene2);
+            expect(engine.getSceneByName('otherScene')).to.deep.equal(scene2);
         });
 
         it('should return null, if getSceneByName found not result', () => {
             var scene:Scene = new Scene();
             scene.name = 'someScene';
             engine.addScene(scene);
-            expect(engine.getSceneByName('wrongName')).toBeNull();
+            expect(engine.getSceneByName('wrongName')).to.be.null;
         });
 
         it('should obtain an scene by name after renaming', () => {
@@ -273,7 +274,7 @@ describe('Engine', () => {
             engine.addScene(scene);
             scene.name = 'newNameScene';
             var other:Scene = engine.getSceneByName('newNameScene');
-            expect(other).toEqual(scene);
+            expect(other).to.deep.equal(scene);
         });
 
         it('should return an error, if the scene name changes and it was not found in the scene list', () => {
@@ -282,8 +283,7 @@ describe('Engine', () => {
             engine.addScene(scene);
             expect(() => {
                 scene.nameChanged.dispatch(this, 'noResultFound');
-            }).toThrow(
-                new Error('The given name was not found in the scene list.'));
+            }).to.throw('The given name was not found in the scene list.');
         });
     });
 
@@ -292,7 +292,7 @@ describe('Engine', () => {
             var updateCompleteCall = 0;
             engine.updateComplete.add(() => { updateCompleteCall++; }, this);
             engine.update(10);
-            expect(updateCompleteCall).toEqual(1);
+            expect(updateCompleteCall).to.deep.equal(1);
         });
     });
 });
