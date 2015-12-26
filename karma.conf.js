@@ -1,53 +1,56 @@
 module.exports = function(config) {
     config.set({
 
-        // testing framework to use
-        frameworks: ['browserify', 'jasmine'],
-
-        // test results reporter to use
-        reporters: ['spec', 'coverage'],
-
-        // start these browsers
-        // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['PhantomJS'],
-
-        // list of files / patterns to load in the browser
+        basePath: '',
+        frameworks: ['mocha', 'chai'],
         files: [
-            'src/**/*.ts'
+            'src/**/*.spec.ts'
         ],
-
         exclude: [
             'src/**/*.bench.ts'
         ],
-
-        plugins: [
-            'karma-jasmine',
-            'karma-coverage',
-            'karma-browserify',
-            'karma-phantomjs-launcher',
-            'karma-spec-reporter'
-        ],
-
-        // level of logging: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
-        logLevel: config.LOG_INFO,
-
         preprocessors: {
-            'src/**/*.ts': ['browserify' ,'coverage'],
-            'src/**/*.spec.ts': ['browserify']
+            'src/**/*.ts': ['webpack', 'sourcemap', 'coverage'],
+            'src/**/*.spec.ts': ['webpack', 'sourcemap']
         },
-
-        browserify: {
-            debug: true,
-            transform: [
-                require('browserify-istanbul')
-            ],
-            extensions: ['.js', '.ts'],
-            plugin: [
-                ['tsify', {target: 'es5'}]
-            ]
+        reporters: ['mocha', 'coverage'],
+        port: 9876,
+        logLevel: config.LOG_INFO,
+        autoWatch: true,
+        browsers: ['PhantomJS'],
+        concurrency: Infinity,
+        plugins: [ 'karma-*' ],
+        client: {
+            mocha: { ui: 'bdd' }
         },
+        webpack: {
+            resolve: {
+                cache: false,
+                root: __dirname,
+                extensions: ['','.ts','.js']
+            },
+            devtool: 'source-map',
+            module: {
+                loaders: [
+                    {
+                        test: /\.ts$/,
+                        loader: 'ts-loader',
+                        exclude: [ /node_modules/ ]
+                    }
+                ],
+                postLoaders: [
+                    {
+                        test: /\.(js|ts)$/,
+                        loader: 'istanbul-instrumenter-loader',
+                        exclude: [ /(test|node_modules)\// ]
+                    }
+                ]
+            },
+            stats: { colors: true, reasons: true },
+            debug: false
+        },
+        webpackMiddleware: { noInfo: true },
 
-        // create coverage report
         coverageReporter: {
             dir: './coverage/',
             reporters:[
@@ -58,7 +61,6 @@ module.exports = function(config) {
             ]
         },
 
-        // enable or disable colors in the output (reporters and logs).
         colors: true
     });
 };
