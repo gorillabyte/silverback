@@ -100,8 +100,8 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="engine.html#_entitynames" class="tsd-kind-icon">_entity<wbr>Names</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="engine.html#_families" class="tsd-kind-icon">_families</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="engine.html#_scenelist" class="tsd-kind-icon">_scene<wbr>List</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="engine.html#_scenenames" class="tsd-kind-icon">_scene<wbr>Names</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="engine.html#_systemlist" class="tsd-kind-icon">_system<wbr>List</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="engine.html#_temparray" class="tsd-kind-icon">_temp<wbr>Array</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="engine.html#familyclass" class="tsd-kind-icon">family<wbr>Class</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="engine.html#updatecomplete" class="tsd-kind-icon">update<wbr>Complete</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="engine.html#updating" class="tsd-kind-icon">updating</a></li>
@@ -120,10 +120,11 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="engine.html#_componentadded" class="tsd-kind-icon">_component<wbr>Added</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="engine.html#_componentremoved" class="tsd-kind-icon">_component<wbr>Removed</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="engine.html#_entitynamechanged" class="tsd-kind-icon">_entity<wbr>Name<wbr>Changed</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="engine.html#_scenenamechanged" class="tsd-kind-icon">_scene<wbr>Name<wbr>Changed</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine.html#addentity" class="tsd-kind-icon">add<wbr>Entity</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine.html#addscene" class="tsd-kind-icon">add<wbr>Scene</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine.html#addsystem" class="tsd-kind-icon">add<wbr>System</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="engine.html#entitynamechanged" class="tsd-kind-icon">entity<wbr>Name<wbr>Changed</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine.html#getentitybyname" class="tsd-kind-icon">get<wbr>Entity<wbr>ByName</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine.html#getnodelist" class="tsd-kind-icon">get<wbr>Node<wbr>List</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine.html#getscene" class="tsd-kind-icon">get<wbr>Scene</a></li>
@@ -154,7 +155,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Engine.ts:52</li>
+									<li>Defined in core/Engine.ts:51</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="engine.html" class="tsd-signature-type">Engine</a></h4>
@@ -167,10 +168,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="_entitylist" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _entity<wbr>List</h3>
-					<div class="tsd-signature tsd-kind-icon">_entity<wbr>List<span class="tsd-signature-symbol">:</span> <a href="entitylist.html" class="tsd-signature-type">EntityList</a></div>
+					<div class="tsd-signature tsd-kind-icon">_entity<wbr>List<span class="tsd-signature-symbol">:</span> <a href="linkedlist.html" class="tsd-signature-type">LinkedList</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in core/Engine.ts:27</li>
+							<li>Defined in core/Engine.ts:26</li>
 						</ul>
 					</aside>
 				</section>
@@ -180,7 +181,7 @@
 					<div class="tsd-signature tsd-kind-icon">_entity<wbr>Names<span class="tsd-signature-symbol">:</span> <a href="dictionary.html" class="tsd-signature-type">Dictionary</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in core/Engine.ts:26</li>
+							<li>Defined in core/Engine.ts:28</li>
 						</ul>
 					</aside>
 				</section>
@@ -197,17 +198,17 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="_scenelist" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _scene<wbr>List</h3>
-					<div class="tsd-signature tsd-kind-icon">_scene<wbr>List<span class="tsd-signature-symbol">:</span> <a href="scenelist.html" class="tsd-signature-type">SceneList</a></div>
+					<div class="tsd-signature tsd-kind-icon">_scene<wbr>List<span class="tsd-signature-symbol">:</span> <a href="linkedlist.html" class="tsd-signature-type">LinkedList</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in core/Engine.ts:28</li>
+							<li>Defined in core/Engine.ts:27</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="_systemlist" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _system<wbr>List</h3>
-					<div class="tsd-signature tsd-kind-icon">_system<wbr>List<span class="tsd-signature-symbol">:</span> <a href="systemlist.html" class="tsd-signature-type">SystemList</a></div>
+					<a name="_scenenames" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _scene<wbr>Names</h3>
+					<div class="tsd-signature tsd-kind-icon">_scene<wbr>Names<span class="tsd-signature-symbol">:</span> <a href="dictionary.html" class="tsd-signature-type">Dictionary</a></div>
 					<aside class="tsd-sources">
 						<ul>
 							<li>Defined in core/Engine.ts:29</li>
@@ -215,12 +216,12 @@
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="_temparray" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _temp<wbr>Array</h3>
-					<div class="tsd-signature tsd-kind-icon">_temp<wbr>Array<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<a name="_systemlist" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _system<wbr>List</h3>
+					<div class="tsd-signature tsd-kind-icon">_system<wbr>List<span class="tsd-signature-symbol">:</span> <a href="linkedlist.html" class="tsd-signature-type">LinkedList</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in core/Engine.ts:32</li>
+							<li>Defined in core/Engine.ts:25</li>
 						</ul>
 					</aside>
 				</section>
@@ -230,7 +231,7 @@
 					<div class="tsd-signature tsd-kind-icon">family<wbr>Class<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in core/Engine.ts:52</li>
+							<li>Defined in core/Engine.ts:51</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -245,10 +246,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="updatecomplete" class="tsd-anchor"></a>
 					<h3>update<wbr>Complete</h3>
-					<div class="tsd-signature tsd-kind-icon">update<wbr>Complete<span class="tsd-signature-symbol">:</span> <a href="signal.html" class="tsd-signature-type">Signal</a></div>
+					<div class="tsd-signature tsd-kind-icon">update<wbr>Complete<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MiniSignal</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in core/Engine.ts:43</li>
+							<li>Defined in core/Engine.ts:42</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -265,7 +266,7 @@
 					<div class="tsd-signature tsd-kind-icon">updating<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in core/Engine.ts:36</li>
+							<li>Defined in core/Engine.ts:35</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -309,7 +310,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Engine.ts:79</li>
+									<li>Defined in core/Engine.ts:75</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -331,7 +332,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Engine.ts:90</li>
+									<li>Defined in core/Engine.ts:82</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -356,7 +357,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Engine.ts:324</li>
+									<li>Defined in core/Engine.ts:362</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -396,7 +397,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Engine.ts:334</li>
+									<li>Defined in core/Engine.ts:372</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -426,6 +427,62 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="_entitynamechanged" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _entity<wbr>Name<wbr>Changed</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">_entity<wbr>Name<wbr>Changed<span class="tsd-signature-symbol">(</span>entity<span class="tsd-signature-symbol">: </span><a href="entity.html" class="tsd-signature-type">Entity</a>, oldName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in core/Engine.ts:338</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>entity: <a href="entity.html" class="tsd-signature-type">Entity</a></h5>
+								</li>
+								<li>
+									<h5>oldName: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="_scenenamechanged" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _scene<wbr>Name<wbr>Changed</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">_scene<wbr>Name<wbr>Changed<span class="tsd-signature-symbol">(</span>scene<span class="tsd-signature-symbol">: </span><a href="scene.html" class="tsd-signature-type">Scene</a>, oldName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in core/Engine.ts:350</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>scene: <a href="scene.html" class="tsd-signature-type">Scene</a></h5>
+								</li>
+								<li>
+									<h5>oldName: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="addentity" class="tsd-anchor"></a>
 					<h3>add<wbr>Entity</h3>
@@ -436,7 +493,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Engine.ts:103</li>
+									<li>Defined in core/Engine.ts:91</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -467,7 +524,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Engine.ts:171</li>
+									<li>Defined in core/Engine.ts:157</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -480,7 +537,7 @@
 								<li>
 									<h5>scene: <a href="scene.html" class="tsd-signature-type">Scene</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The entity to add.</p>
+										<p>The scene to add.</p>
 									</div>
 								</li>
 							</ul>
@@ -498,7 +555,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Engine.ts:270</li>
+									<li>Defined in core/Engine.ts:273</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -530,32 +587,6 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
-					<a name="entitynamechanged" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> entity<wbr>Name<wbr>Changed</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">entity<wbr>Name<wbr>Changed<span class="tsd-signature-symbol">(</span>entity<span class="tsd-signature-symbol">: </span><a href="entity.html" class="tsd-signature-type">Entity</a>, oldName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in core/Engine.ts:137</li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>entity: <a href="entity.html" class="tsd-signature-type">Entity</a></h5>
-								</li>
-								<li>
-									<h5>oldName: <span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="getentitybyname" class="tsd-anchor"></a>
 					<h3>get<wbr>Entity<wbr>ByName</h3>
@@ -566,7 +597,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Engine.ts:150</li>
+									<li>Defined in core/Engine.ts:135</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -598,7 +629,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Engine.ts:229</li>
+									<li>Defined in core/Engine.ts:230</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -634,16 +665,26 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Engine.ts:213</li>
+									<li>Defined in core/Engine.ts:214</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the scene instance of a particular type from within the engine.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>type: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The type of scene</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="scene.html" class="tsd-signature-type">Scene</a></h4>
+							<p>The instance of the scene type that is in the engine, or
+							null if no scene of this type are in the engine.</p>
 						</li>
 					</ul>
 				</section>
@@ -657,7 +698,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Engine.ts:205</li>
+									<li>Defined in core/Engine.ts:200</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -689,7 +730,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Engine.ts:283</li>
+									<li>Defined in core/Engine.ts:286</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -722,7 +763,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Engine.ts:251</li>
+									<li>Defined in core/Engine.ts:252</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -757,7 +798,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Engine.ts:160</li>
+									<li>Defined in core/Engine.ts:145</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -779,12 +820,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Engine.ts:192</li>
+									<li>Defined in core/Engine.ts:187</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Remove all entities from the engine.</p>
+									<p>Remove all scenes from the engine.</p>
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -801,7 +842,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Engine.ts:300</li>
+									<li>Defined in core/Engine.ts:312</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -817,13 +858,13 @@
 					<a name="removeentity" class="tsd-anchor"></a>
 					<h3>remove<wbr>Entity</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">remove<wbr>Entity<span class="tsd-signature-symbol">(</span>entity<span class="tsd-signature-symbol">: </span><a href="entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Entity<span class="tsd-signature-symbol">(</span>entity<span class="tsd-signature-symbol">: </span><a href="entity.html" class="tsd-signature-type">Entity</a>, index<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Engine.ts:124</li>
+									<li>Defined in core/Engine.ts:113</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -839,6 +880,12 @@
 										<p>The entity to remove.</p>
 									</div>
 								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> index: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The index of the entity list.</p>
+									</div>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
@@ -848,18 +895,18 @@
 					<a name="removescene" class="tsd-anchor"></a>
 					<h3>remove<wbr>Scene</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">remove<wbr>Scene<span class="tsd-signature-symbol">(</span>scene<span class="tsd-signature-symbol">: </span><a href="scene.html" class="tsd-signature-type">Scene</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Scene<span class="tsd-signature-symbol">(</span>scene<span class="tsd-signature-symbol">: </span><a href="scene.html" class="tsd-signature-type">Scene</a>, index<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Engine.ts:182</li>
+									<li>Defined in core/Engine.ts:170</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Remove an entity from the engine.</p>
+									<p>Remove an scene from the engine.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -868,6 +915,12 @@
 									<h5>scene: <a href="scene.html" class="tsd-signature-type">Scene</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>The scene to remove.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> index: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The scene index in the sceneList</p>
 									</div>
 								</li>
 							</ul>
@@ -879,13 +932,13 @@
 					<a name="removesystem" class="tsd-anchor"></a>
 					<h3>remove<wbr>System</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">remove<wbr>System<span class="tsd-signature-symbol">(</span>system<span class="tsd-signature-symbol">: </span><a href="system.html" class="tsd-signature-type">System</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>System<span class="tsd-signature-symbol">(</span>system<span class="tsd-signature-symbol">: </span><a href="system.html" class="tsd-signature-type">System</a>, index<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Engine.ts:292</li>
+									<li>Defined in core/Engine.ts:296</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -899,6 +952,12 @@
 									<h5>system: <a href="system.html" class="tsd-signature-type">System</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>The system to remove from the engine.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> index: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The system index in the system list.</p>
 									</div>
 								</li>
 							</ul>
@@ -916,7 +975,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Engine.ts:312</li>
+									<li>Defined in core/Engine.ts:325</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -953,7 +1012,7 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-class">
-						<a href="componentmatchingfamily.html" class="tsd-kind-icon">Component<wbr>Matching<wbr>Family</a>
+						<a href="componentsfamily.html" class="tsd-kind-icon">Components<wbr>Family</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="dictionary.html" class="tsd-kind-icon">Dictionary</a>
@@ -979,10 +1038,10 @@
 								<a href="engine.html#_scenelist" class="tsd-kind-icon">_scene<wbr>List</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="engine.html#_systemlist" class="tsd-kind-icon">_system<wbr>List</a>
+								<a href="engine.html#_scenenames" class="tsd-kind-icon">_scene<wbr>Names</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="engine.html#_temparray" class="tsd-kind-icon">_temp<wbr>Array</a>
+								<a href="engine.html#_systemlist" class="tsd-kind-icon">_system<wbr>List</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="engine.html#familyclass" class="tsd-kind-icon">family<wbr>Class</a>
@@ -1008,6 +1067,12 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="engine.html#_componentremoved" class="tsd-kind-icon">_component<wbr>Removed</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="engine.html#_entitynamechanged" class="tsd-kind-icon">_entity<wbr>Name<wbr>Changed</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="engine.html#_scenenamechanged" class="tsd-kind-icon">_scene<wbr>Name<wbr>Changed</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="engine.html#addentity" class="tsd-kind-icon">add<wbr>Entity</a>
 							</li>
@@ -1016,9 +1081,6 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="engine.html#addsystem" class="tsd-kind-icon">add<wbr>System</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
-								<a href="engine.html#entitynamechanged" class="tsd-kind-icon">entity<wbr>Name<wbr>Changed</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="engine.html#getentitybyname" class="tsd-kind-icon">get<wbr>Entity<wbr>ByName</a>
@@ -1067,10 +1129,7 @@
 						<a href="entity.html" class="tsd-kind-icon">Entity</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="entitylist.html" class="tsd-kind-icon">Entity<wbr>List</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="familymock.html" class="tsd-kind-icon">Family<wbr>Mock</a>
+						<a href="linkedlist.html" class="tsd-kind-icon">Linked<wbr>List</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="node.html" class="tsd-kind-icon">Node</a>
@@ -1079,37 +1138,19 @@
 						<a href="nodelist.html" class="tsd-kind-icon">Node<wbr>List</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="nodemock.html" class="tsd-kind-icon">Node<wbr>Mock</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="nodemock2.html" class="tsd-kind-icon">Node<wbr>Mock2</a>
-					</li>
-					<li class=" tsd-kind-class">
 						<a href="nodepool.html" class="tsd-kind-icon">Node<wbr>Pool</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="scene.html" class="tsd-kind-icon">Scene</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="scenelist.html" class="tsd-kind-icon">Scene<wbr>List</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="signal.html" class="tsd-kind-icon">Signal</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="signalbinding.html" class="tsd-kind-icon">Signal<wbr>Binding</a>
-					</li>
-					<li class=" tsd-kind-class">
 						<a href="system.html" class="tsd-kind-icon">System</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="systemlist.html" class="tsd-kind-icon">System<wbr>List</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="vec2d.html" class="tsd-kind-icon">Vec2D</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/ifamily.html" class="tsd-kind-icon">IFamily</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="../globals.html#minisignal" class="tsd-kind-icon">Mini<wbr>Signal</a>
 					</li>
 				</ul>
 			</nav>

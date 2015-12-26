@@ -93,9 +93,16 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="scene.html#_name" class="tsd-kind-icon">_name</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="scene.html#entityadded" class="tsd-kind-icon">entity<wbr>Added</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="scene.html#entityremoved" class="tsd-kind-icon">entity<wbr>Removed</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="scene.html#namechanged" class="tsd-kind-icon">name<wbr>Changed</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="scene.html#next" class="tsd-kind-icon">next</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="scene.html#previous" class="tsd-kind-icon">previous</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-static"><a href="scene.html#namecount" class="tsd-kind-icon">name<wbr>Count</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Accessors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="scene.html#name" class="tsd-kind-icon">name</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -125,7 +132,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Scene.ts:27</li>
+									<li>Defined in core/Scene.ts:35</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -147,17 +154,17 @@
 					<div class="tsd-signature tsd-kind-icon">_entities<span class="tsd-signature-symbol">:</span> <a href="dictionary.html" class="tsd-signature-type">Dictionary</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in core/Scene.ts:26</li>
+							<li>Defined in core/Scene.ts:34</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="_entitylist" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _entity<wbr>List</h3>
-					<div class="tsd-signature tsd-kind-icon">_entity<wbr>List<span class="tsd-signature-symbol">:</span> <a href="entitylist.html" class="tsd-signature-type">EntityList</a></div>
+					<div class="tsd-signature tsd-kind-icon">_entity<wbr>List<span class="tsd-signature-symbol">:</span> <a href="linkedlist.html" class="tsd-signature-type">LinkedList</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in core/Scene.ts:27</li>
+							<li>Defined in core/Scene.ts:35</li>
 						</ul>
 					</aside>
 				</section>
@@ -172,37 +179,53 @@
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Optional, give the entity a name. This can help with debugging and with serialising the entity.</p>
+							<p>Optional, give the scene a name. This can help with debugging and with serialising the scenes.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="entityadded" class="tsd-anchor"></a>
 					<h3>entity<wbr>Added</h3>
-					<div class="tsd-signature tsd-kind-icon">entity<wbr>Added<span class="tsd-signature-symbol">:</span> <a href="signal.html" class="tsd-signature-type">Signal</a></div>
+					<div class="tsd-signature tsd-kind-icon">entity<wbr>Added<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in core/Scene.ts:17</li>
+							<li>Defined in core/Scene.ts:18</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>This signal is dispatched when a entity is added to the entity.</p>
+							<p>This signal is dispatched when a entity is added to the scene.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="entityremoved" class="tsd-anchor"></a>
 					<h3>entity<wbr>Removed</h3>
-					<div class="tsd-signature tsd-kind-icon">entity<wbr>Removed<span class="tsd-signature-symbol">:</span> <a href="signal.html" class="tsd-signature-type">Signal</a></div>
+					<div class="tsd-signature tsd-kind-icon">entity<wbr>Removed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in core/Scene.ts:21</li>
+							<li>Defined in core/Scene.ts:23</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>This signal is dispatched when a entity is removed from the entity.</p>
+							<p>This signal is dispatched when a entity is removed from the scene.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="namechanged" class="tsd-anchor"></a>
+					<h3>name<wbr>Changed</h3>
+					<div class="tsd-signature tsd-kind-icon">name<wbr>Changed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in core/Scene.ts:29</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Dispatched when the name of the scene changes.
+							Used internally by the engine to track entities based on their names.</p>
 						</div>
 					</div>
 				</section>
@@ -212,7 +235,7 @@
 					<div class="tsd-signature tsd-kind-icon">next<span class="tsd-signature-symbol">:</span> <a href="scene.html" class="tsd-signature-type">Scene</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in core/Scene.ts:24</li>
+							<li>Defined in core/Scene.ts:32</li>
 						</ul>
 					</aside>
 				</section>
@@ -222,7 +245,7 @@
 					<div class="tsd-signature tsd-kind-icon">previous<span class="tsd-signature-symbol">:</span> <a href="scene.html" class="tsd-signature-type">Scene</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in core/Scene.ts:23</li>
+							<li>Defined in core/Scene.ts:31</li>
 						</ul>
 					</aside>
 				</section>
@@ -238,6 +261,53 @@
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
+					<a name="name" class="tsd-anchor"></a>
+					<h3>name</h3>
+					<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> name<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> name<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in core/Scene.ts:55</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>All scenes have a name. If no name is set, a default name is used. Names are used to
+									fetch specific scenes from the engine, and can also help to identify an entity when debugging.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in core/Scene.ts:58</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>All scenes have a name. If no name is set, a default name is used. Names are used to
+									fetch specific scenes from the engine, and can also help to identify an entity when debugging.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>value: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="addentity" class="tsd-anchor"></a>
@@ -249,12 +319,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Scene.ts:54</li>
+									<li>Defined in core/Scene.ts:78</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Add a entity to the entity.</p>
+									<p>Add a entity to the scene.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -290,7 +360,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Scene.ts:124</li>
+									<li>Defined in core/Scene.ts:148</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -299,7 +369,7 @@
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
-							<p>An array containing all the entities that are on the entity.</p>
+							<p>An array containing all the entities that are on the scene.</p>
 						</li>
 					</ul>
 				</section>
@@ -313,7 +383,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Scene.ts:107</li>
+									<li>Defined in core/Scene.ts:131</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -345,7 +415,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Scene.ts:92</li>
+									<li>Defined in core/Scene.ts:116</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -377,7 +447,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Scene.ts:141</li>
+									<li>Defined in core/Scene.ts:165</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -409,7 +479,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Scene.ts:145</li>
+									<li>Defined in core/Scene.ts:169</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -432,7 +502,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/Scene.ts:74</li>
+									<li>Defined in core/Scene.ts:98</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -464,7 +534,7 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-class">
-						<a href="componentmatchingfamily.html" class="tsd-kind-icon">Component<wbr>Matching<wbr>Family</a>
+						<a href="componentsfamily.html" class="tsd-kind-icon">Components<wbr>Family</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="dictionary.html" class="tsd-kind-icon">Dictionary</a>
@@ -476,22 +546,13 @@
 						<a href="entity.html" class="tsd-kind-icon">Entity</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="entitylist.html" class="tsd-kind-icon">Entity<wbr>List</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="familymock.html" class="tsd-kind-icon">Family<wbr>Mock</a>
+						<a href="linkedlist.html" class="tsd-kind-icon">Linked<wbr>List</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="node.html" class="tsd-kind-icon">Node</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="nodelist.html" class="tsd-kind-icon">Node<wbr>List</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="nodemock.html" class="tsd-kind-icon">Node<wbr>Mock</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="nodemock2.html" class="tsd-kind-icon">Node<wbr>Mock2</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="nodepool.html" class="tsd-kind-icon">Node<wbr>Pool</a>
@@ -520,6 +581,9 @@
 								<a href="scene.html#entityremoved" class="tsd-kind-icon">entity<wbr>Removed</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="scene.html#namechanged" class="tsd-kind-icon">name<wbr>Changed</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="scene.html#next" class="tsd-kind-icon">next</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
@@ -527,6 +591,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-static">
 								<a href="scene.html#namecount" class="tsd-kind-icon">name<wbr>Count</a>
+							</li>
+							<li class=" tsd-kind-accessor tsd-parent-kind-class">
+								<a href="scene.html#name" class="tsd-kind-icon">name</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="scene.html#addentity" class="tsd-kind-icon">add<wbr>Entity</a>
@@ -554,25 +621,13 @@
 				</ul>
 				<ul class="after-current">
 					<li class=" tsd-kind-class">
-						<a href="scenelist.html" class="tsd-kind-icon">Scene<wbr>List</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="signal.html" class="tsd-kind-icon">Signal</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="signalbinding.html" class="tsd-kind-icon">Signal<wbr>Binding</a>
-					</li>
-					<li class=" tsd-kind-class">
 						<a href="system.html" class="tsd-kind-icon">System</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="systemlist.html" class="tsd-kind-icon">System<wbr>List</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="vec2d.html" class="tsd-kind-icon">Vec2D</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/ifamily.html" class="tsd-kind-icon">IFamily</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="../globals.html#minisignal" class="tsd-kind-icon">Mini<wbr>Signal</a>
 					</li>
 				</ul>
 			</nav>
