@@ -1,5 +1,4 @@
 //{
-/// <reference path="../js/index.d.ts" />
 /// <reference path="../js/core/ComponentMatchingFamily.d.ts" />
 /// <reference path="../js/core/Engine.d.ts" />
 /// <reference path="../js/core/Entity.d.ts" />
