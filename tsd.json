@@ -5,8 +5,35 @@
   "path": "typings",
   "bundle": "typings/tsd.d.ts",
   "installed": {
-    "jasmine/jasmine.d.ts": {
-      "commit": "40c60850ad6c8175a62d5ab48c4e016ea5b3dffe"
+    "assertion-error/assertion-error.d.ts": {
+      "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
+    },
+    "chai/chai.d.ts": {
+      "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
+    },
+    "bluebird/bluebird.d.ts": {
+      "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
+    },
+    "karma/karma.d.ts": {
+      "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
+    },
+    "log4js/log4js.d.ts": {
+      "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
+    },
+    "express/express.d.ts": {
+      "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
+    },
+    "node/node.d.ts": {
+      "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
+    },
+    "mime/mime.d.ts": {
+      "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
+    },
+    "serve-static/serve-static.d.ts": {
+      "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
+    },
+    "mocha/mocha.d.ts": {
+      "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
     }
   }
 }
