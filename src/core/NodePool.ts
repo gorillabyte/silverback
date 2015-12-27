@@ -34,16 +34,15 @@ export class NodePool {
             node.previous = null;
             return node;
         } else {
-            var newNode = new this._nodeClass;
-            return newNode;
+            return new this._nodeClass;
         }
     }
 
     /**
      * Adds a node to the pool.
      */
-    public dispose(node:Node) {
-        this._components.forEach(function (componentClass, componentName) {
+    public dispose(node:Node):void {
+        this._components.forEach((componentClass, componentName) => {
             node[componentName] = null;
         });
         node.entity = null;
@@ -55,7 +54,7 @@ export class NodePool {
     /**
      * Adds a node to the cache
      */
-    public cache(node:Node) {
+    public cache(node:Node):void {
         node.previous = this._cacheTail;
         this._cacheTail = node;
     }
@@ -63,13 +62,11 @@ export class NodePool {
     /**
      * Releases all nodes from the cache into the pool
      */
-    public releaseCache() {
+    public releaseCache():void {
         while (this._cacheTail) {
             var node:Node = this._cacheTail;
             this._cacheTail = node.previous;
-            node.next = null;
-            node.previous = this._tail;
-            this._tail = node;
+            this.dispose(node);
         }
     }
 }
