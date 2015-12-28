@@ -163,4 +163,17 @@ export class Entity {
     public set scene(scene:Scene) {
         this._addedToScene = scene;
     }
+
+    public toString() {
+        let seen = [];
+        return JSON.stringify(this, function(key, val) {
+            if (typeof val === 'object') {
+                if (seen.indexOf(val) >= 0) {
+                    return;
+                }
+                seen.push(val);
+            }
+            return val;
+        }, 4);
+    }
 }
