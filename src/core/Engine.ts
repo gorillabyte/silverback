@@ -48,7 +48,7 @@ export class Engine {
      *
      * The class must implement the Family interface.
      */
-    public familyClass;
+    public familyClass = null;
 
     constructor() {
         this._systemList = new LinkedList();
@@ -230,13 +230,14 @@ export class Engine {
     public getNodeList(nodeClass):NodeList {
         if(this._families.has(nodeClass)) {
             return this._families.getValue(nodeClass)._nodes;
+        } else {
+            let family:IFamily = new this.familyClass(nodeClass, this);
+            this._families.add(nodeClass, family);
+            for (let i = 0; i < this._entityList.size(); i++) {
+                family.newEntity(this._entityList.item(i));
+            }
+            return family.nodeList;
         }
-        var family = new this.familyClass(nodeClass, this);
-        this._families.add(nodeClass, family);
-        for (let i = 0; i < this._entityList.size(); i++) {
-            family.newEntity(this._entityList.item(i));
-        }
-        return family.nodeList;
     }
 
     /**
