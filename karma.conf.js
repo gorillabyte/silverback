@@ -13,7 +13,7 @@ module.exports = function(config) {
             'src/**/*.ts': ['webpack', 'sourcemap', 'coverage'],
             'src/**/*.spec.ts': ['webpack', 'sourcemap']
         },
-        reporters: ['mocha', 'coverage'],
+        reporters: ['spec', 'coverage'],
         port: 9876,
         logLevel: config.LOG_INFO,
         autoWatch: true,
@@ -21,7 +21,11 @@ module.exports = function(config) {
         concurrency: Infinity,
         plugins: [ 'karma-*' ],
         client: {
-            mocha: { ui: 'bdd' }
+            captureConsole: true,
+            mocha: {
+                reporter: 'spec',
+                ui: 'bdd'
+            }
         },
         webpack: {
             resolve: {
