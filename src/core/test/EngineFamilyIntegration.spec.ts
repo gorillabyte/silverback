@@ -1,14 +1,14 @@
 import chai = require('chai');
 import {Engine} from '../Engine';
-import {NodeList} from '../NodeList';
+import {LinkedList} from '../../utils/LinkedList';
 import {FamilyMock} from './FamilyMock';
-import {NodeMock, NodeMock2, Vec2D, Matrix} from './NodeMock';
+import {NodeMock, NodeMock2, Vec2D, Matrix, NewNodeMock} from './NodeMock';
 import {Entity} from '../Entity';
 
-var expect = chai.expect;
+let expect = chai.expect;
 
 describe('EngineFamilyIntegration', () => {
-    var engine:Engine;
+    let engine:Engine;
 
     beforeEach(() => {
         engine = new Engine();
@@ -18,65 +18,130 @@ describe('EngineFamilyIntegration', () => {
         engine = null;
     });
 
-    it('should test, if the Family is initially empty', () => {
-        var nodes:NodeList = engine.getNodeList(NodeMock);
-        expect(nodes.head).to.be.null;
-    });
+    describe('- FamilyNode', () => {
 
-    it('node should contain the entity properties', () => {
-        var entity:Entity = new Entity();
-        var point:Vec2D = new Vec2D(10, 10);
-        var matrix:Matrix = new Matrix();
-        entity.add(point);
-        entity.add(matrix);
-        var nodes:NodeList = engine.getNodeList(NodeMock);
-        engine.addEntity(entity);
-        expect(nodes.head.entity.get(point.constructor)).to.be.equal(point);
-        expect(nodes.head.entity.get(matrix.constructor)).to.be.equal(matrix);
-    });
+        it('should be initially empty', () => {
+            let nodes:LinkedList = engine.getNodeList(NewNodeMock);
+            expect(nodes.item(0)).to.be.null;
+        });
 
-    it('should correctly add entity to family, when accessing the family first', () => {
-        var entity:Entity = new Entity();
-        entity.add(new Vec2D(0, 0));
-        entity.add(new Matrix());
-        var nodes:NodeList = engine.getNodeList(NodeMock);
-        engine.addEntity(entity);
-        expect(nodes.head.entity).to.be.deep.equal(entity);
-    });
+        it('should contain the entity properties', () => {
+            let entity:Entity = new Entity();
+            let point:Vec2D = new Vec2D(10, 10);
+            let matrix:Matrix = new Matrix();
+            entity.addComponent(point);
+            entity.addComponent(matrix);
+            let nodes:LinkedList = engine.getNodeList(NewNodeMock);
+            engine.addEntity(entity);
+            expect(nodes.item(0).point).to.be.equal(point);
+            expect(nodes.item(0).matrix).to.be.equal(matrix);
+        });
 
-    it('should correctly add entity to family, when accessing the family second', () => {
-        var entity:Entity = new Entity();
-        entity.add(new Vec2D(0, 0));
-        entity.add(new Matrix());
-        engine.addEntity(entity);
-        var nodes:NodeList = engine.getNodeList(NodeMock);
-        expect(nodes.head.entity).to.be.deep.equal(entity);
-    });
+        it('should correctly add entity to family, when accessing the family first', () => {
+            let entity:Entity = new Entity();
+            entity.addComponent(new Vec2D(0, 0));
+            entity.addComponent(new Matrix());
+            let nodes:LinkedList = engine.getNodeList(NewNodeMock);
+            engine.addEntity(entity);
+            expect(nodes.item(0).entity).to.be.deep.equal(entity);
+        });
 
-    it('should correctly add entity to family, when components added', () => {
-        var entity:Entity = new Entity();
-        engine.addEntity(entity);
-        var nodes:NodeList = engine.getNodeList(NodeMock);
-        entity.add(new Vec2D(0, 0));
-        entity.add(new Matrix());
-        expect(nodes.head.entity).to.be.deep.equal(entity);
-    });
+        it('should correctly add entity to family, when accessing the family second', () => {
+            let entity:Entity = new Entity();
+            entity.addComponent(new Vec2D(0, 0));
+            entity.addComponent(new Matrix());
+            engine.addEntity(entity);
+            let nodes:LinkedList = engine.getNodeList(NewNodeMock);
+            expect(nodes.item(0).entity).to.be.deep.equal(entity);
+        });
 
-    xit('should not add incorrect entity to a family, when accessing the family first', () => {
-        var entity:Entity = new Entity();
-        var nodes:NodeList = engine.getNodeList(NodeMock);
-        engine.addEntity(entity);
-        expect(nodes.head).to.be.null;
-    });
+        it('should correctly add entity to family, when components added', () => {
+            let entity:Entity = new Entity();
+            engine.addEntity(entity);
+            let nodes:LinkedList = engine.getNodeList(NewNodeMock);
+            entity.addComponent(new Vec2D(0, 0));
+            entity.addComponent(new Matrix());
+            expect(nodes.item(0).entity).to.be.deep.equal(entity);
+        });
 
-    xit('should removed entity from family, when component removed and family already accessed', () => {
-        var entity:Entity = new Entity();
-        entity.add(new Vec2D(0, 0));
-        entity.add(new Matrix());
-        engine.addEntity(entity);
-        console.log('ENTITY', entity.toString());
-        var nodes : NodeList = engine.getNodeList(NodeMock);
-        entity.remove(Vec2D);
-        expect(nodes.head).to.be.null;
+        it('should not add incorrect entity to a family, when accessing the family first', () => {
+            let entity:Entity = new Entity();
+            let nodes:LinkedList = engine.getNodeList(NewNodeMock);
+            engine.addEntity(entity);
+            expect(nodes.item(0)).to.be.null;
+        });
+
+        it('should removed entity from family, when component removed and family already accessed', () => {
+            let entity:Entity = new Entity();
+            entity.addComponent(new Vec2D(0, 0));
+            entity.addComponent(new Matrix());
+            engine.addEntity(entity);
+            let nodes:LinkedList = engine.getNodeList(NewNodeMock);
+            entity.removeComponent('Vec2D');
+            expect(nodes.item(0)).to.be.null;
+        });
+
+        it('should removed entity from family, when component removed and family not already accessed', () => {
+            let entity:Entity = new Entity();
+            entity.addComponent(new Vec2D(0, 0));
+            entity.addComponent(new Matrix());
+            engine.addEntity(entity);
+            entity.removeComponent('Vec2D');
+            let nodes:LinkedList = engine.getNodeList(NewNodeMock);
+            expect(nodes.item(0)).to.be.null;
+        });
+
+        it('should removed entity from family, when entity removed from engine and family already accessed', () => {
+            let entity:Entity = new Entity();
+            entity.addComponent(new Vec2D(0, 0));
+            entity.addComponent(new Matrix());
+            engine.addEntity(entity);
+            let nodes:LinkedList = engine.getNodeList(NewNodeMock);
+            engine.removeEntity(entity);
+            expect(nodes.item(0)).to.be.null;
+        });
+
+        it('should removed entity from family, when entity removed from engine and family not already accessed', () => {
+            let entity:Entity = new Entity();
+            entity.addComponent(new Vec2D(0, 0));
+            entity.addComponent(new Matrix());
+            engine.addEntity(entity);
+            engine.removeEntity(entity);
+            let nodes:LinkedList = engine.getNodeList(NewNodeMock);
+            expect(nodes.item(0)).to.be.null;
+        });
+
+        it('should only contain matching entities', () => {
+            let entities = [];
+            for(let i = 0; i < 5; ++i) {
+                let entity:Entity = new Entity();
+                entity.addComponent(new Vec2D(0, 0));
+                entity.addComponent(new Matrix());
+                entities.push(entity);
+                engine.addEntity(entity);
+            }
+            let nodes:LinkedList = engine.getNodeList(NewNodeMock);
+            for(let i = 0; i < nodes.size(); i++) {
+                expect(entities).to.include(nodes.item(i).entity);
+            }
+        });
+
+        it('should only contain matching entities after clearing', () => {
+            let entities = [];
+            for(let i = 0; i < 5; ++i) {
+                let entity:Entity = new Entity();
+                entity.addComponent(new Vec2D(0, 0));
+                entity.addComponent(new Matrix());
+                entities.push(entity);
+                engine.addEntity(entity);
+            }
+            let nodes:LinkedList = engine.getNodeList(NewNodeMock);
+            for(let i = 0; i < nodes.size(); i++) {
+                let index = entities.indexOf(nodes.item(i).entity);
+                entities.splice(index, 1);
+            }
+            expect(entities.length).to.be.equal(0);
+
+        });
     });
 });
