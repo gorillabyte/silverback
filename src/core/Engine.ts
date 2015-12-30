@@ -99,9 +99,8 @@ export class Engine {
         entity.nameChanged.add(this._entityNameChanged, this);
 
         this._families.forEach((nodeObject, family:IFamily) => {
-                family.newEntity(entity);
-            }
-        );
+            family.newEntity(entity);
+        });
     }
 
     /**
@@ -111,19 +110,23 @@ export class Engine {
      * @param index The index of the entity list.
      */
     public removeEntity(entity: Entity, index?:number):void {
-        /*entity.componentAdded.remove(this._componentAdded, this);
-        entity.componentRemoved.remove(this._componentRemoved, this);
-        entity.nameChanged.remove(this._entityNameChanged, this);*/
         entity.componentAdded.detachAll();
         entity.componentRemoved.detachAll();
         entity.nameChanged.detachAll();
 
-        this._families.forEach((nodeObject, family: IFamily) => {
-                family.removeEntity(entity);
+        if(typeof index === 'undefined') {
+            for (let i = 0; i < this._entityList.size(); i++) {
+                if(this._entityList.item(i) === entity) {
+                    this._entityList.remove(i);
+                }
             }
-        );
+        } else {
+            this._entityList.remove(index);
+        }
+        this._families.forEach((nodeObject, family: IFamily) => {
+            family.removeEntity(entity);
+        });
         this._entityNames.remove(entity.name);
-        this._entityList.remove(index);
     }
 
     /**
@@ -227,9 +230,9 @@ export class Engine {
      * @param nodeClass The type of node required.
      * @return A linked list of all nodes of this type from all entities in the engine.
      */
-    public getNodeList(nodeClass):NodeList {
+    public getNodeList(nodeClass):LinkedList {
         if(this._families.has(nodeClass)) {
-            return this._families.getValue(nodeClass)._nodes;
+            return this._families.getValue(nodeClass).nodeList;
         } else {
             let family:IFamily = new this.familyClass(nodeClass, this);
             this._families.add(nodeClass, family);
