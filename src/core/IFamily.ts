@@ -5,7 +5,8 @@
  * in the Engine object). Most developers don't need to use this since the default implementation
  * is used by default and suits most needs.
  */
-import {NodeList} from './NodeList';
+//import {NodeList} from './NodeList';
+import {LinkedList} from '../utils/LinkedList';
 import {Entity} from './Entity';
 
 export interface IFamily {
@@ -15,7 +16,7 @@ export interface IFamily {
      * since it is retained and reused by Systems that use the list. i.e. never recreate the list,
      * always modify it in place.
      */
-    nodeList:NodeList;
+    nodeList:LinkedList;
 
     /**
      * An entity has been added to the engine. It may already have components so test the entity
