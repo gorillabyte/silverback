@@ -9,7 +9,6 @@
  */
 import {Node} from './Node';
 import {NodePool} from './NodePool';
-//import {NodeList} from './NodeList';
 import {LinkedList} from '../utils/LinkedList';
 import {Engine} from './Engine';
 import {Entity} from './Entity';
@@ -36,61 +35,6 @@ export class ComponentsFamily implements IFamily {
         this._engine = engine;
 
         this._init();
-
-        /*this._nodes = new LinkedList();
-        this._entities = new Dictionary();
-        this._components = new Dictionary();
-
-        var nodeClassPrototype = this._nodeClass.prototype;
-
-        for (var property in nodeClassPrototype) {
-            ///TODO - tidy this up...
-            if (nodeClassPrototype.hasOwnProperty(property) &&
-                property !== 'types' &&
-                property !== 'next' &&
-                property !== 'previous' &&
-                property !== 'constructor' &&
-                property !== 'super' &&
-                property !== 'extend' &&
-                property !== 'entity') {
-                    var componentObject = nodeClassPrototype.types[property];
-                    this._components.add(componentObject, property);
-            }
-        }
-
-        this._nodePool = new NodePool(this._nodeClass, this._components);
-        this._nodePool.dispose(this._nodePool.get());*/
-
-
-
-        /*this._nodeClass = nodeClass;
-         this._engine = engine;
-
-         this._nodePool = new silverback.core.NodePool(this._nodeClass);
-         this._nodes = new silverback.core.NodeList();
-         this._entities = new silverback.utils.Dictionary();
-
-         this._components = new silverback.utils.Dictionary();
-         this._nodePool.dispose(this._nodePool.get()); // create a dummy instance to ensure describeType works.
-
-         var nodeClassPrototype = this._nodeClass.prototype;
-
-         for (var property in nodeClassPrototype) {
-         ///TODO - tidy this up...
-         if (nodeClassPrototype.hasOwnProperty(property) &&
-         property !== 'types' &&
-         property !== 'next' &&
-         property !== 'previous' &&
-         property !== 'constructor' &&
-         property !== 'super' &&
-         property !== 'extend' &&
-         property !== 'entity') {
-         var componentObject = nodeClassPrototype.types[property];
-         this._components.add(componentObject, property);
-         }
-         }
-
-         this._init();*/
     }
 
     /**

@@ -9,21 +9,20 @@
  * to the list obtained by the system. The engine keeps the list up to date as entities are added
  * to and removed from the engine and as the components on entities change.</p>
  */
-import {Entity} from './Entity';
 
-export class Node {
+export var Node = {
     /**
      * The entity whose components are included in the node.
      */
-    public entity:Entity = null;
+    entity: null,
 
     /**
      * Used by the NodeList class. The previous node in a node list.
      */
-    public previous:any = null;
+    previous: null,
 
     /**
      * Used by the NodeList class. The next node in a node list.
      */
-    public next:any = null;
-}
+    next: null
+};

@@ -10,7 +10,6 @@
     "test:watch": "karma start karma.conf.js",
     "docs": "typedoc --options typedoc.json src/**/*.ts",
     "postinstall": "tsd install",
-    "ts": "tsc",
     "lint": "tslint -c tslint.json src/**/*.ts"
   },
   "repository": {

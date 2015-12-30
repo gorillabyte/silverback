@@ -8,14 +8,18 @@ export class Vec2D {
 export class Matrix {
 }
 
-export class NodeMock extends Node {
-    public point:Vec2D = null;
-    public matrix:Matrix = null;
-    public types = {
+export var NodeMock = {
+    name: 'NodeMock',
+    entity: null,
+    previous: null,
+    next: null,
+    point: null,
+    matrix: null,
+    types: {
         point: 'Vec2D',
         matrix: 'Matrix'
-    };
-}
+    }
+};
 
 export var NewNodeMock = {
     name: 'NewNodeMock',
@@ -30,6 +34,13 @@ export var NewNodeMock = {
     }
 };
 
-export class NodeMock2 extends Node {
-    public matrix:Matrix = null;
-}
+export var NodeMock2 = {
+    name: 'NodeMock2',
+    entity: null,
+    previous: null,
+    next: null,
+    matrix: null,
+    types: {
+        matrix: 'Matrix'
+    }
+};

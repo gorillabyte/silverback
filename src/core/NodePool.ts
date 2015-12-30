@@ -8,13 +8,12 @@
  * while iterating through the NodeList, the pool also maintains a cache of nodes that are added to the pool
  * but should not be reused yet. They are then released into the pool by calling the releaseCache method.
  */
-import {Node} from './Node';
 import {Dictionary} from '../utils/Dictionary';
 
 export class NodePool {
-    private _tail:Node;
+    private _tail:any;      // Node
     private _nodeClass;
-    private _cacheTail:Node;
+    private _cacheTail:any; // Node
     private _components:Dictionary;
 
     /**
@@ -42,10 +41,7 @@ export class NodePool {
     /**
      * Adds a node to the pool.
      */
-    public dispose(node:Node):void {
-        /*this._components.forEach((componentClass, componentName) => {
-            node[componentName] = null;
-        });*/
+    public dispose(node:any):void {
         node.entity = null;
         node.next = null;
         node.previous = this._tail;
@@ -55,7 +51,7 @@ export class NodePool {
     /**
      * Adds a node to the cache
      */
-    public cache(node:Node):void {
+    public cache(node):void {
         node.previous = this._cacheTail;
         this._cacheTail = node;
     }
@@ -65,7 +61,7 @@ export class NodePool {
      */
     public releaseCache():void {
         while(this._cacheTail) {
-            var node:Node = this._cacheTail;
+            var node:any = this._cacheTail;
             this._cacheTail = node.previous;
             this.dispose(node);
         }

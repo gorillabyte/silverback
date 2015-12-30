@@ -13,7 +13,6 @@ export * from './core/Engine';
 export * from './core/Entity';
 export * from './core/System';
 export * from './core/Node';
-export * from './core/NodeList';
 export * from './core/NodePool';
 export * from './core/Scene';
 export * from './core/ComponentsFamily';

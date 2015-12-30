@@ -7,7 +7,6 @@
 
 import {Entity} from './Entity';
 import {Scene} from './Scene';
-import {NodeList} from './NodeList';
 import {Dictionary} from '../utils/Dictionary';
 import {LinkedList} from '../utils/LinkedList';
 import {System} from './System';
