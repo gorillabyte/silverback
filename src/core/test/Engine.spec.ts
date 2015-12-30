@@ -98,7 +98,7 @@ describe('Engine', () => {
             engine.getNodeList(NodeMock2);
             var entity:Entity = new Entity();
             engine.addEntity(entity);
-            entity.add(new Vec2D(0, 0));
+            entity.addComponent(new Vec2D(0, 0));
             expect(FamilyMock.instances[0].componentAddedCalls).to.deep.equal(1);
             expect(FamilyMock.instances[1].componentAddedCalls).to.deep.equal(1);
         });
@@ -108,8 +108,8 @@ describe('Engine', () => {
             engine.getNodeList(NodeMock2);
             var entity:Entity = new Entity();
             engine.addEntity(entity);
-            entity.add(new Vec2D(0, 0));
-            entity.remove(Vec2D);
+            entity.addComponent(new Vec2D(0, 0));
+            entity.removeComponent('Vec2D');
             expect(FamilyMock.instances[0].componentRemovedCalls).to.deep.equal(1);
             expect(FamilyMock.instances[1].componentRemovedCalls).to.deep.equal(1);
         });

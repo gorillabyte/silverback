@@ -62,7 +62,7 @@ export class Entity {
         if(name.length > 0) {
             this._name = name;
         } else {
-            this._name = '_entity' + (++Entity.nameCount);
+            this._name = 'entity' + (++Entity.nameCount);
         }
     }
 
@@ -96,15 +96,15 @@ export class Entity {
      *     .add(new Position(100, 200))
      *     .add(new Display(new PlayerClip());</code>
      */
-    public add(component: any, componentClass?):Entity {
-        if( typeof componentClass === 'undefined' ) {
-            componentClass = component.constructor;
+    public addComponent(component:any, componentClass?):Entity {
+        if(typeof componentClass === 'undefined') {
+            componentClass = component.constructor.name;
         }
-        if ( this._components.has( componentClass ) ) {
-            this.remove( componentClass );
+        if(this._components.has(componentClass)) {
+            this.removeComponent(componentClass);
         }
         this._components.add(componentClass, component);
-        this.componentAdded.dispatch( this, componentClass );
+        this.componentAdded.dispatch(this, componentClass);
         return this;
     }
 
@@ -114,10 +114,10 @@ export class Entity {
      * @param componentClass The class of the component to be removed.
      * @return the component, or null if the component doesn't exist in the entity
      */
-    public remove(componentClass):any {
-        var component:any = this._components.getValue(componentClass);
+    public removeComponent(componentClass:string):any {
+        let component:any = this._components.getValue(componentClass);
         if (component) {
-            this._components.remove( componentClass );
+            this._components.remove(componentClass);
             this.componentRemoved.dispatch(this, componentClass);
             return component;
         }
@@ -130,24 +130,8 @@ export class Entity {
      * @param componentClass The class of the component requested.
      * @return The component, or null if none was found.
      */
-    public get (componentClass:any):any {
+    public getComponent(componentClass:any):any {
         return this._components.getValue(componentClass);
-    }
-
-    /**
-     * Get all components from the entity.
-     *
-     * @return An array containing all the components that are on the entity.
-     */
-    public getAll():any[] {
-        var componentArray = [];
-
-        this._components.forEach(
-            (componentClass, component) => {
-                componentArray.push(component);
-            }
-        );
-        return componentArray;
     }
 
     /**
@@ -156,8 +140,24 @@ export class Entity {
      * @param componentClass The class of the component sought.
      * @return true if the entity has a component of the type, false if not.
      */
-    public has(componentClass:any):boolean {
+    public hasComponent(componentClass:string):boolean {
         return this._components.has(componentClass);
+    }
+
+    /**
+     * Get all components from the entity.
+     *
+     * @return An array containing all the components that are on the entity.
+     */
+    public getAll():any[] {
+        let componentArray = [];
+
+        this._components.forEach(
+            (componentClass, component) => {
+                componentArray.push(component);
+            }
+        );
+        return componentArray;
     }
 
     public set scene(scene:Scene) {
