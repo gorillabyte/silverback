@@ -75,7 +75,7 @@ export class LinkedList {
      *      or null if the item doesn't exist.
      * @method item
      */
-    public item(index) {
+    public item(index:number) {
         //check for out-of-bounds values
         if (index > -1 && index < this._length) {
             var current = this._head,
@@ -98,7 +98,7 @@ export class LinkedList {
      *      the item doesn't exist.
      * @method remove
      */
-    public remove(index) {
+    public remove(index:number) {
         //check for out-of-bounds values
         if (index > -1 && index < this._length) {
 
