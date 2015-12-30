@@ -174,7 +174,7 @@ export class ComponentsFamily implements IFamily {
      */
     public cleanUp() {
         for (let i = 0; i < this._nodes.size(); i++) {
-            this._entities.remove(this._nodes.item(i));
+            this._entities.remove(this._nodes.item(i).entity);
             this._nodes.remove(i);
         }
     }

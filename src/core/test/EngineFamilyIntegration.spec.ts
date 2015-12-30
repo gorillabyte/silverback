@@ -141,7 +141,46 @@ describe('EngineFamilyIntegration', () => {
                 entities.splice(index, 1);
             }
             expect(entities.length).to.be.equal(0);
+        });
 
+        it('should release family empty nodeList', () => {
+            let entity:Entity = new Entity();
+            entity.addComponent(new Vec2D(0, 0));
+            entity.addComponent(new Matrix());
+            engine.addEntity(entity);
+            var nodes:LinkedList = engine.getNodeList(NewNodeMock);
+            engine.releaseNodeList(NewNodeMock);
+            expect(nodes.item(0)).to.be.null;
+        });
+
+        it('should release family sets node to null', () => {
+            let entities = [];
+            for(let i = 0; i < 5; ++i) {
+                let entity:Entity = new Entity();
+                entity.addComponent(new Vec2D(0, 0));
+                entity.addComponent(new Matrix());
+                entities.push(entity);
+                engine.addEntity(entity);
+            }
+
+            let nodes:LinkedList = engine.getNodeList(NewNodeMock);
+            let node = nodes.item(4).next;
+            engine.releaseNodeList(NewNodeMock);
+            expect(node).to.be.null;
+        });
+
+        it('should remove all entities by calling the method', () => {
+            let entity:Entity = new Entity();
+            entity.addComponent(new Vec2D(0, 0));
+            entity.addComponent(new Matrix());
+            engine.addEntity(entity);
+            entity = new Entity();
+            entity.addComponent(new Vec2D(0, 0));
+            entity.addComponent(new Matrix());
+            engine.addEntity(entity);
+            let nodes:LinkedList = engine.getNodeList(NewNodeMock);
+            engine.removeAllEntities();
+            expect(nodes.item(0)).to.be.null;
         });
     });
 });
