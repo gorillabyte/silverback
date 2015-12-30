@@ -114,7 +114,7 @@ export class Entity {
      * @param componentClass The class of the component to be removed.
      * @return the component, or null if the component doesn't exist in the entity
      */
-    public removeComponent(componentClass:string):any {
+    public removeComponent(componentClass):any {
         let component:any = this._components.getValue(componentClass);
         if (component) {
             this._components.remove(componentClass);
@@ -130,7 +130,7 @@ export class Entity {
      * @param componentClass The class of the component requested.
      * @return The component, or null if none was found.
      */
-    public getComponent(componentClass:any):any {
+    public getComponent(componentClass:string):any {
         return this._components.getValue(componentClass);
     }
 
