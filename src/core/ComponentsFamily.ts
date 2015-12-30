@@ -9,14 +9,15 @@
  */
 import {Node} from './Node';
 import {NodePool} from './NodePool';
-import {NodeList} from './NodeList';
+//import {NodeList} from './NodeList';
+import {LinkedList} from '../utils/LinkedList';
 import {Engine} from './Engine';
 import {Entity} from './Entity';
 import {IFamily} from './IFamily';
 import {Dictionary} from '../utils/Dictionary';
 
 export class ComponentsFamily implements IFamily {
-    private _nodes:NodeList;
+    private _nodes:LinkedList;
     private _entities:Dictionary;
     private _nodeClass;
     private _components:Dictionary;
@@ -34,7 +35,9 @@ export class ComponentsFamily implements IFamily {
         this._nodeClass = nodeClass;
         this._engine = engine;
 
-        this._nodes = new NodeList();
+        this._init();
+
+        /*this._nodes = new LinkedList();
         this._entities = new Dictionary();
         this._components = new Dictionary();
 
@@ -50,13 +53,16 @@ export class ComponentsFamily implements IFamily {
                 property !== 'super' &&
                 property !== 'extend' &&
                 property !== 'entity') {
-                var componentObject = nodeClassPrototype.types[property];
-                this._components.add(componentObject, property);
+                    var componentObject = nodeClassPrototype.types[property];
+                    this._components.add(componentObject, property);
             }
         }
 
         this._nodePool = new NodePool(this._nodeClass, this._components);
-        this._nodePool.dispose(this._nodePool.get());
+        this._nodePool.dispose(this._nodePool.get());*/
+
+
+
         /*this._nodeClass = nodeClass;
          this._engine = engine;
 
@@ -91,16 +97,28 @@ export class ComponentsFamily implements IFamily {
      * Initialises the class. Creates the nodelist and other tools. Analyses the node to determine
      * what component types the node requires.
      */
-    /*private _init()
-     {
-     }*/
+    private _init() {
+        this._nodes = new LinkedList();
+        this._entities = new Dictionary();   // <Entity, Node>
+        this._components = new Dictionary(); // <Type, string>
+
+        let types = this._nodeClass['types'];
+
+        for(let prop in types) {
+            if (types.hasOwnProperty(prop)) {
+                this._components.add(prop, types[prop]);
+            }
+        }
+        this._nodePool = new NodePool(this._nodeClass, this._components);
+        this._nodePool.dispose(this._nodePool.get());
+    }
 
     /**
      * The nodelist managed by this family. This is a reference that remains valid always
      * since it is retained and reused by Systems that use the list. i.e. we never recreate the list,
      * we always modify it in place.
      */
-    public get nodeList():NodeList {
+    public get nodeList():LinkedList {
         return this._nodes;
     }
 
@@ -126,9 +144,7 @@ export class ComponentsFamily implements IFamily {
      * remove it if so.
      */
     public componentRemovedFromEntity(entity:Entity, componentClass:() => any) {
-        if (this._components.has(componentClass)) {
-            this.removeIfMatch(entity);
-        }
+        this.removeIfMatch(entity);
     }
 
     /**
@@ -145,19 +161,34 @@ export class ComponentsFamily implements IFamily {
      */
     public addIfMatch(entity:Entity) {
         if (!this._entities.has(entity)) {
+
             this._components.forEach((componentClass) => {
-                if (!entity.has(componentClass)) {
+                if (!entity.hasComponent(componentClass)) {
                     return;
                 }
             });
+            // If the entity has not components, don't add it.
+            if(entity.getAll().length > 0) {
+                let node = this._nodePool.get();
+                let types = node.types;
 
-            var node = this._nodePool.get();
-            node.entity = entity;
-            this._components.forEach(function (componentClass, componentName) {
-                node[componentName] = entity.get(componentClass);
-            });
-            this._entities.add(entity, node);
-            this._nodes.add(node);
+                for(let prop in types) {
+                    if (types.hasOwnProperty(prop)) {
+
+                        if(!entity.hasComponent(types[prop])) {
+                            // Node prop was not found in the entity
+                            return;
+                        } else {
+                            // Add entity value to node
+                            node[prop] = entity.getComponent(types[prop]);
+                        }
+                    }
+                }
+                node.entity = entity;
+
+                this._entities.add(entity, node);
+                this._nodes.add(node);
+            }
         }
     }
 
@@ -165,10 +196,17 @@ export class ComponentsFamily implements IFamily {
      * Removes the entity if it is in this family's NodeList.
      */
     public removeIfMatch(entity:Entity) {
-        if (this._entities.getValue(entity)) {
-            var node:Node = this._entities.getValue(entity);
+
+        if(this._entities.getValue(entity)) {
+            var node = this._entities.getValue(entity);
             this._entities.remove(entity);
-            this._nodes.remove(node);
+
+            for(let i = 0; i < this._nodes.size(); i++) {
+                if(this._nodes.item(i) === node) {
+                    this._nodes.remove(i);
+                }
+            }
+
             if (this._engine.updating) {
                 this._nodePool.cache(node);
                 this._engine.updateComplete.add(this._releaseNodePoolCache, this);
@@ -191,9 +229,9 @@ export class ComponentsFamily implements IFamily {
      * Removes all nodes from the NodeList.
      */
     public cleanUp() {
-        for (var node:Node = this._nodes.head; node; node = node.next) {
-            this._entities.remove(node.entity);
+        for (let i = 0; i < this._nodes.size(); i++) {
+            this._entities.remove(this._nodes.item(i));
+            this._nodes.remove(i);
         }
-        this._nodes.removeAll();
     }
 }
