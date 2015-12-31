@@ -1,3 +1,4 @@
+import {Dictionary} from "./Dictionary";
 /**
  *  Linked List implementation in JavaScript, Released under the MIT license
  *  https://github.com/nzakas/computer-science-in-javascript/
@@ -29,7 +30,7 @@ export class LinkedList {
     /**
      * The number of items in the list.
      * @property _length
-     * @type int
+     * @type number
      * @private
      */
     private _length = 0;
@@ -43,36 +44,37 @@ export class LinkedList {
      */
     public add(data) {
 
-        //create a new item object, place data in
+        // Create a new item object, place data in
         var node = {
             data: data,
             next: null,
-            prev: null
+            previous: null
         };
 
-        //special case: no items in the list yet
+        // Special case: no items in the list yet
         if (this._length === 0) {
             this._head = node;
             this._tail = node;
+            // If node has next and previous properties
+            if (typeof data.next !== 'undefined') {
+                data.next = data.previous = null;
+            }
         } else {
 
-            //attach to the tail node
+            // Attach to the tail node
             this._tail.next = node;
-            node.prev = this._tail;
+            node.previous = this._tail;
+            node.next = null;
             this._tail = node;
         }
-
-        //don't forget to update the count
+        // Don't forget to update the count
         this._length++;
-
     }
 
     /**
      * Retrieves the data in the given position in the list.
-     * @param {int} index The zero-based index of the item whose value
-     *      should be returned.
-     * @return {any} The value in the "data" portion of the given item
-     *      or null if the item doesn't exist.
+     * @param {number} index The zero-based index of the item whose value should be returned.
+     * @return {any} The value in the "data" portion of the given item or null if the item doesn't exist.
      * @method item
      */
     public item(index:number) {
@@ -99,13 +101,13 @@ export class LinkedList {
      * @method remove
      */
     public remove(index:number) {
-        //check for out-of-bounds values
+        // Check for out-of-bounds values
         if (index > -1 && index < this._length) {
 
-            var current = this._head,
-                i = 0;
+            let current = this._head;
+            let i = 0;
 
-            //special case: removing first item
+            // Special case: removing first item
             if (index === 0) {
                 this._head = current.next;
 
@@ -119,13 +121,13 @@ export class LinkedList {
                 if (!this._head) {
                     this._tail = null;
                 } else {
-                    this._head.prev = null;
+                    this._head.previous = null;
                 }
 
                 //special case: removing last item
             } else if (index === this._length - 1) {
                 current = this._tail;
-                this._tail = current.prev;
+                this._tail = current.previous;
                 this._tail.next = null;
             } else {
 
@@ -135,14 +137,14 @@ export class LinkedList {
                 }
 
                 //skip over the item to remove
-                current.prev.next = current.next;
-                current.next.prev = current.prev;
+                current.previous.next = current.next;
+                current.next.previous = current.previous;
             }
 
-            //decrement the length
+            // Decrement the length
             this._length--;
 
-            //return the value
+            // Return the value
             return current.data;
 
         } else {
@@ -165,8 +167,8 @@ export class LinkedList {
      * @method toArray
      */
     public toArray() {
-        var result = [],
-            current = this._head;
+        let result = [];
+        let current = this._head;
 
         while (current) {
             result.push(current.data);
@@ -184,9 +186,35 @@ export class LinkedList {
         return this.toArray().toString();
     }
 
+    /**
+     * Returns the first element in this list.
+     * @return {any} The first element of the list or undefined if the list is empty.
+     */
+    public get first() {
+        if (this._head !== null) {
+            return this._head.data;
+        }
+        return undefined;
+    }
+
+    /**
+     * Returns the last element in this list.
+     * @return {any} the last element in the list or undefined if the list is empty.
+     */
+    public get last() {
+        if (this._tail !== null) {
+            return this._tail.data;
+        }
+        return undefined;
+    }
+
+    /**
+     * Returns the a list element by its type.
+     * @return {any} The element of the list or null if the item was not in the list.
+     */
     public get(type) {
-        var current:any = this._head;
-        if(typeof current.data.is === 'function') {
+        let current:any = this._head;
+        if (typeof current.data.is === 'function') {
             while (current) {
                 if (current.data.is(type)) {
                     return current.data;
