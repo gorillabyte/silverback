@@ -60,17 +60,61 @@ describe('System unit test', () => {
             expect(system1.priority).to.equal(10);
         });
 
-        xit('should sort the list with there priority when adding to a new system', () => {
+        it('should sort the list with there priority when adding to a new system', () => {
+            system1 = new SystemMock();
+            engine.addSystem(system1, 10);
+            system2 = new SystemMock2();
+            engine.addSystem(system2, 5);
+            var system3 = new SystemMock();
+            engine.addSystem(system3, 1);
+            expect(engine.systems[0]).to.deep.equal(system3);
+            expect(engine.systems[2]).to.deep.equal(system1);
         });
 
-        xit('should update in the priority order, if same as addOrder', () => {
+        it('should sort the list with there priority when removing a system', () => {
+            system1 = new SystemMock();
+            engine.addSystem(system1, 10);
+            system2 = new SystemMock2();
+            engine.addSystem(system2, 5);
+            var system3 = new SystemMock();
+            engine.addSystem(system3, 1);
+            engine.removeSystem(system3);
+            expect(engine.systems[0]).to.deep.equal(system2);
+            expect(engine.systems[1]).to.deep.equal(system1);
         });
 
-        xit('should return the first element of the list', () => {
+        it('updating should be false before update', () => {
+            expect(engine.updating).to.be.false;
         });
 
-        xit('should return the last element of the list', () => {
+        it('updating should be false after the update', () => {
+            system1 = new SystemMock();
+            engine.addSystem(system1, 10);
+            engine.update(0.1);
+            expect(engine.updating).to.be.false;
         });
 
+        it('should return the requested system with calling getSystem', () => {
+            system1 = new SystemMock();
+            engine.addSystem(system1, 0);
+            engine.addSystem(new SystemMock2(), 0);
+            expect(engine.getSystem(SystemMock)).to.deep.equal(system1);
+        });
+
+        it('should return null, if the requested system was not found', () => {
+            engine.addSystem(new SystemMock());
+            expect(engine.getSystem(SystemMock2)).to.be.null;
+        });
+
+        it('should remove all systems when calling removeAll', () => {
+            system1 = new SystemMock();
+            engine.addSystem(system1, 10);
+            system2 = new SystemMock2();
+            engine.addSystem(system2, 5);
+            engine.removeAllSystems();
+            expect(engine.getSystem(system1)).to.be.null;
+            expect(engine.getSystem(SystemMock2)).to.be.null;
+            expect(engine.systems.length).to.deep.equal(0);
+        });
     });
 });

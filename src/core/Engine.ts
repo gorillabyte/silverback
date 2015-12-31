@@ -9,6 +9,7 @@ import {Entity} from './Entity';
 import {Scene} from './Scene';
 import {Dictionary} from '../utils/Dictionary';
 import {LinkedList} from '../utils/LinkedList';
+import systemSort from '../utils/SystemSort';
 import {System} from './System';
 import {ComponentsFamily} from './ComponentsFamily';
 import {IFamily} from './IFamily';
@@ -21,7 +22,7 @@ const MiniSignal = require('../../node_modules/mini-signals');
  */
 export class Engine {
 
-    private _systemList:LinkedList;
+    private _systemList:Array<System>;
     private _entityList:LinkedList;
     private _sceneList:LinkedList;
     private _entityNames:Dictionary;
@@ -31,7 +32,7 @@ export class Engine {
     /**
      * Indicates if the engine is currently in its update loop.
      */
-    public updating:boolean;
+    public updating:boolean = false;
 
     /**
      * Dispatched when the update loop ends. If you want to add and remove systems from the
@@ -50,7 +51,7 @@ export class Engine {
     public familyClass = null;
 
     constructor() {
-        this._systemList = new LinkedList();
+        this._systemList = [];
         this._entityList = new LinkedList();
         this._sceneList = new LinkedList();
         this._entityNames = new Dictionary();
@@ -79,7 +80,7 @@ export class Engine {
      * Returns an array containing all the systems in the engine.
      */
     public get systems():Array<System> {
-        return this._systemList.toArray();
+        return this._systemList;
     }
 
     /**
@@ -273,10 +274,11 @@ export class Engine {
      * @param priority The priority for updating the systems during the engine loop. A
      * lower number means the system is updated sooner.
      */
-    public addSystem(system:System, priority:number) {
-        system.priority = priority;
+    public addSystem(system:System, priority?:number) {
+        system.priority = priority | 0;
         system.addToEngine(this);
-        this._systemList.add(system);
+        this._systemList.push(system);
+        this._systemList = systemSort(this._systemList);
     }
 
     /**
@@ -287,7 +289,12 @@ export class Engine {
      * null if no systems of this type are in the engine.
      */
     public getSystem(type):System {
-        return this._systemList.get(type);
+        for (let i = 0, len = this._systemList.length; i < len; i++) {
+            if(this._systemList[i].is(type)) {
+                return this._systemList[i];
+            }
+        }
+        return null;
     }
 
     /**
@@ -298,13 +305,13 @@ export class Engine {
      */
     public removeSystem(system:System, index?:number) {
         if(typeof index === 'undefined') {
-            for (let i = 0; i < this._systemList.size(); i++) {
-                if(this._systemList.item(i) === system) {
-                    this._systemList.remove(i);
+            for (let i = 0, len = this._systemList.length; i < len; i++) {
+                if(this._systemList[i] === system) {
+                    this._systemList.splice(i, 1);
                 }
             }
         } else {
-            this._systemList.remove(index);
+            this._systemList.splice(index - 1, 1);
         }
         system.removeFromEngine(this);
     }
@@ -313,10 +320,10 @@ export class Engine {
      * Remove all systems from the engine.
      */
     public removeAllSystems():void {
-        let listSize = this._systemList.size() - 1;
-        for (let i = listSize; i >= 0; i--) {
-            this.removeSystem(this._systemList.item(i), i);
+        for (let i = this._systemList.length - 1; i >= 0; i--) {
+            this.removeSystem(this._systemList[i], i);
         }
+        return;
     }
 
     /**
@@ -327,9 +334,8 @@ export class Engine {
      */
     public update(time:number):void {
         this.updating = true;
-        let systemSize = this._systemList.size();
-        for (let i = 0; i < systemSize; i++) {
-            this._systemList.item(i).update(time);
+        for (let i = 0, len = this._systemList.length; i < len; i++) {
+            this._systemList[i].update(time);
         }
         this.updating = false;
         this.updateComplete.dispatch();

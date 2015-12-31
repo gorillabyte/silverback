@@ -1,4 +1,3 @@
-import {Dictionary} from "./Dictionary";
 /**
  *  Linked List implementation in JavaScript, Released under the MIT license
  *  https://github.com/nzakas/computer-science-in-javascript/
