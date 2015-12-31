@@ -9,5 +9,5 @@
 /// <reference path="../js/core/System.d.ts" />
 /// <reference path="../js/utils/Dictionary.d.ts" />
 /// <reference path="../js/utils/LinkedList.d.ts" />
-/// <reference path="../js/utils/Quicksort.d.ts" />
+/// <reference path="../js/utils/SystemSort.d.ts" />
 //}

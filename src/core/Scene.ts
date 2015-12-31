@@ -2,6 +2,7 @@
 
 import {LinkedList} from '../utils/LinkedList';
 import {Dictionary} from '../utils/Dictionary';
+import {Entity} from './Entity';
 const MiniSignal = require('../../node_modules/mini-signals');
 
 export class Scene {
@@ -33,12 +34,14 @@ export class Scene {
 
     private _entities:Dictionary;
     private _entityList:LinkedList;
+    private _entityNames:Dictionary;
 
     constructor(name:string = '') {
         this._entities = new Dictionary();
         this.entityAdded = new MiniSignal();
         this.entityRemoved = new MiniSignal();
         this._entityList = new LinkedList();
+        this._entityNames = new Dictionary();
         this.nameChanged = new MiniSignal();
 
         if (name) {
@@ -79,11 +82,8 @@ export class Scene {
         if (typeof entityClass === 'undefined') {
             entityClass = entity.constructor;
         }
-        /*
-         if ( this._entities.has( entityClass ) ) {
-         this.removeEntity( entityClass );
-         }*/
         this._entityList.add(entity);
+        this._entityNames.add(entity.name, entity);
         this.entityAdded.dispatch(this, entityClass);
         entity.scene = this;
         return this;
@@ -95,16 +95,16 @@ export class Scene {
      * @param entityClass The class of the entity to be removed.
      * @return the entity, or null if the entity doesn't exist in the entity
      */
-    public removeEntity(entity):any {
-        this._entityList.remove(entity);
-
-        /*var entity:any = this._entities.getValue(entityClass);
-         if (entity) {
-         this._entities.remove( entityClass );
-         this.entityRemoved.dispatch(this, entityClass);
-         return entity;
-         }
-         return null;*/
+    public removeEntity(entity:Entity, index?:number):void {
+        if(typeof index === 'undefined') {
+            for (let i = 0; i < this._entityList.size(); i++) {
+                if(this._entityList.item(i) === entity) {
+                    this._entityList.remove(i);
+                }
+            }
+        } else {
+            this._entityList.remove(index);
+        }
     }
 
     /**
@@ -113,8 +113,7 @@ export class Scene {
      * @param entityName The class of the entity requested.
      * @return The entity, or null if none was found.
      */
-    public getEntityWithName(entityName:any):any {
-        //return this._entities.getValue(entityClass);
+    public getEntityWithName(entityName:any):Entity {
         for (let i = 0; i < this._entityList.size(); i++) {
             if (this._entityList.item(i).name === entityName) {
                 return this._entityList.item(i);
@@ -123,50 +122,35 @@ export class Scene {
     }
 
     /**
-     * Get a entity with component from the scene.
-     *
-     * @param entityClass The class of the entity requested.
-     * @return The entity, or null if none was found.
-     */
-    public getEntityWithComponent(_component:any, _componentClass:any):any {
-
-        for (let i = 0; i < this._entityList.size(); i++) {
-            if (this._entityList.item(i).has(_componentClass)) {
-                if (this._entityList.item(i).get(_componentClass).displayObject === _component) {
-                    return this._entityList.item(i);
-                }
-            }
-        }
-        return null;
-    }
-
-    /**
      * Get all entities from the scene.
      *
      * @return An array containing all the entities that are on the scene.
      */
-    public getAllEntity():any[] {
-        var entityArray = [];
-
-        this._entities.forEach(
-            (entityClass, entity) => {
-                entityArray.push(entity);
-            }
-        );
-        return entityArray;
+    public getAllEntities():any[] {
+        return this._entityList.toArray();
     }
 
     /**
      * Does the entity have a entity of a particular type.
      *
-     * @param entityClass The class of the entity sought.
+     * @param entityName The class of the entity sought.
      * @return true if the entity has a entity of the type, false if not.
      */
-    public hasEntity(entityClass:any):boolean {
-        return this._entities.has(entityClass);
+    public hasEntityWithName(entityName:any):boolean {
+        for (let i = 0, len = this._entityList.size(); i < len; i++) {
+            if(this._entityList.item(i).name === entityName) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public is(type) {
+    /**
+     * Checks the type, if the prototype is matching.
+     *
+     * @return {boolean} Return if the prototypes match.
+     */
+    public is(type):boolean {
         return type.prototype.isPrototypeOf(this);
     }
 }
