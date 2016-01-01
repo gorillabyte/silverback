@@ -3,7 +3,7 @@
 import {LinkedList} from '../utils/LinkedList';
 import {Dictionary} from '../utils/Dictionary';
 import {Entity} from './Entity';
-const MiniSignal = require('../../node_modules/mini-signals');
+const MiniSignal = require('mini-signals');
 
 export class Scene {
 

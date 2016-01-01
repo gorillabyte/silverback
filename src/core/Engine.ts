@@ -14,7 +14,7 @@ import {System} from './System';
 import {ComponentsFamily} from './ComponentsFamily';
 import {IFamily} from './IFamily';
 
-const MiniSignal = require('../../node_modules/mini-signals');
+const MiniSignal = require('mini-signals');
 
 /**
  * The Engine class is the central point for creating and managing your game state. Add

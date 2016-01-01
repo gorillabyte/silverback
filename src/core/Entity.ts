@@ -20,9 +20,8 @@
  */
 
 import {Scene} from './Scene';
-//import {Signal} from '../utils/Signal';
 import {Dictionary} from '../utils/Dictionary';
-const MiniSignal = require('../../node_modules/mini-signals');
+const MiniSignal = require('mini-signals');
 
 export class Entity {
 

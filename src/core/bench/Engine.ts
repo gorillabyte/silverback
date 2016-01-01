@@ -3,7 +3,7 @@ import {FamilyMock} from '../test/FamilyMock';
 import {Engine} from '../Engine';
 import {SystemMock, SystemMock2} from '../test/SystemMock';
 
-var bench = require('../../../node_modules/benchmark');
+var bench = require('benchmark');
 var s = new bench.Suite;
 
 s.add('AddEntityToEngine', function() {
