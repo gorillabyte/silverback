@@ -92,8 +92,8 @@ export class Scene {
     /**
      * Remove a entity from the scene.
      *
-     * @param entityClass The class of the entity to be removed.
-     * @return the entity, or null if the entity doesn't exist in the entity
+     * @param entity The entity to be removed.
+     * @param index The index of the entity in the entityList.
      */
     public removeEntity(entity:Entity, index?:number):void {
         if(typeof index === 'undefined') {
@@ -119,6 +119,7 @@ export class Scene {
                 return this._entityList.item(i);
             }
         }
+        return null;
     }
 
     /**
