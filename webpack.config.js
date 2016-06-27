@@ -6,7 +6,7 @@ module.exports = {
     output: {
         path: path.join(__dirname, './lib'),
         filename: 'silverback.js',
-        publicPath: '/lib/',
+        publicPath: './lib/',
         library: true,
         libraryTarget: 'commonjs'
     },
@@ -18,7 +18,7 @@ module.exports = {
         }]
     },
     resolve: {
-        extensions: ['', '.ts', '.js'],
+        extensions: ['', '.ts'],
         modulesDirectories: ['node_modules']
     }
 

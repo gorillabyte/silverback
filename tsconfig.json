@@ -8,7 +8,7 @@
     "noLib": false,
     "preserveConstEnums": true,
     "moduleResolution": "node",
-    "declaration": true,
+    "declaration": false,
     "suppressImplicitAnyIndexErrors": true,
     "outDir": "js"
   },
