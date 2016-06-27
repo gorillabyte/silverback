@@ -21,7 +21,7 @@ describe('EngineStateMachine', () => {
         engine = null;
         fsm = null;
     });
-    describe.only('- EngineState', () => {
+    describe('- EngineState', () => {
 
         it('should enter state and adds statesSystems', () => {
             var state:EngineState = new EngineState();
