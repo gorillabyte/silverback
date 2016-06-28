@@ -1,0 +1,16 @@
+{
+  "name": "silverback",
+  "globalDependencies": {
+    "assertion-error": "github:DefinitelyTyped/DefinitelyTyped/assertion-error/assertion-error.d.ts#1da639a106527e0c4010b354a1efe52a3059a291",
+    "chai": "github:DefinitelyTyped/DefinitelyTyped/chai/chai.d.ts#1da639a106527e0c4010b354a1efe52a3059a291",
+    "bluebird": "github:DefinitelyTyped/DefinitelyTyped/bluebird/bluebird.d.ts#1da639a106527e0c4010b354a1efe52a3059a291",
+    "karma": "github:DefinitelyTyped/DefinitelyTyped/karma/karma.d.ts#1da639a106527e0c4010b354a1efe52a3059a291",
+    "log4js": "github:DefinitelyTyped/DefinitelyTyped/log4js/log4js.d.ts#1da639a106527e0c4010b354a1efe52a3059a291",
+    "express": "github:DefinitelyTyped/DefinitelyTyped/express/express.d.ts#1da639a106527e0c4010b354a1efe52a3059a291",
+    "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#1da639a106527e0c4010b354a1efe52a3059a291",
+    "mime": "github:DefinitelyTyped/DefinitelyTyped/mime/mime.d.ts#1da639a106527e0c4010b354a1efe52a3059a291",
+    "serve-static": "github:DefinitelyTyped/DefinitelyTyped/serve-static/serve-static.d.ts#1da639a106527e0c4010b354a1efe52a3059a291",
+    "mocha": "github:DefinitelyTyped/DefinitelyTyped/mocha/mocha.d.ts#1da639a106527e0c4010b354a1efe52a3059a291",
+    "benchmark": "github:DefinitelyTyped/DefinitelyTyped/benchmark/benchmark.d.ts#dc9dabe74a5be62613b17a3605309783a12ff28a"
+  }
+}
