@@ -3,7 +3,7 @@
  * @class Engine
  */
 
-/// <reference path="../../typings/tsd.d.ts" />
+/// <reference path="../../typings/index.d.ts" />
 
 import {Entity} from './Entity';
 import {Scene} from './Scene';

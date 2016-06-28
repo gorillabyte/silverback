@@ -1,4 +1,4 @@
-/// <reference path="../../typings/tsd.d.ts" />
+/// <reference path="../../typings/index.d.ts" />
 
 /**
  * This export class maintains a pool of deleted nodes for reuse by the framework. This reduces the overhead

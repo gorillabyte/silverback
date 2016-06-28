@@ -1,4 +1,4 @@
-/// <reference path="../../typings/tsd.d.ts" />
+/// <reference path="../../typings/index.d.ts" />
 
 import {System} from '../core/System';
 import {ISystemProvider} from './ISystemProvider';

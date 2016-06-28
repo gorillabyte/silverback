@@ -1,4 +1,4 @@
-/// <reference path="../../typings/tsd.d.ts" />
+/// <reference path="../../typings/index.d.ts" />
 
 /**
  * The interface for classes that are used to manage NodeLists (set as the familyClass property

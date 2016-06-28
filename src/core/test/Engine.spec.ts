@@ -1,4 +1,4 @@
-/// <reference path="../../../typings/tsd.d.ts" />
+/// <reference path="../../../typings/index.d.ts" />
 
 import {Engine} from '../Engine';
 import {Entity} from '../Entity';
@@ -7,7 +7,6 @@ import {NodeMock, NodeMock2, Vec2D} from './NodeMock';
 import {System} from '../System';
 import {SystemMock} from './SystemMock';
 import {Scene} from '../Scene';
-import {SceneMock} from './SceneMock';
 import chai = require('chai');
 
 var expect = chai.expect;

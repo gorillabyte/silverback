@@ -1,4 +1,4 @@
-/// <reference path="../../typings/tsd.d.ts" />
+/// <reference path="../../typings/index.d.ts" />
 
 /**
  * The default class for managing a NodeList. This class creates the NodeList and adds and removes

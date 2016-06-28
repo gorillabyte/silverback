@@ -1,4 +1,4 @@
-/// <reference path="../../typings/tsd.d.ts" />
+/// <reference path="../../typings/index.d.ts" />
 
 /**
  * An entity is composed from components. As such, it is essentially a collection object for components.

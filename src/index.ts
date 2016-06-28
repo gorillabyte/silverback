@@ -1,14 +1,14 @@
 /**
  * @author       Stefan Herndlbauer <sherndlbauer@gorillabyte.com>
- * @copyright    2015 Gorillabyte
- * @license      {@link http://repo.gorillabyte.com/cos/silverback/blob/master/README.md|LGPL License}
- *
- * */
+ * @copyright    2015-2016 Gorillabyte
+ * @license      {@link https://github.com/Herndl/silverback.git/blob/master/README.md|MIT License}
+ **/
 
- // Core components of the engine
+ // Utility libraries
 export * from './utils/Dictionary';
 export * from './utils/LinkedList';
 
+// Core components of the engine
 export * from './core/Engine';
 export * from './core/Entity';
 export * from './core/System';

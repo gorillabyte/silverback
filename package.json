@@ -18,7 +18,7 @@
     "url": "repo.gorillabyte.com:cos/silverback.git"
   },
   "engines": {
-    "node": ">= 4.2.1 <= 5",
+    "node": ">= 4.2.1",
     "npm": ">= 3"
   },
   "author": "Stefan Herndlbauer <sherndlbauer@gorillabyte.com>",
@@ -55,10 +55,10 @@
     "mocha": "^2.5.3",
     "phantomjs": "^2.1.7",
     "ts-loader": "^0.8.2",
-    "tsd": "^0.6.5",
     "tslint": "^3.12.1",
     "typedoc": "^0.4.4",
     "typescript": "^1.8.10",
+    "typings": "^1.3.1",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
   },
