@@ -10,7 +10,7 @@
     "test:watch": "karma start karma.conf.js",
     "bench": "tsc && node ./js/core/bench/index.js",
     "docs": "typedoc --options typedoc.json src/**/*.ts",
-    "postinstall": "tsd install",
+    "postinstall": "typings install",
     "lint": "tslint -c tslint.json src/**/*.ts"
   },
   "repository": {
@@ -36,6 +36,9 @@
     "engine"
   ],
   "devDependencies": {
+    "babel-core": "^6.10.4",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
     "benchmark": "^2.1.0",
     "chai": "^3.5.0",
     "istanbul": "^1.1.0-alpha.1",

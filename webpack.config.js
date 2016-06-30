@@ -1,4 +1,4 @@
-var path = require("path");
+var path = require('path');
 
 module.exports = {
     entry: path.join(__dirname, './src/index.ts'),
@@ -7,19 +7,25 @@ module.exports = {
         path: path.join(__dirname, './lib'),
         filename: 'silverback.js',
         publicPath: './lib/',
-        library: true,
-        libraryTarget: 'commonjs'
+        library: 'silverback',
+        libraryTarget: 'var'
     },
     module: {
         loaders: [{
-            test: /\.ts$/,
-            loader: 'ts-loader',
-            exclude: [ /node_modules/, /docs/, /coverage/, /example/ ]
+            test: /\.ts(x?)$/,
+            exclude: /node_modules/,
+            loader: 'babel-loader?presets[]=es2015!ts-loader'
+        }, {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            loader: 'babel',
+            query: {
+                presets: ['es2015']
+            }
         }]
     },
     resolve: {
-        extensions: ['', '.ts'],
-        modulesDirectories: ['node_modules']
+        extensions: ['', '.ts', '.tsx', '.js'],
+        modulesDirectories: ['node_modules', 'src']
     }
-
 };

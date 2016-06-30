@@ -1,16 +1,14 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "sourceMap": true,
     "module": "commonjs",
     "noImplicitAny": false,
     "removeComments": true,
     "noLib": false,
     "preserveConstEnums": true,
-    "moduleResolution": "node",
     "declaration": false,
-    "suppressImplicitAnyIndexErrors": true,
-    "outDir": "js"
+    "suppressImplicitAnyIndexErrors": true
   },
   "exclude": [
     "node_modules",

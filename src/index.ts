@@ -4,7 +4,7 @@
  * @license      {@link https://github.com/Herndl/silverback.git/blob/master/README.md|MIT License}
  **/
 
- // Utility libraries
+// Utility libraries
 export * from './utils/Dictionary';
 export * from './utils/LinkedList';
 
@@ -16,4 +16,3 @@ export * from './core/Node';
 export * from './core/NodePool';
 export * from './core/Scene';
 export * from './core/ComponentsFamily';
-
