@@ -62,11 +62,11 @@ declare module silverback {
         cleanUp(): void;
     }
 
-    export var Node: {
-        entity: any;
-        previous: any;
-        next: any;
-    };
+    export class Node {
+        entity:any;
+        previous:any;
+        next:any;
+    }
 
     export class NodePool {
         private _tail;
@@ -75,9 +75,9 @@ declare module silverback {
         private _components;
         constructor(nodeClass: any, components: Dictionary);
         get(): any;
-        dispose(node: any): void;
-        cache(node: any): void;
-        releaseCache(): void;
+        dispose(node:any):void;
+        cache(node:any):void;
+        releaseCache():void;
     }
 
     export abstract class System {
@@ -169,18 +169,19 @@ declare module silverback {
     }
 }
 
-declare class MiniSignalBinding {
+declare export class MiniSignalBinding {
     constructor(fn:() => void, once:boolean, thisArg:any);
     detach():void;
 }
-declare class MiniSignal {
+declare export class MiniSignal {
     constructor();
     handlers(exists:boolean):MiniSignalBinding[];
     handlers(exists:boolean):boolean;
     has(node:MiniSignalBinding):boolean;
     detach(node:MiniSignalBinding):MiniSignal;
-    dispatch():boolean;
-    add(fn:() => void, thisArg:any):MiniSignalBinding;
-    once(fn:() => void, thisArg:any):MiniSignalBinding;
+    dispatch(thisArg?:any):boolean;
+    add(fn:() => void, thisArg?:any):MiniSignalBinding;
+    remove(fn:() => void, thisArg?:any):MiniSignalBinding;
+    once(fn:() => void, thisArg?:any):MiniSignalBinding;
     detachAll():void;
 }

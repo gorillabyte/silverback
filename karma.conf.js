@@ -35,13 +35,18 @@ module.exports = function(config) {
             },
             devtool: 'source-map',
             module: {
-                loaders: [
-                    {
-                        test: /\.ts$/,
-                        loader: 'ts-loader',
-                        exclude: [ /node_modules/ ]
+                loaders: [{
+                    test: /\.ts(x?)$/,
+                    exclude: /node_modules/,
+                    loader: 'babel-loader?presets[]=es2015!ts-loader'
+                }, {
+                    test: /\.js$/,
+                    exclude: /node_modules/,
+                    loader: 'babel',
+                    query: {
+                        presets: ['es2015']
                     }
-                ],
+                }],
                 postLoaders: [
                     {
                         test: /\.(js|ts)$/,
