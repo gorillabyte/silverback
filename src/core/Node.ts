@@ -10,19 +10,19 @@
  * to and removed from the engine and as the components on entities change.</p>
  */
 
-export var Node = {
+export class Node {
     /**
      * The entity whose components are included in the node.
      */
-    entity: null,
+    public entity:any = null;
 
     /**
      * Used by the NodeList class. The previous node in a node list.
      */
-    previous: null,
+    public previous:any = null;
 
     /**
      * Used by the NodeList class. The next node in a node list.
      */
-    next: null
-};
+    public next:any = null;
+}
