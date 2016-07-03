@@ -1,3 +1,4 @@
 language: node_js
+# Add a comment for a first build
 node_js:
   - 6.2
