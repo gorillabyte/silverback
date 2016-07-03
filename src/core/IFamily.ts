@@ -5,7 +5,6 @@
  * in the Engine object). Most developers don't need to use this since the default implementation
  * is used by default and suits most needs.
  */
-//import {NodeList} from './NodeList';
 import {LinkedList} from '../utils/LinkedList';
 import {Entity} from './Entity';
 

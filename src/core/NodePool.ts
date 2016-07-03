@@ -11,9 +11,9 @@
 import {Dictionary} from '../utils/Dictionary';
 
 export class NodePool {
-    private _tail:any;      // Node
+    private _tail:any;
     private _nodeClass;
-    private _cacheTail:any; // Node
+    private _cacheTail:any;
     private _components:Dictionary;
 
     /**

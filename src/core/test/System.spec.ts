@@ -1,7 +1,6 @@
 import chai = require('chai');
 import {Engine} from '../Engine';
 import {SystemMock, SystemMock2} from './SystemMock';
-import {System} from '../System';
 let expect = chai.expect;
 
 describe('System unit test', () => {

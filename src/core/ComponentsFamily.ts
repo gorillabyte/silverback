@@ -7,7 +7,6 @@
  * It uses the basic entity matching pattern of an entity system - entities are added to the list if
  * they contain components matching all the public properties of the node class.
  */
-import {Node} from './Node';
 import {NodePool} from './NodePool';
 import {LinkedList} from '../utils/LinkedList';
 import {Engine} from './Engine';

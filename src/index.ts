@@ -1,6 +1,6 @@
 /**
  * @author       Stefan Herndlbauer <sherndlbauer@gorillabyte.com>
- * @copyright    2015-2016 Gorillabyte
+ * @copyright    2015-2016 Stefan Herndlbauer
  * @license      {@link https://github.com/Herndl/silverback.git/blob/master/README.md|MIT License}
  **/
 
