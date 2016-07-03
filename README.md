@@ -8,7 +8,7 @@ We encourage you to contribute to Silverback Game Engine!
 
 ## Code Status
 
-...
+[![Build Status](https://travis-ci.org/Herndl/silverback.svg?branch=master)](https://travis-ci.org/Herndl/silverback)
 
 ## Copyright and license
 
