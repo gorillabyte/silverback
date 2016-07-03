@@ -1,14 +1,18 @@
-# Silverback Game Framework
+# Silverback Game Engine
 
-Silverback is heavily based on the [Ash framework](http://www.ashframework.org/) and rewritten for the purpose of performance and multi-player games. The basic ideas and concepts is very similar however with the conversion to Typescript bings all the benefits of this language with it. Silverback can be used on the server with NodeJS or on the client.
+Silverback is an entity component framework, which is heavily based on the [Ash framework](http://www.ashframework.org/) and rewritten for the purpose of performance and multi-player games. The basic ideas and concepts is very similar however the conversion to Typescript brings all the benefits of this language with it. Silverback can be used on the server with NodeJS or only on the client.
 
-## Author
+## Contributing
 
-Stefan Herndlbauer (@Herndl)
+We encourage you to contribute to Silverback Game Engine!
+
+## Code Status
+
+...
 
 ## Copyright and license
 
-The MIT License (MIT) Copyright © 2015 Gorillabyte
+The MIT License (MIT) Copyright © 2015-2016 Stefan Herndlbauer
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
