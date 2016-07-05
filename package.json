@@ -6,6 +6,7 @@
   "scripts": {
     "build": "webpack --progress --profile --colors --display-error-details --display-cached",
     "build:prod": "webpack --progress --profile --colors --display-error-details --display-cached --optimize-occurence-order --optimize-minimize --optimize-dedupe",
+    "watch": "webpack --progress --profile --colors --display-error-details --display-cached --watch",
     "test": "karma start karma.conf.js --single-run",
     "test:watch": "karma start karma.conf.js",
     "bench": "tsc && node ./js/core/bench/index.js",
