@@ -118,12 +118,12 @@ export class ComponentsFamily implements IFamily {
                 for(let prop in types) {
                     if (types.hasOwnProperty(prop)) {
 
-                        if(!entity.hasComponent(types[prop])) {
+                        if(!entity.hasComponent(types[prop].name)) {
                             // Node prop was not found in the entity
                             return;
                         } else {
                             // Add entity value to node
-                            node[prop] = entity.getComponent(types[prop]);
+                            node[prop] = entity.getComponent(types[prop].name);
                         }
                     }
                 }
