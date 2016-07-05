@@ -1,7 +1,6 @@
 import chai = require('chai');
 import {Engine} from '../Engine';
 import {LinkedList} from '../../utils/LinkedList';
-import {FamilyMock} from './FamilyMock';
 import {NodeMock, NodeMock2, Vec2D, Matrix, NewNodeMock} from './NodeMock';
 import {Entity} from '../Entity';
 
@@ -36,6 +35,18 @@ describe('EngineFamilyIntegration', () => {
             expect(nodes.item(0).point).to.be.equal(point);
             expect(nodes.item(0).matrix).to.be.equal(matrix);
         });
+
+        it('should add a component and only the family with the component should be selected', () => {
+            var entity:Entity = new Entity();
+            engine.addEntity(entity);
+            entity.addComponent(new Vec2D(0, 0));
+            entity.addComponent(new Matrix());
+            var nodeList1 = engine.getNodeList(NodeMock);
+            var nodeList2 = engine.getNodeList(NodeMock2);
+            expect(nodeList1.size()).to.deep.equal(1);
+            expect(nodeList2.size()).to.deep.equal(0);
+        });
+
 
         it('should correctly add entity to family, when accessing the family first', () => {
             let entity:Entity = new Entity();

@@ -6,6 +6,9 @@ export class Vec2D {
 export class Matrix {
 }
 
+export class Position {
+}
+
 export var NodeMock = {
     name: 'NodeMock',
     entity: null,
@@ -14,8 +17,8 @@ export var NodeMock = {
     point: null,
     matrix: null,
     types: {
-        point: 'Vec2D',
-        matrix: 'Matrix'
+        point: Vec2D,
+        matrix: Matrix
     }
 };
 
@@ -27,8 +30,8 @@ export var NewNodeMock = {
     point: null,
     matrix: null,
     types: {
-        point: 'Vec2D',
-        matrix: 'Matrix'
+        point: Vec2D,
+        matrix: Matrix
     }
 };
 
@@ -37,8 +40,8 @@ export var NodeMock2 = {
     entity: null,
     previous: null,
     next: null,
-    matrix: null,
+    position: null,
     types: {
-        matrix: 'Matrix'
+        position: Position
     }
 };
