@@ -118,15 +118,16 @@ export class Engine {
             for (let i = 0; i < this._entityList.size(); i++) {
                 if(this._entityList.item(i) === entity) {
                     this._entityList.remove(i);
+                    this._entityNames.remove(entity.name);
                 }
             }
         } else {
             this._entityList.remove(index);
+            this._entityNames.remove(entity.name);
         }
         this._families.forEach((nodeObject, family: IFamily) => {
             family.removeEntity(entity);
         });
-        this._entityNames.remove(entity.name);
     }
 
     /**
