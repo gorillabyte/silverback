@@ -10,7 +10,6 @@
     "test:watch": "karma start",
     "bench": "tsc && node ./js/core/bench/index.js",
     "docs": "typedoc --options typedoc.json src/**/*.ts",
-    "postinstall": "typings install",
     "lint": "tslint -c tslint.json src/**/*.ts"
   },
   "repository": {
