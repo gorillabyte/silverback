@@ -1,0 +1,16 @@
+node_modules/
+*.log
+*.tgz
+
+js/
+docs/
+coverage/
+examples/
+typings/
+
+tsconfig.json
+tslint.json
+typings.json
+typedoc.json
+karma.conf.js
+webpack.config.js

@@ -2,13 +2,12 @@
   "name": "silverback",
   "version": "0.0.5",
   "description": "The Silverback Game Engine is a Typescript entity component framework.",
-  "main": "silverback.js",
   "scripts": {
     "build": "webpack --progress --profile --colors --display-error-details --display-cached",
     "build:prod": "webpack --progress --profile --colors --display-error-details --display-cached --optimize-occurence-order --optimize-minimize --optimize-dedupe",
     "watch": "webpack --progress --profile --colors --display-error-details --display-cached --watch",
-    "test": "karma start karma.conf.js --single-run",
-    "test:watch": "karma start karma.conf.js",
+    "test": "karma start --single-run",
+    "test:watch": "karma start",
     "bench": "tsc && node ./js/core/bench/index.js",
     "docs": "typedoc --options typedoc.json src/**/*.ts",
     "postinstall": "typings install",
@@ -16,14 +15,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "repo.gorillabyte.com:cos/silverback.git"
+    "url": "git@github.com:Herndl/silverback.git"
   },
   "engines": {
     "node": ">= 4.2.1",
     "npm": ">= 3"
   },
-  "author": "Stefan Herndlbauer <sherndlbauer@gorillabyte.com>",
+  "author": {
+    "email": "sherndlbauer@gorillabyte.com",
+    "name": "Stefan Herndlbauer",
+    "url": "http://www.gorillabyte.com"
+  },
   "license": "MIT",
+  "main": "./lib/silverback.js",
   "keywords": [
     "typescript",
     "game",
