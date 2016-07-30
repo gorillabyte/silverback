@@ -14,3 +14,5 @@ typings.json
 typedoc.json
 karma.conf.js
 webpack.config.js
+.travis.yml
+.idea
