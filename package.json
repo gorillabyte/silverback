@@ -1,6 +1,6 @@
 {
   "name": "silverback",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "The Silverback Game Engine is a Typescript entity component framework.",
   "scripts": {
     "build": "webpack --progress --profile --colors --display-error-details --display-cached",
