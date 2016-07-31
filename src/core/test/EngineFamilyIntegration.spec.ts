@@ -1,7 +1,7 @@
 import chai = require('chai');
 import {Engine} from '../Engine';
 import {LinkedList} from '../../utils/LinkedList';
-import {NodeMock, NodeMock2, Vec2D, Matrix, NewNodeMock} from './NodeMock';
+import {NodeMock, NodeMock2, Vec2D, Matrix, NewNodeMock} from './Node.stub';
 import {Entity} from '../Entity';
 
 let expect = chai.expect;

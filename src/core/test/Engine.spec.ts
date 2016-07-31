@@ -2,10 +2,10 @@
 
 import {Engine} from '../Engine';
 import {Entity} from '../Entity';
-import {FamilyMock} from './FamilyMock';
-import {NodeMock, NodeMock2, Vec2D} from './NodeMock';
+import {FamilyMock} from './Family.stub';
+import {NodeMock, NodeMock2, Vec2D} from './Node.stub';
 import {System} from '../System';
-import {SystemMock} from './SystemMock';
+import {SystemMock} from './System.stub';
 import {Scene} from '../Scene';
 import chai = require('chai');
 

@@ -2,8 +2,7 @@ import chai = require('chai');
 import {Engine} from '../../core/Engine';
 import {EngineStateMachine} from '../EngineStateMachine';
 import {EngineState} from '../EngineState';
-import {System} from '../../core/System';
-import {SystemMock} from '../../core/test/SystemMock';
+import {SystemMock} from '../../core/test/System.stub';
 
 var expect = chai.expect;
 

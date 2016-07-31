@@ -1,6 +1,6 @@
 import chai = require('chai');
 import {Entity} from '../Entity';
-import {ComponentMock, ComponentMock2, ComponentMockExtended} from './ComponentMock';
+import {ComponentMock, ComponentMock2, ComponentMockExtended} from './Component.stub';
 
 let expect = chai.expect;
 

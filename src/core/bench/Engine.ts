@@ -1,7 +1,7 @@
 import {Entity} from '../Entity';
-import {FamilyMock} from '../test/FamilyMock';
+import {FamilyMock} from '../test/Family.stub';
 import {Engine} from '../Engine';
-import {SystemMock, SystemMock2} from '../test/SystemMock';
+import {SystemMock, SystemMock2} from '../test/System.stub';
 
 var bench = require('benchmark');
 var s = new bench.Suite;
