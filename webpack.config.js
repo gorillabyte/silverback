@@ -1,4 +1,5 @@
 var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
     entry: path.join(__dirname, './src/index.ts'),
@@ -10,18 +11,30 @@ module.exports = {
         library: 'silverback',
         libraryTarget: 'commonjs2'
     },
+    node : {
+        fs: 'empty'
+    },
+    isparta: {
+        embedSource: true,
+        noAutoWrap: true,
+        babel: {
+            presets: ['es2015-webpack', 'stage-2']
+        }
+    },
     module: {
         loaders: [{
             test: /\.ts(x?)$/,
             exclude: /node_modules/,
-            loader: 'babel-loader?presets[]=es2015!ts-loader'
+            loader: 'babel!ts-loader'
         }, {
             test: /\.js$/,
             exclude: /node_modules/,
-            loader: 'babel',
-            query: {
-                presets: ['es2015']
-            }
+            loader: 'babel'
+        }],
+        postLoaders: [{
+            test: /\.(js|ts)$/,
+            loader: 'istanbul-instrumenter',
+            exclude: /(test|node_modules)\//
         }]
     },
     resolve: {
