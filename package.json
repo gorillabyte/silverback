@@ -27,6 +27,11 @@
   },
   "license": "MIT",
   "main": "./lib/silverback.js",
+  "config": {
+    "ghooks": {
+      "pre-commit": "npm run test"
+    }
+  },
   "keywords": [
     "typescript",
     "game",
@@ -47,6 +52,7 @@
     "babel-preset-stage-2": "6.11.0",
     "benchmark": "^2.1.0",
     "chai": "^3.5.0",
+    "ghooks": "1.3.2",
     "istanbul": "^1.1.0-alpha.1",
     "istanbul-instrumenter-loader": "^0.2.0",
     "jasmine-core": "^2.4.1",
