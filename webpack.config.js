@@ -8,7 +8,7 @@ module.exports = {
         filename: 'silverback.js',
         publicPath: './lib/',
         library: 'silverback',
-        libraryTarget: 'var'
+        libraryTarget: 'commonjs2'
     },
     module: {
         loaders: [{
