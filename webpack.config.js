@@ -14,31 +14,19 @@ module.exports = {
     node : {
         fs: 'empty'
     },
-    isparta: {
-        embedSource: true,
-        noAutoWrap: true,
-        babel: {
-            presets: ['es2015-webpack', 'stage-2']
-        }
-    },
     module: {
         loaders: [{
             test: /\.ts(x?)$/,
             exclude: /node_modules/,
-            loader: 'babel!ts-loader'
+            loader: 'babel-loader!ts-loader'
         }, {
             test: /\.js$/,
             exclude: /node_modules/,
-            loader: 'babel'
-        }],
-        postLoaders: [{
-            test: /\.(js|ts)$/,
-            loader: 'istanbul-instrumenter',
-            exclude: /(test|node_modules)\//
+            loader: 'babel-loader'
         }]
     },
     resolve: {
-        extensions: ['', '.ts', '.tsx', '.js'],
-        modulesDirectories: ['node_modules', 'src']
+        extensions: [ '.ts', '.tsx', '.js'],
+        modules: ['node_modules', 'src']
     }
 };

@@ -74,7 +74,8 @@ export class EngineStateMachine {
                 var other:ISystemProvider = toAdd.getValue(id);
 
                 if (other) {
-                    delete toAdd.getValue(id);
+                    // TODO: disable because of error TS2703, need further investigation
+                    //delete toAdd.getValue(id);
                 } else {
                     this.engine.removeSystem(provider.getSystem());
                 }
