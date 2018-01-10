@@ -44,7 +44,7 @@ export class LinkedList {
     public add(data) {
 
         // Create a new item object, place data in
-        var node = {
+        let node = {
             data: data,
             next: null,
             previous: null
@@ -79,7 +79,7 @@ export class LinkedList {
     public item(index: number) {
         //check for out-of-bounds values
         if (index > -1 && index < this._length) {
-            var current = this._head,
+            let current = this._head,
                 i = 0;
 
             while (i++ < index) {

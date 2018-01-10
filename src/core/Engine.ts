@@ -3,8 +3,6 @@
  * @class Engine
  */
 
-/// <reference path="../../typings/index.d.ts" />
-
 import { Entity } from './Entity';
 import { Scene } from './Scene';
 import { Dictionary } from '../utils/Dictionary';

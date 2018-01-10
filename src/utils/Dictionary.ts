@@ -1,5 +1,3 @@
-/// <reference path="../../typings/index.d.ts" />
-
 export class Dictionary {
 
     private _keys: any[];
@@ -25,7 +23,7 @@ export class Dictionary {
         let keyIndex = this.getIndex(key);
 
         if (keyIndex >= 0) {
-            var removedValue = this._values[keyIndex];
+            let removedValue = this._values[keyIndex];
             this._keys.splice(keyIndex, 1);
             this._values.splice(keyIndex, 1);
             return removedValue;
@@ -92,7 +90,7 @@ export class Dictionary {
         for (let i = 0; i < len; ++i) {
             key = this._keys[i];
             value = this._values[i];
-            var breakHere = action(key, value);
+            let breakHere = action(key, value);
             if (breakHere === 'return') {
                 return false;
             }

@@ -3,8 +3,8 @@ import { FamilyMock } from '../test/Family.stub';
 import { Engine } from '../Engine';
 import { SystemMock, SystemMock2 } from '../test/System.stub';
 
-var bench = require('benchmark');
-var s = new bench.Suite;
+const bench = require('benchmark');
+const s = new bench.Suite;
 
 s.add('AddEntityToEngine', function () {
     let engine = new Engine();

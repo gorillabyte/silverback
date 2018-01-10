@@ -1,5 +1,3 @@
-/// <reference path="../../typings/index.d.ts" />
-
 /**
  * The base class for a node.
  *

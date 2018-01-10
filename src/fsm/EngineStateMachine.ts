@@ -72,7 +72,7 @@ export class EngineStateMachine {
         if (this.currentState) {
             this.currentState.providers.forEach((provider: ISystemProvider) => {
                 id = provider.identifier;
-                var other: ISystemProvider = toAdd.getValue(id);
+                let other: ISystemProvider = toAdd.getValue(id);
 
                 if (other) {
                     // TODO: disable because of error TS2703, need further investigation

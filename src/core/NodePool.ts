@@ -1,5 +1,3 @@
-/// <reference path="../../typings/index.d.ts" />
-
 /**
  * This export class maintains a pool of deleted nodes for reuse by the framework. This reduces the overhead
  * from object creation and garbage collection.
@@ -29,7 +27,7 @@ export class NodePool {
      */
     public get() {
         if (this._tail) {
-            var node = this._tail;
+            let node = this._tail;
             this._tail = this._tail.previous;
             node.previous = null;
             return node;
@@ -61,7 +59,7 @@ export class NodePool {
      */
     public releaseCache(): void {
         while (this._cacheTail) {
-            var node: any = this._cacheTail;
+            let node: any = this._cacheTail;
             this._cacheTail = node.previous;
             this.dispose(node);
         }

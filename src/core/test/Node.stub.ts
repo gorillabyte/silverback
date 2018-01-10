@@ -9,7 +9,7 @@ export class Matrix {
 export class Position {
 }
 
-export var NodeMock = {
+export const NodeMock = {
     name: 'NodeMock',
     entity: null,
     previous: null,
@@ -22,7 +22,7 @@ export var NodeMock = {
     }
 };
 
-export var NewNodeMock = {
+export const NewNodeMock = {
     name: 'NewNodeMock',
     entity: null,
     previous: null,
@@ -35,7 +35,7 @@ export var NewNodeMock = {
     }
 };
 
-export var NodeMock2 = {
+export const NodeMock2 = {
     name: 'NodeMock2',
     entity: null,
     previous: null,

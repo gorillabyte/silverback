@@ -1,5 +1,3 @@
-/// <reference path="../../typings/index.d.ts" />
-
 /**
  * An entity is composed from components. As such, it is essentially a collection object for components.
  * Sometimes, the entities in a game will mirror the actual characters and objects in the game, but this
@@ -76,7 +74,7 @@ export class Entity {
 
     public set name(value: string) {
         if (this._name !== value) {
-            var previous: string = this._name;
+            let previous: string = this._name;
             this._name = value;
             this.nameChanged.dispatch(this, previous);
         }
@@ -93,7 +91,7 @@ export class Entity {
      * @return A reference to the entity. This enables the chaining of calls to add, to make
      * creating and configuring entities cleaner. e.g.
      *
-     * <code>var entity : Entity = new Entity()
+     * <code>let entity : Entity = new Entity()
      *     .add(new Position(100, 200))
      *     .add(new Display(new PlayerClip());</code>
      */

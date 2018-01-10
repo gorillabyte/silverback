@@ -2,12 +2,12 @@ import chai = require('chai');
 import { Engine } from '../Engine';
 import { SystemMock, SystemMock2 } from './System.stub';
 
-let expect = chai.expect;
+const expect = chai.expect;
 
 describe('System unit test', () => {
-    var engine: Engine;
-    var system1: SystemMock;
-    var system2: SystemMock;
+    let engine: Engine;
+    let system1: SystemMock;
+    let system2: SystemMock;
 
     beforeEach(() => {
         engine = new Engine();
@@ -65,7 +65,7 @@ describe('System unit test', () => {
             engine.addSystem(system1, 10);
             system2 = new SystemMock2();
             engine.addSystem(system2, 5);
-            var system3 = new SystemMock();
+            let system3 = new SystemMock();
             engine.addSystem(system3, 1);
             expect(engine.systems[0]).to.deep.equal(system3);
             expect(engine.systems[2]).to.deep.equal(system1);
@@ -76,7 +76,7 @@ describe('System unit test', () => {
             engine.addSystem(system1, 10);
             system2 = new SystemMock2();
             engine.addSystem(system2, 5);
-            var system3 = new SystemMock();
+            let system3 = new SystemMock();
             engine.addSystem(system3, 1);
             engine.removeSystem(system3);
             expect(engine.systems[0]).to.deep.equal(system2);

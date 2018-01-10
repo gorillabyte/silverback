@@ -1,10 +1,10 @@
 import chai = require('chai');
 import { Engine } from '../Engine';
-import { LinkedList } from '../../utils/LinkedList';
+import { LinkedList } from '../../';
 import { NodeMock, NodeMock2, Vec2D, Matrix, NewNodeMock } from './Node.stub';
 import { Entity } from '../Entity';
 
-let expect = chai.expect;
+const expect = chai.expect;
 
 describe('EngineFamilyIntegration', () => {
     let engine: Engine;
@@ -37,12 +37,12 @@ describe('EngineFamilyIntegration', () => {
         });
 
         it('should add a component and only the family with the component should be selected', () => {
-            var entity: Entity = new Entity();
+            let entity: Entity = new Entity();
             engine.addEntity(entity);
             entity.addComponent(new Vec2D(0, 0));
             entity.addComponent(new Matrix());
-            var nodeList1 = engine.getNodeList(NodeMock);
-            var nodeList2 = engine.getNodeList(NodeMock2);
+            let nodeList1 = engine.getNodeList(NodeMock);
+            let nodeList2 = engine.getNodeList(NodeMock2);
             expect(nodeList1.size()).to.deep.equal(1);
             expect(nodeList2.size()).to.deep.equal(0);
         });
@@ -159,7 +159,7 @@ describe('EngineFamilyIntegration', () => {
             entity.addComponent(new Vec2D(0, 0));
             entity.addComponent(new Matrix());
             engine.addEntity(entity);
-            var nodes: LinkedList = engine.getNodeList(NewNodeMock);
+            let nodes: LinkedList = engine.getNodeList(NewNodeMock);
             engine.releaseNodeList(NewNodeMock);
             expect(nodes.item(0)).to.be.null;
         });

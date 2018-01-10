@@ -1,5 +1,3 @@
-/// <reference path="../../typings/index.d.ts" />
-
 /**
  * The abstract class for a system implementation.
  *

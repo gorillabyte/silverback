@@ -1,5 +1,3 @@
-/// <reference path="../../typings/index.d.ts" />
-
 import { LinkedList } from '../utils/LinkedList';
 import { Dictionary } from '../utils/Dictionary';
 import { Entity } from './Entity';
@@ -62,7 +60,7 @@ export class Scene {
 
     public set name(value: string) {
         if (this._name !== value) {
-            var previous: string = this._name;
+            let previous: string = this._name;
             this._name = value;
             this.nameChanged.dispatch(this, previous);
         }

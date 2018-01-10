@@ -1,8 +1,0 @@
-{
-  "resolution": "main",
-  "tree": {
-    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/1da639a106527e0c4010b354a1efe52a3059a291/log4js/log4js.d.ts",
-    "raw": "github:DefinitelyTyped/DefinitelyTyped/log4js/log4js.d.ts#1da639a106527e0c4010b354a1efe52a3059a291",
-    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/1da639a106527e0c4010b354a1efe52a3059a291/log4js/log4js.d.ts"
-  }
-}

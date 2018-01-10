@@ -1,6 +1,6 @@
 import { Entity } from '../Entity';
 import { Engine } from '../Engine';
-import { LinkedList } from '../../utils/LinkedList';
+import { LinkedList } from '../../';
 import { IFamily } from '../IFamily';
 
 export class FamilyMock implements IFamily {

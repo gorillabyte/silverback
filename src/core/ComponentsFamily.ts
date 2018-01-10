@@ -1,5 +1,3 @@
-/// <reference path="../../typings/index.d.ts" />
-
 /**
  * The default class for managing a NodeList. This class creates the NodeList and adds and removes
  * nodes to/from the list as the entities and the components in the engine change.
@@ -141,7 +139,7 @@ export class ComponentsFamily implements IFamily {
     public removeIfMatch(entity: Entity) {
 
         if (this._entities.getValue(entity)) {
-            var node = this._entities.getValue(entity);
+            let node = this._entities.getValue(entity);
             this._entities.remove(entity);
 
             for (let i = 0; i < this._nodes.size(); i++) {

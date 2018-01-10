@@ -2,7 +2,7 @@ import chai = require('chai');
 import { Scene } from '../Scene';
 import { Entity } from '../Entity';
 
-let expect = chai.expect;
+const expect = chai.expect;
 
 describe('Scene unit test', () => {
     let scene: Scene;
