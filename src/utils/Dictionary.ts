@@ -21,7 +21,7 @@ export class Dictionary {
         }
     }
 
-    public remove(key):any {
+    public remove(key): any {
         let keyIndex = this.getIndex(key);
 
         if (keyIndex >= 0) {

@@ -1,9 +1,10 @@
 /// <reference path="../../typings/index.d.ts" />
 
-import {System} from '../core/System';
+import { System } from '../core/System';
 
 export interface ISystemProvider {
-    getSystem():System;
+    getSystem(): System;
+
     identifier;
-    priority:number;
+    priority: number;
 }

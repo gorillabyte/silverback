@@ -1,14 +1,14 @@
 import chai = require('chai');
-import {Engine} from '../../core/Engine';
-import {EngineStateMachine} from '../EngineStateMachine';
-import {EngineState} from '../EngineState';
-import {SystemMock} from '../../core/test/System.stub';
+import { Engine } from '../../core/Engine';
+import { EngineStateMachine } from '../EngineStateMachine';
+import { EngineState } from '../EngineState';
+import { SystemMock } from '../../core/test/System.stub';
 
 var expect = chai.expect;
 
 describe('EngineStateMachine', () => {
-    let engine:Engine;
-    let fsm:EngineStateMachine;
+    let engine: Engine;
+    let fsm: EngineStateMachine;
 
 
     beforeEach(() => {
@@ -23,8 +23,8 @@ describe('EngineStateMachine', () => {
     describe('- EngineState', () => {
 
         it('should enter state and adds statesSystems', () => {
-            var state:EngineState = new EngineState();
-            var system:SystemMock = new SystemMock();
+            var state: EngineState = new EngineState();
+            var system: SystemMock = new SystemMock();
             state.addInstance(system);
             fsm.addState('test', state);
             fsm.changeState('test');

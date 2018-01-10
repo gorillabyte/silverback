@@ -1,21 +1,22 @@
-import {Dictionary} from '../utils/Dictionary';
-import {EngineState} from './EngineState';
-import {Engine} from '../core/Engine';
-import {ISystemProvider} from './ISystemProvider';
+import { Dictionary } from '../utils/Dictionary';
+import { EngineState } from './EngineState';
+import { Engine } from '../core/Engine';
+import { ISystemProvider } from './ISystemProvider';
+
 /**
  * This is a state machine for the Engine. The state machine manages a set of states,
  * each of which has a set of System providers. When the state machine changes the state, it removes
  * Systems associated with the previous state and adds Systems associated with the new state.
  */
 export class EngineStateMachine {
-    public engine:Engine;
-    private states:Dictionary;
-    private currentState:EngineState;
+    public engine: Engine;
+    private states: Dictionary;
+    private currentState: EngineState;
 
     /**
      * Constructor. Creates an SystemStateMachine.
      */
-    constructor(engine:Engine) {
+    constructor(engine: Engine) {
         this.engine = engine;
         this.states = new Dictionary();
     }
@@ -27,7 +28,7 @@ export class EngineStateMachine {
      * @param state The state.
      * @return This state machine, so methods can be chained.
      */
-    public addState(name:string, state:EngineState):EngineStateMachine {
+    public addState(name: string, state: EngineState): EngineStateMachine {
         this.states.add(name, state);
         return this;
     }
@@ -39,8 +40,8 @@ export class EngineStateMachine {
      * @return The new EntityState object that is the state. This will need to be configured with
      * the appropriate component providers.
      */
-    public createState(name:string):EngineState {
-        let state:EngineState = new EngineState();
+    public createState(name: string): EngineState {
+        let state: EngineState = new EngineState();
         this.states.add(name, state);
         return state;
     }
@@ -51,27 +52,27 @@ export class EngineStateMachine {
      *
      * @param name The name of the state to change to.
      */
-    public changeState(name:string):void {
-        let newState:EngineState = this.states.getValue(name);
-        let toAdd:Dictionary = new Dictionary();
+    public changeState(name: string): void {
+        let newState: EngineState = this.states.getValue(name);
+        let toAdd: Dictionary = new Dictionary();
         let id;
 
-        if(!newState) {
-            throw( new Error( 'Engine state ' + name + ' doesn\'t exist' ));
+        if (!newState) {
+            throw(new Error('Engine state ' + name + ' doesn\'t exist'));
         }
-        if(newState === this.currentState ) {
+        if (newState === this.currentState) {
             newState = null;
             return;
         }
 
-        newState.providers.forEach( function(provider:ISystemProvider) {
+        newState.providers.forEach(function (provider: ISystemProvider) {
             id = provider.identifier;
             toAdd.add(id, provider);
         });
-        if(this.currentState) {
-            this.currentState.providers.forEach( (provider:ISystemProvider) => {
+        if (this.currentState) {
+            this.currentState.providers.forEach((provider: ISystemProvider) => {
                 id = provider.identifier;
-                var other:ISystemProvider = toAdd.getValue(id);
+                var other: ISystemProvider = toAdd.getValue(id);
 
                 if (other) {
                     // TODO: disable because of error TS2703, need further investigation
@@ -81,7 +82,7 @@ export class EngineStateMachine {
                 }
             });
         }
-        toAdd.forEach( (provider) => {
+        toAdd.forEach((provider) => {
             this.engine.addSystem(provider, provider.priority);
         });
         this.currentState = newState;

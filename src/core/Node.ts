@@ -14,15 +14,15 @@ export class Node {
     /**
      * The entity whose components are included in the node.
      */
-    public entity:any = null;
+    public entity: any = null;
 
     /**
      * Used by the NodeList class. The previous node in a node list.
      */
-    public previous:any = null;
+    public previous: any = null;
 
     /**
      * Used by the NodeList class. The next node in a node list.
      */
-    public next:any = null;
+    public next: any = null;
 }

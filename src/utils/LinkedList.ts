@@ -76,7 +76,7 @@ export class LinkedList {
      * @return {any} The value in the "data" portion of the given item or null if the item doesn't exist.
      * @method item
      */
-    public item(index:number) {
+    public item(index: number) {
         //check for out-of-bounds values
         if (index > -1 && index < this._length) {
             var current = this._head,
@@ -99,7 +99,7 @@ export class LinkedList {
      *      the item doesn't exist.
      * @method remove
      */
-    public remove(index:number) {
+    public remove(index: number) {
         // Check for out-of-bounds values
         if (index > -1 && index < this._length) {
 
@@ -212,7 +212,7 @@ export class LinkedList {
      * @return {any} The element of the list or null if the item was not in the list.
      */
     public get(type) {
-        let current:any = this._head;
+        let current: any = this._head;
         if (typeof current.data.is === 'function') {
             while (current) {
                 if (current.data.is(type)) {

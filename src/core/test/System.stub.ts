@@ -1,4 +1,4 @@
-import {System} from '../System';
+import { System } from '../System';
 
 export class SystemMock extends System {
 
@@ -10,15 +10,15 @@ export class SystemMock extends System {
         super();
     }
 
-    addToEngine(engine:any) {
+    addToEngine(engine: any) {
         this.addToEngineCalls++;
     }
 
-    removeFromEngine(engine:any) {
+    removeFromEngine(engine: any) {
         this.removeFromEngineCalls++;
     }
 
-    update(time:number) {
+    update(time: number) {
         this.updateCalls++;
     }
 
@@ -34,15 +34,15 @@ export class SystemMock2 extends System {
         super();
     }
 
-    addToEngine(engine:any) {
+    addToEngine(engine: any) {
         this.addToEngineCalls++;
     }
 
-    removeFromEngine(engine:any) {
+    removeFromEngine(engine: any) {
         this.removeFromEngineCalls++;
     }
 
-    update(time:number) {
+    update(time: number) {
         this.updateCalls++;
     }
 

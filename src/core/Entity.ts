@@ -19,8 +19,9 @@
  * position component. Systems operate on entities based on the components they have.</p>
  */
 
-import {Scene} from './Scene';
-import {Dictionary} from '../utils/Dictionary';
+import { Scene } from './Scene';
+import { Dictionary } from '../utils/Dictionary';
+
 const MiniSignal = require('mini-signals');
 
 export class Entity {
@@ -29,7 +30,7 @@ export class Entity {
     /**
      * Optional, give the entity a name. This can help with debugging and with serialising the entity.
      */
-    private _name:string;
+    private _name: string;
 
     /**
      * This signal is dispatched when a component is added to the entity.
@@ -47,18 +48,18 @@ export class Entity {
      */
     public nameChanged;
 
-    public previous:Entity;
-    public next:Entity;
-    private _components:Dictionary;
-    private _addedToScene:Scene;
+    public previous: Entity;
+    public next: Entity;
+    private _components: Dictionary;
+    private _addedToScene: Scene;
 
-    constructor(name:string = '') {
+    constructor(name: string = '') {
         this._components = new Dictionary();
         this.componentAdded = new MiniSignal();
         this.componentRemoved = new MiniSignal();
         this.nameChanged = new MiniSignal();
 
-        if(name.length > 0) {
+        if (name.length > 0) {
             this._name = name;
         } else {
             this._name = 'entity' + (++Entity.nameCount);
@@ -69,12 +70,13 @@ export class Entity {
      * All entities have a name. If no name is set, a default name is used. Names are used to
      * fetch specific entities from the engine, and can also help to identify an entity when debugging.
      */
-    public get name():string {
+    public get name(): string {
         return this._name;
     }
-    public set name(value:string) {
-        if(this._name !== value) {
-            var previous:string = this._name;
+
+    public set name(value: string) {
+        if (this._name !== value) {
+            var previous: string = this._name;
             this._name = value;
             this.nameChanged.dispatch(this, previous);
         }
@@ -95,11 +97,11 @@ export class Entity {
      *     .add(new Position(100, 200))
      *     .add(new Display(new PlayerClip());</code>
      */
-    public addComponent(component:any, componentClass?):Entity {
-        if(typeof componentClass === 'undefined') {
+    public addComponent(component: any, componentClass?): Entity {
+        if (typeof componentClass === 'undefined') {
             componentClass = component.constructor.name;
         }
-        if(this._components.has(componentClass)) {
+        if (this._components.has(componentClass)) {
             this.removeComponent(componentClass);
         }
         this._components.add(componentClass, component);
@@ -113,8 +115,8 @@ export class Entity {
      * @param componentClass The class of the component to be removed.
      * @return the component, or null if the component doesn't exist in the entity
      */
-    public removeComponent(componentClass):any {
-        let component:any = this._components.getValue(componentClass);
+    public removeComponent(componentClass): any {
+        let component: any = this._components.getValue(componentClass);
         if (component) {
             this._components.remove(componentClass);
             this.componentRemoved.dispatch(this, componentClass);
@@ -129,7 +131,7 @@ export class Entity {
      * @param componentClass The class of the component requested.
      * @return The component, or null if none was found.
      */
-    public getComponent(componentClass:string):any {
+    public getComponent(componentClass: string): any {
         return this._components.getValue(componentClass);
     }
 
@@ -139,7 +141,7 @@ export class Entity {
      * @param componentClass The class of the component sought.
      * @return true if the entity has a component of the type, false if not.
      */
-    public hasComponent(componentClass:string):boolean {
+    public hasComponent(componentClass: string): boolean {
         return this._components.has(componentClass);
     }
 
@@ -148,7 +150,7 @@ export class Entity {
      *
      * @return An array containing all the components that are on the entity.
      */
-    public getAll():any[] {
+    public getAll(): any[] {
         let componentArray = [];
 
         this._components.forEach(
@@ -159,13 +161,13 @@ export class Entity {
         return componentArray;
     }
 
-    public set scene(scene:Scene) {
+    public set scene(scene: Scene) {
         this._addedToScene = scene;
     }
 
     public toString() {
         let seen = [];
-        return JSON.stringify(this, function(key, val) {
+        return JSON.stringify(this, function (key, val) {
             if (typeof val === 'object') {
                 if (seen.indexOf(val) >= 0) {
                     return;

@@ -1,10 +1,11 @@
 import chai = require('chai');
-import {Scene} from '../Scene';
-import {Entity} from '../Entity';
+import { Scene } from '../Scene';
+import { Entity } from '../Entity';
+
 let expect = chai.expect;
 
 describe('Scene unit test', () => {
-    let scene:Scene;
+    let scene: Scene;
 
     describe('- Scene', () => {
 
@@ -28,12 +29,12 @@ describe('Scene unit test', () => {
         it('should dispatch the changed signal after the name has changed', () => {
             let signalSend = false;
             scene = new Scene('anything');
-            scene.nameChanged.add( (signalEntity:Scene, oldName:string) => {
+            scene.nameChanged.add((signalEntity: Scene, oldName: string) => {
                 expect(signalEntity).to.deep.equal(scene);
                 expect(scene.name).to.deep.equal('newOne');
                 expect(oldName).to.deep.equal('anything');
                 signalSend = true;
-            } );
+            });
             scene.name = 'newOne';
         });
 

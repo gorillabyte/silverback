@@ -1,20 +1,20 @@
-import {Entity} from '../Entity';
-import {FamilyMock} from '../test/Family.stub';
-import {Engine} from '../Engine';
-import {SystemMock, SystemMock2} from '../test/System.stub';
+import { Entity } from '../Entity';
+import { FamilyMock } from '../test/Family.stub';
+import { Engine } from '../Engine';
+import { SystemMock, SystemMock2 } from '../test/System.stub';
 
 var bench = require('benchmark');
 var s = new bench.Suite;
 
-s.add('AddEntityToEngine', function() {
-        let engine = new Engine();
-        engine.familyClass = FamilyMock;
-        let entity1:Entity = new Entity();
-        engine.addEntity(entity1);
-        let entity2:Entity = new Entity();
-        engine.addEntity(entity2);
-    })
-    .add('AddSystemToEngine', function() {
+s.add('AddEntityToEngine', function () {
+    let engine = new Engine();
+    engine.familyClass = FamilyMock;
+    let entity1: Entity = new Entity();
+    engine.addEntity(entity1);
+    let entity2: Entity = new Entity();
+    engine.addEntity(entity2);
+})
+    .add('AddSystemToEngine', function () {
         let engine = new Engine();
         engine.familyClass = FamilyMock;
         let system1 = new SystemMock();

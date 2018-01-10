@@ -5,8 +5,8 @@
  * in the Engine object). Most developers don't need to use this since the default implementation
  * is used by default and suits most needs.
  */
-import {LinkedList} from '../utils/LinkedList';
-import {Entity} from './Entity';
+import { LinkedList } from '../utils/LinkedList';
+import { Entity } from './Entity';
 
 export interface IFamily {
 
@@ -15,30 +15,30 @@ export interface IFamily {
      * since it is retained and reused by Systems that use the list. i.e. never recreate the list,
      * always modify it in place.
      */
-    nodeList:LinkedList;
+    nodeList: LinkedList;
 
     /**
      * An entity has been added to the engine. It may already have components so test the entity
      * for inclusion in this family's NodeList.
      */
-    newEntity(entity:Entity);
+    newEntity(entity: Entity);
 
     /**
      * An entity has been removed from the engine. If it's in this family's NodeList it should be removed.
      */
-    removeEntity(entity:Entity);
+    removeEntity(entity: Entity);
 
     /**
      * A component has been added to an entity. Test whether the entity's inclusion in this family's
      * NodeList should be modified.
      */
-    componentAddedToEntity(entity:Entity, componentClass:() => any);
+    componentAddedToEntity(entity: Entity, componentClass: () => any);
 
     /**
      * A component has been removed from an entity. Test whether the entity's inclusion in this family's
      * NodeList should be modified.
      */
-    componentRemovedFromEntity(entity:Entity, componentClass:() => any);
+    componentRemovedFromEntity(entity: Entity, componentClass: () => any);
 
 
     /**

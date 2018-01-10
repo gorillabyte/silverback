@@ -28,13 +28,13 @@
  * @param {int} secondIndex Index of second item to swap.
  * @return {void}
  */
-function swap(items, firstIndex:number, secondIndex:number):void {
+function swap(items, firstIndex: number, secondIndex: number): void {
     let temp = items[firstIndex];
     items[firstIndex] = items[secondIndex];
     items[secondIndex] = temp;
 }
 
-function partition(items, left:number, right:number) {
+function partition(items, left: number, right: number) {
     let pivot = items[Math.floor((right + left) / 2)].priority;  // pivot value is middle item
     let i = left;     // starts from left and goes right to pivot index
     let j = right;    // starts from right and goes left to pivot index

@@ -7,20 +7,20 @@
  * It uses the basic entity matching pattern of an entity system - entities are added to the list if
  * they contain components matching all the public properties of the node class.
  */
-import {NodePool} from './NodePool';
-import {LinkedList} from '../utils/LinkedList';
-import {Engine} from './Engine';
-import {Entity} from './Entity';
-import {IFamily} from './IFamily';
-import {Dictionary} from '../utils/Dictionary';
+import { NodePool } from './NodePool';
+import { LinkedList } from '../utils/LinkedList';
+import { Engine } from './Engine';
+import { Entity } from './Entity';
+import { IFamily } from './IFamily';
+import { Dictionary } from '../utils/Dictionary';
 
 export class ComponentsFamily implements IFamily {
-    private _nodes:LinkedList;
-    private _entities:Dictionary;
+    private _nodes: LinkedList;
+    private _entities: Dictionary;
     private _nodeClass;
-    private _components:Dictionary;
-    private _nodePool:NodePool;
-    private _engine:Engine;
+    private _components: Dictionary;
+    private _nodePool: NodePool;
+    private _engine: Engine;
 
     /**
      * The constructor. Creates a ComponentsFamily to provide a NodeList for the
@@ -29,7 +29,7 @@ export class ComponentsFamily implements IFamily {
      * @param nodeClass The type of node to create and manage a NodeList for.
      * @param engine The engine that this family is managing teh NodeList for.
      */
-    constructor(nodeClass:any, engine:Engine) {
+    constructor(nodeClass: any, engine: Engine) {
         this._nodeClass = nodeClass;
         this._engine = engine;
 
@@ -47,7 +47,7 @@ export class ComponentsFamily implements IFamily {
 
         let types = this._nodeClass['types'];
 
-        for(let prop in types) {
+        for (let prop in types) {
             if (types.hasOwnProperty(prop)) {
                 this._components.add(prop, types[prop]);
             }
@@ -61,7 +61,7 @@ export class ComponentsFamily implements IFamily {
      * since it is retained and reused by Systems that use the list. i.e. we never recreate the list,
      * we always modify it in place.
      */
-    public get nodeList():LinkedList {
+    public get nodeList(): LinkedList {
         return this._nodes;
     }
 
@@ -69,7 +69,7 @@ export class ComponentsFamily implements IFamily {
      * Called by the engine when an entity has been added to it. We check if the entity should be in
      * this family's NodeList and add it if appropriate.
      */
-    public newEntity(entity:Entity) {
+    public newEntity(entity: Entity) {
         this.addIfMatch(entity);
     }
 
@@ -77,7 +77,7 @@ export class ComponentsFamily implements IFamily {
      * Called by the engine when a component has been added to an entity. We check if the entity is not in
      * this family's NodeList and should be, and add it if appropriate.
      */
-    public componentAddedToEntity(entity:Entity, componentClass:() => any) {
+    public componentAddedToEntity(entity: Entity, componentClass: () => any) {
         this.addIfMatch(entity);
     }
 
@@ -86,7 +86,7 @@ export class ComponentsFamily implements IFamily {
      * is required by this family's NodeList and if so, we check if the entity is in this this NodeList and
      * remove it if so.
      */
-    public componentRemovedFromEntity(entity:Entity, componentClass:() => any) {
+    public componentRemovedFromEntity(entity: Entity, componentClass: () => any) {
         this.removeIfMatch(entity);
     }
 
@@ -94,7 +94,7 @@ export class ComponentsFamily implements IFamily {
      * Called by the engine when an entity has been rmoved from it. We check if the entity is in
      * this family's NodeList and remove it if so.
      */
-    public removeEntity(entity:Entity) {
+    public removeEntity(entity: Entity) {
         this.removeIfMatch(entity);
     }
 
@@ -102,7 +102,7 @@ export class ComponentsFamily implements IFamily {
      * If the entity is not in this family's NodeList, tests the components of the entity to see
      * if it should be in this NodeList and adds it if so.
      */
-    public addIfMatch(entity:Entity) {
+    public addIfMatch(entity: Entity) {
         if (!this._entities.has(entity)) {
 
             this._components.forEach((componentClass) => {
@@ -111,14 +111,14 @@ export class ComponentsFamily implements IFamily {
                 }
             });
             // If the entity has not components, don't add it.
-            if(entity.getAll().length > 0) {
+            if (entity.getAll().length > 0) {
                 let node = this._nodePool.get();
                 let types = node.types;
 
-                for(let prop in types) {
+                for (let prop in types) {
                     if (types.hasOwnProperty(prop)) {
 
-                        if(!entity.hasComponent(types[prop].name)) {
+                        if (!entity.hasComponent(types[prop].name)) {
                             // Node prop was not found in the entity
                             return;
                         } else {
@@ -138,14 +138,14 @@ export class ComponentsFamily implements IFamily {
     /**
      * Removes the entity if it is in this family's NodeList.
      */
-    public removeIfMatch(entity:Entity) {
+    public removeIfMatch(entity: Entity) {
 
-        if(this._entities.getValue(entity)) {
+        if (this._entities.getValue(entity)) {
             var node = this._entities.getValue(entity);
             this._entities.remove(entity);
 
-            for(let i = 0; i < this._nodes.size(); i++) {
-                if(this._nodes.item(i) === node) {
+            for (let i = 0; i < this._nodes.size(); i++) {
+                if (this._nodes.item(i) === node) {
                     this._nodes.remove(i);
                 }
             }

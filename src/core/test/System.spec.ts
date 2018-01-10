@@ -1,12 +1,13 @@
 import chai = require('chai');
-import {Engine} from '../Engine';
-import {SystemMock, SystemMock2} from './System.stub';
+import { Engine } from '../Engine';
+import { SystemMock, SystemMock2 } from './System.stub';
+
 let expect = chai.expect;
 
 describe('System unit test', () => {
-    var engine:Engine;
-    var system1:SystemMock;
-    var system2:SystemMock;
+    var engine: Engine;
+    var system1: SystemMock;
+    var system2: SystemMock;
 
     beforeEach(() => {
         engine = new Engine();
@@ -40,14 +41,14 @@ describe('System unit test', () => {
             engine.removeSystem(system1);
             expect(system1.removeFromEngineCalls).to.equal(1);
         });
-        
+
         it('engine should call the update on the systems', () => {
             system1 = new SystemMock();
             engine.addSystem(system1, 0);
             engine.update(0.1);
             expect(system1.updateCalls).to.equal(1);
         });
-        
+
         it('should have a default priority of zero', () => {
             system1 = new SystemMock();
             expect(system1.priority).to.equal(0);

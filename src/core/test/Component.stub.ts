@@ -1,5 +1,5 @@
 export class ComponentMock {
-    public value:number;
+    public value: number;
 }
 
 export class ComponentMock2 {
@@ -7,5 +7,5 @@ export class ComponentMock2 {
 }
 
 export class ComponentMockExtended extends ComponentMock {
-    public other:number;
+    public other: number;
 }

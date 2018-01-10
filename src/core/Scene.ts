@@ -1,8 +1,9 @@
 /// <reference path="../../typings/index.d.ts" />
 
-import {LinkedList} from '../utils/LinkedList';
-import {Dictionary} from '../utils/Dictionary';
-import {Entity} from './Entity';
+import { LinkedList } from '../utils/LinkedList';
+import { Dictionary } from '../utils/Dictionary';
+import { Entity } from './Entity';
+
 const MiniSignal = require('mini-signals');
 
 export class Scene {
@@ -11,7 +12,7 @@ export class Scene {
     /**
      * Optional, give the scene a name. This can help with debugging and with serialising the scenes.
      */
-    private _name:string;
+    private _name: string;
 
     /**
      * This signal is dispatched when a entity is added to the scene.
@@ -29,14 +30,14 @@ export class Scene {
      */
     public nameChanged;
 
-    public previous:Scene;
-    public next:Scene;
+    public previous: Scene;
+    public next: Scene;
 
-    private _entities:Dictionary;
-    private _entityList:LinkedList;
-    private _entityNames:Dictionary;
+    private _entities: Dictionary;
+    private _entityList: LinkedList;
+    private _entityNames: Dictionary;
 
-    constructor(name:string = '') {
+    constructor(name: string = '') {
         this._entities = new Dictionary();
         this.entityAdded = new MiniSignal();
         this.entityRemoved = new MiniSignal();
@@ -55,12 +56,13 @@ export class Scene {
      * All scenes have a name. If no name is set, a default name is used. Names are used to
      * fetch specific scenes from the engine, and can also help to identify an entity when debugging.
      */
-    public get name():string {
+    public get name(): string {
         return this._name;
     }
-    public set name(value:string) {
-        if(this._name !== value) {
-            var previous:string = this._name;
+
+    public set name(value: string) {
+        if (this._name !== value) {
+            var previous: string = this._name;
             this._name = value;
             this.nameChanged.dispatch(this, previous);
         }
@@ -78,7 +80,7 @@ export class Scene {
      * creating and configuring entities cleaner. e.g.
      *
      */
-    public addEntity(entity:any, entityClass?):Scene {
+    public addEntity(entity: any, entityClass?): Scene {
         if (typeof entityClass === 'undefined') {
             entityClass = entity.constructor;
         }
@@ -95,10 +97,10 @@ export class Scene {
      * @param entity The entity to be removed.
      * @param index The index of the entity in the entityList.
      */
-    public removeEntity(entity:Entity, index?:number):void {
-        if(typeof index === 'undefined') {
+    public removeEntity(entity: Entity, index?: number): void {
+        if (typeof index === 'undefined') {
             for (let i = 0; i < this._entityList.size(); i++) {
-                if(this._entityList.item(i) === entity) {
+                if (this._entityList.item(i) === entity) {
                     this._entityList.remove(i);
                 }
             }
@@ -113,7 +115,7 @@ export class Scene {
      * @param entityName The class of the entity requested.
      * @return The entity, or null if none was found.
      */
-    public getEntityWithName(entityName:any):Entity {
+    public getEntityWithName(entityName: any): Entity {
         for (let i = 0; i < this._entityList.size(); i++) {
             if (this._entityList.item(i).name === entityName) {
                 return this._entityList.item(i);
@@ -127,7 +129,7 @@ export class Scene {
      *
      * @return An array containing all the entities that are on the scene.
      */
-    public getAllEntities():any[] {
+    public getAllEntities(): any[] {
         return this._entityList.toArray();
     }
 
@@ -137,9 +139,9 @@ export class Scene {
      * @param entityName The class of the entity sought.
      * @return true if the entity has a entity of the type, false if not.
      */
-    public hasEntityWithName(entityName:any):boolean {
+    public hasEntityWithName(entityName: any): boolean {
         for (let i = 0, len = this._entityList.size(); i < len; i++) {
-            if(this._entityList.item(i).name === entityName) {
+            if (this._entityList.item(i).name === entityName) {
                 return true;
             }
         }
@@ -151,7 +153,7 @@ export class Scene {
      *
      * @return {boolean} Return if the prototypes match.
      */
-    public is(type):boolean {
+    public is(type): boolean {
         return type.prototype.isPrototypeOf(this);
     }
 }

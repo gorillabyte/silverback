@@ -1,11 +1,12 @@
-import {ISystemProvider} from './ISystemProvider';
-import {System} from '../core/System';
+import { ISystemProvider } from './ISystemProvider';
+import { System } from '../core/System';
+
 /**
  * This System provider returns results of a method call. The method
  * is passed to the provider at initialisation.
  */
 export class DynamicSystemProvider implements ISystemProvider {
-    private _method:Function;
+    private _method: Function;
     private _systemPriority = 0;
 
     /**
@@ -13,7 +14,7 @@ export class DynamicSystemProvider implements ISystemProvider {
      *
      * @param method The method that returns the System instance;
      */
-    constructor( method:Function ) {
+    constructor(method: Function) {
         this._method = method;
     }
 
@@ -22,7 +23,7 @@ export class DynamicSystemProvider implements ISystemProvider {
      *
      * @return The instance of the System
      */
-    public getSystem():System {
+    public getSystem(): System {
         return this._method();
     }
 
@@ -39,11 +40,11 @@ export class DynamicSystemProvider implements ISystemProvider {
     /**
      * The priority at which the System should be added to the Engine
      */
-    public get priority():number {
+    public get priority(): number {
         return this._systemPriority;
     }
 
-    public set priority(value:number) {
+    public set priority(value: number) {
         this._systemPriority = value;
     }
 }

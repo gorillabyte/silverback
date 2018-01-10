@@ -1,16 +1,16 @@
 /// <reference path="../../typings/index.d.ts" />
 
-import {System} from '../core/System';
-import {ISystemProvider} from './ISystemProvider';
-import {EngineState} from './EngineState';
+import { System } from '../core/System';
+import { ISystemProvider } from './ISystemProvider';
+import { EngineState } from './EngineState';
 
 /**
  * Used by the SystemState class to create the mappings of Systems to providers via a fluent interface.
  */
 export class StateSystemMapping {
 
-    private creatingState:EngineState;
-    private provider:ISystemProvider;
+    private creatingState: EngineState;
+    private provider: ISystemProvider;
 
     /**
      * Used internally, the constructor creates a component mapping. The constructor
@@ -20,7 +20,7 @@ export class StateSystemMapping {
      * @param creatingState The SystemState that the mapping will belong to
      * @param provider The System type for the mapping
      */
-    constructor(creatingState:EngineState, provider:ISystemProvider) {
+    constructor(creatingState: EngineState, provider: ISystemProvider) {
         this.creatingState = creatingState;
         this.provider = provider;
     }
@@ -31,7 +31,7 @@ export class StateSystemMapping {
      * @param priority The component provider to use.
      * @return This StateSystemMapping, so more modifications can be applied.
      */
-    public withPriority(priority:number):StateSystemMapping {
+    public withPriority(priority: number): StateSystemMapping {
         this.provider.priority = priority;
         return this;
     }
@@ -43,7 +43,7 @@ export class StateSystemMapping {
      * @param system The System instance to use for the mapping
      * @return This StateSystemMapping, so more modifications can be applied
      */
-    public addInstance(system:System):StateSystemMapping {
+    public addInstance(system: System): StateSystemMapping {
         return this.creatingState.addInstance(system);
     }
 
@@ -57,7 +57,7 @@ export class StateSystemMapping {
      * mapping is used.
      * @return This StateSystemMapping, so more modifications can be applied
      */
-    public addSingleton(type:any):StateSystemMapping {
+    public addSingleton(type: any): StateSystemMapping {
         return this.creatingState.addSingleton(type);
     }
 
@@ -69,7 +69,7 @@ export class StateSystemMapping {
      * @param method The method to provide the System instance.
      * @return This StateSystemMapping, so more modifications can be applied.
      */
-    public addMethod(method:Function):StateSystemMapping {
+    public addMethod(method: Function): StateSystemMapping {
         return this.creatingState.addMethod(method);
     }
 
@@ -80,7 +80,7 @@ export class StateSystemMapping {
      * @param provider The component provider to use.
      * @return This StateSystemMapping, so more modifications can be applied.
      */
-    public addProvider(provider:ISystemProvider):StateSystemMapping {
+    public addProvider(provider: ISystemProvider): StateSystemMapping {
         return this.creatingState.addProvider(provider);
     }
 }

@@ -8,18 +8,18 @@
  * while iterating through the NodeList, the pool also maintains a cache of nodes that are added to the pool
  * but should not be reused yet. They are then released into the pool by calling the releaseCache method.
  */
-import {Dictionary} from '../utils/Dictionary';
+import { Dictionary } from '../utils/Dictionary';
 
 export class NodePool {
-    private _tail:any;
+    private _tail: any;
     private _nodeClass;
-    private _cacheTail:any;
-    private _components:Dictionary;
+    private _cacheTail: any;
+    private _components: Dictionary;
 
     /**
      * Creates a pool for the given node class.
      */
-    constructor(nodeClass, components:Dictionary) {
+    constructor(nodeClass, components: Dictionary) {
         this._nodeClass = nodeClass;
         this._components = components;
     }
@@ -28,7 +28,7 @@ export class NodePool {
      * Fetches a node from the pool.
      */
     public get() {
-        if(this._tail) {
+        if (this._tail) {
             var node = this._tail;
             this._tail = this._tail.previous;
             node.previous = null;
@@ -41,7 +41,7 @@ export class NodePool {
     /**
      * Adds a node to the pool.
      */
-    public dispose(node:any):void {
+    public dispose(node: any): void {
         node.entity = null;
         node.next = null;
         node.previous = this._tail;
@@ -51,7 +51,7 @@ export class NodePool {
     /**
      * Adds a node to the cache
      */
-    public cache(node):void {
+    public cache(node): void {
         node.previous = this._cacheTail;
         this._cacheTail = node;
     }
@@ -59,9 +59,9 @@ export class NodePool {
     /**
      * Releases all nodes from the cache into the pool
      */
-    public releaseCache():void {
-        while(this._cacheTail) {
-            var node:any = this._cacheTail;
+    public releaseCache(): void {
+        while (this._cacheTail) {
+            var node: any = this._cacheTail;
             this._cacheTail = node.previous;
             this.dispose(node);
         }
