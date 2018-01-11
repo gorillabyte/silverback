@@ -10,7 +10,7 @@
     "test": "karma start --single-run",
     "test:watch": "karma start",
     "bench": "tsc && node ./js/core/bench/index.js",
-    "docs": "typedoc --options typedoc.json src/**/*.ts",
+    "docs": "typedoc --json typedoc.json --out src/**/*.ts --mode modules --target ES6 --tsconfig ./tsconfig.json",
     "lint": "tslint -c tslint.json src/**/*.ts",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
