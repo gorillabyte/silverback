@@ -16,3 +16,6 @@
 /js
 /js/**/*.js
 /js/**/*.js.map
+
+# Dist/Lib Export
+/lib

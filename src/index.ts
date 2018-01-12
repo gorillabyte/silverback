@@ -16,3 +16,6 @@ export * from './core/Node';
 export * from './core/NodePool';
 export * from './core/Scene';
 export * from './core/ComponentsFamily';
+
+// Always export Silverback globally.
+window.Silverback = exports; // eslint-disable-line

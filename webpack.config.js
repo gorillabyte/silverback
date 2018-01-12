@@ -1,5 +1,4 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
 
 module.exports = {
     entry: path.join(__dirname, './src/index.ts'),
@@ -8,8 +7,8 @@ module.exports = {
         path: path.join(__dirname, './lib'),
         filename: 'silverback.js',
         publicPath: './lib/',
-        library: 'silverback',
-        libraryTarget: 'commonjs2'
+        library: 'Silverback',
+        libraryTarget: 'var'
     },
     node : {
         fs: 'empty'
