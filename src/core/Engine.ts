@@ -2,7 +2,7 @@
  * @module Silverback
  * @class Engine
  */
-
+/// <reference path="../../types/mini-signals.d.ts" />
 import { Entity } from './Entity';
 import { Scene } from './Scene';
 import { Dictionary } from '../utils/Dictionary';

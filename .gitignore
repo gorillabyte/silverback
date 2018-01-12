@@ -18,4 +18,7 @@
 /js/**/*.js.map
 
 # Dist/Lib Export
-/lib
+/dist
+
+# Docs
+/docs
