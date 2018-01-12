@@ -10,7 +10,7 @@
     "test": "karma start --single-run",
     "test:watch": "karma start",
     "bench": "tsc && node ./js/core/bench/index.js",
-    "docs": "typedoc --json typedoc.json --out docs src/**/*.ts --mode modules --target ES6 --tsconfig ./tsconfig.json --includeDeclarations",
+    "docs": "typedoc --json typedoc.json --out docs src/**/*.ts --mode modules --target ES6 --tsconfig ./tsconfig.json",
     "lint": "tslint -c tslint.json src/**/*.ts",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
@@ -27,7 +27,7 @@
     "url": "http://www.gorillabyte.com"
   },
   "license": "MIT",
-  "main": "./lib/silverback.js",
+  "main": "./dist/silverback.js",
   "config": {
     "ghooks": {
       "pre-commit": "npm run test"
@@ -58,6 +58,7 @@
     "@types/mime": "^2.0.0",
     "@types/mocha": "^2.2.46",
     "@types/node": "^9.3.0",
+    "@types/pixi.js": "^4.6.3",
     "@types/serve-static": "^1.13.1",
     "babel-core": "^6.10.4",
     "babel-loader": "^7.1.2",
