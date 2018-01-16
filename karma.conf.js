@@ -6,6 +6,7 @@ module.exports = function setKarmaConfig(config) {
         basePath: '',
         frameworks: ['mocha', 'chai', 'commonjs'],
         files: [
+            { pattern: 'node_modules/babel-polyfill/browser.js', instrument: false },
             'src/**/*.spec.ts'
         ],
         exclude: [

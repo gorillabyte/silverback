@@ -62,7 +62,7 @@ describe('Entity unit test', () => {
         });
 
         it('should return null, if no component is not assigned to entity', () => {
-            expect(entity.getComponent('ComponentMock')).to.be.null;
+            expect(entity.getComponent('ComponentMock')).to.be.undefined;
         });
 
         it('should retrieve all components', () => {

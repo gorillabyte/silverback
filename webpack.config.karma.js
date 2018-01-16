@@ -3,7 +3,7 @@ const webpackConfig = require('./webpack.config.js');
 webpackConfig.module.rules = [
     {
         test: /\.ts$/,
-        loader: 'ts-loader?silent=true',
+        loader: 'babel-loader!ts-loader?silent=true',
         exclude: /node_modules/
     },
     {
