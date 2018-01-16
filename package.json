@@ -12,7 +12,8 @@
     "bench": "tsc && node ./js/core/bench/index.js",
     "docs": "typedoc --json typedoc.json --out docs src/**/*.ts --mode modules --target ES6 --tsconfig ./tsconfig.json",
     "lint": "tslint -c tslint.json src/**/*.ts",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "examples": "node tools/server.js"
   },
   "repository": {
     "type": "git",
@@ -67,6 +68,7 @@
     "chai": "^4.1.2",
     "commitizen": "2.9.6",
     "cz-conventional-changelog": "2.1.0",
+    "express": "^4.16.2",
     "ghooks": "2.0.2",
     "istanbul": "^1.1.0-alpha.1",
     "istanbul-instrumenter-loader": "^3.0.0",
