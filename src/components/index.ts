@@ -5,3 +5,4 @@
 
 export { CPosition } from './CPosition';
 export { CDisplay } from './CDisplay';
+export { CGroup } from './CGroup';

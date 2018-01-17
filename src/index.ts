@@ -10,10 +10,14 @@ export * from './core';
 
 // Import libs
 import * as components from './components';
+import * as systems from './systems';
+import * as nodes from './nodes';
 
 
 export {
-    components
+    components,
+    systems,
+    nodes
 };
 
 // Always export Silverback globally.
