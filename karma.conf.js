@@ -4,7 +4,7 @@ const webpackConfig = require('./webpack.config.karma.js');
 module.exports = function setKarmaConfig(config) {
     config.set({
         basePath: '',
-        frameworks: ['mocha', 'chai', 'commonjs'],
+        frameworks: ['mocha', 'chai'],
         files: [
             { pattern: 'node_modules/babel-polyfill/browser.js', instrument: false },
             'src/**/*.spec.ts'
@@ -13,8 +13,8 @@ module.exports = function setKarmaConfig(config) {
             'src/**/*.bench.ts'
         ],
         preprocessors: {
-            'src/**/*!(spec|stub).ts': ['webpack', 'sourcemap','commonjs'],
-            'src/**/*.spec.ts': ['webpack','sourcemap', 'commonjs']
+            'src/**/*!(spec|stub).ts': ['webpack', 'sourcemap',],
+            'src/**/*.spec.ts': ['webpack','sourcemap']
         },
         reporters: ['spec', 'coverage-istanbul'],
         port: 9876,
