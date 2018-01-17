@@ -8,17 +8,6 @@ interface Window {
 
 declare module Silverback {
 
-    export class Dictionary {
-        private _map;
-        constructor();
-        add(key: any, value: any): void;
-        remove(key: any): any;
-        getValue(key: any): any;
-        has(testKey: any): boolean;
-        values(): any[];
-        forEach(action: any): boolean;
-    }
-
     export function systemSort(items: any, left?: any, right?: any): any;
 
     export class LinkedList {
@@ -76,7 +65,7 @@ declare module Silverback {
         private _nodeClass;
         private _cacheTail;
         private _components;
-        constructor(nodeClass: any, components: Dictionary);
+        constructor(nodeClass: any, components: Map<any, any>);
         get(): any;
         dispose(node:any):void;
         cache(node:any):void;

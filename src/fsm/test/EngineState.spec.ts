@@ -25,7 +25,7 @@ describe('EngineStateMachine', () => {
         it('should enter state and adds statesSystems', () => {
             let state: EngineState = new EngineState();
             let system: SystemMock = new SystemMock();
-            state.addInstance(system);
+            engine.addSystem(system, 0);
             fsm.addState('test', state);
             fsm.changeState('test');
             expect(engine.getSystem(SystemMock)).to.deep.equal(system);

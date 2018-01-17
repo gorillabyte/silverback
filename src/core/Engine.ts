@@ -5,7 +5,6 @@
 /// <reference path="../../types/mini-signals.d.ts" />
 import { Entity } from './Entity';
 import { Scene } from './Scene';
-import { Dictionary } from '../utils/Dictionary';
 import { LinkedList } from '../utils/LinkedList';
 import systemSort from '../utils/SystemSort';
 import { System } from './System';
@@ -23,9 +22,9 @@ export class Engine {
     private _systemList: Array<System>;
     private _entityList: LinkedList;
     private _sceneList: LinkedList;
-    private _entityNames: Dictionary;
-    private _sceneNames: Dictionary;
-    private _families: Dictionary;
+    private _entityNames: Map<any, any>;
+    private _sceneNames: Map<any, any>;
+    private _families: Map<any, any>;
 
     /**
      * Indicates if the engine is currently in its update loop.
@@ -52,9 +51,9 @@ export class Engine {
         this._systemList = [];
         this._entityList = new LinkedList();
         this._sceneList = new LinkedList();
-        this._entityNames = new Dictionary();
-        this._sceneNames = new Dictionary();
-        this._families = new Dictionary();
+        this._entityNames = new Map();
+        this._sceneNames = new Map();
+        this._families = new Map();
         this.updateComplete = new MiniSignal();
 
         this.familyClass = ComponentsFamily;
@@ -91,13 +90,13 @@ export class Engine {
             throw new Error('The entity name ' + entity.name + ' is already in use by another entity.');
         }
         this._entityList.add(entity);
-        this._entityNames.add(entity.name, entity);
+        this._entityNames.set(entity.name, entity);
         entity.componentAdded.add(this._componentAdded, this);
         entity.componentRemoved.add(this._componentRemoved, this);
         entity.nameChanged.add(this._entityNameChanged, this);
 
         this._families.forEach((nodeObject, family: IFamily) => {
-            family.newEntity(entity);
+            nodeObject.newEntity(entity);
         });
     }
 
@@ -116,15 +115,15 @@ export class Engine {
             for (let i = 0; i < this._entityList.size(); i++) {
                 if (this._entityList.item(i) === entity) {
                     this._entityList.remove(i);
-                    this._entityNames.remove(entity.name);
+                    this._entityNames.delete(entity.name);
                 }
             }
         } else {
             this._entityList.remove(index);
-            this._entityNames.remove(entity.name);
+            this._entityNames.delete(entity.name);
         }
         this._families.forEach((nodeObject, family: IFamily) => {
-            family.removeEntity(entity);
+            nodeObject.removeEntity(entity);
         });
     }
 
@@ -136,7 +135,7 @@ export class Engine {
      */
     public getEntityByName(name: string): Entity {
         if (this._entityNames.has(name)) {
-            return this._entityNames.getValue(name);
+            return this._entityNames.get(name);
         }
         return null;
     }
@@ -158,7 +157,7 @@ export class Engine {
      */
     public addScene(scene: Scene): void {
         this._sceneList.add(scene);
-        this._sceneNames.add(scene.name, scene);
+        this._sceneNames.set(scene.name, scene);
         scene.nameChanged.add(this._sceneNameChanged, this);
 
     }
@@ -179,7 +178,7 @@ export class Engine {
         } else {
             this._sceneList.remove(index);
         }
-        this._sceneNames.remove(scene.name);
+        this._sceneNames.delete(scene.name);
         scene.nameChanged.detachAll();
     }
 
@@ -201,7 +200,7 @@ export class Engine {
      */
     public getSceneByName(name: string): Scene {
         if (this._sceneNames.has(name)) {
-            return this._sceneNames.getValue(name);
+            return this._sceneNames.get(name);
         }
         return null;
     }
@@ -231,10 +230,10 @@ export class Engine {
      */
     public getNodeList(nodeClass): LinkedList {
         if (this._families.has(nodeClass)) {
-            return this._families.getValue(nodeClass).nodeList;
+            return this._families.get(nodeClass).nodeList;
         } else {
             let family: IFamily = new this.familyClass(nodeClass, this);
-            this._families.add(nodeClass, family);
+            this._families.set(nodeClass, family);
             for (let i = 0; i < this._entityList.size(); i++) {
                 family.newEntity(this._entityList.item(i));
             }
@@ -254,11 +253,11 @@ export class Engine {
      */
     public releaseNodeList(nodeClass) {
         if (this._families.has(nodeClass)) {
-            this._families.getValue(nodeClass).cleanUp();
+            this._families.get(nodeClass).cleanUp();
         } else {
             throw new Error('The given nodeClass was not found and can not be released.');
         }
-        this._families.remove(nodeClass);
+        this._families.delete(nodeClass);
     }
 
     /**
@@ -345,8 +344,8 @@ export class Engine {
      */
     private _entityNameChanged(entity: Entity, oldName: string): void {
         if (this._entityNames.has(oldName)) {
-            this._entityNames.remove(oldName);
-            this._entityNames.add(entity.name, entity);
+            this._entityNames.delete(oldName);
+            this._entityNames.set(entity.name, entity);
         } else {
             throw new Error('The given name was not found in the entity list.');
         }
@@ -357,8 +356,8 @@ export class Engine {
      */
     private _sceneNameChanged(scene: Scene, oldName: string): void {
         if (this._sceneNames.has(oldName)) {
-            this._sceneNames.remove(oldName);
-            this._sceneNames.add(scene.name, scene);
+            this._sceneNames.delete(oldName);
+            this._sceneNames.set(scene.name, scene);
         } else {
             throw new Error('The given name was not found in the scene list.');
         }
@@ -369,7 +368,7 @@ export class Engine {
      */
     private _componentAdded(entity: Entity, componentClass: () => any): void {
         this._families.forEach((nodeObject, family: IFamily) => {
-                family.componentAddedToEntity(entity, componentClass);
+                nodeObject.componentAddedToEntity(entity, componentClass);
             }
         );
     }
@@ -379,7 +378,7 @@ export class Engine {
      */
     private _componentRemoved(entity: Entity, componentClass: () => any): void {
         this._families.forEach((nodeObject, family: IFamily) => {
-                family.componentRemovedFromEntity(entity, componentClass);
+                nodeObject.componentRemovedFromEntity(entity, componentClass);
             }
         );
     }

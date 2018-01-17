@@ -1,5 +1,4 @@
 import { LinkedList } from '../utils/LinkedList';
-import { Dictionary } from '../utils/Dictionary';
 import { Entity } from './Entity';
 
 const MiniSignal = require('mini-signals');
@@ -31,16 +30,16 @@ export class Scene {
     public previous: Scene;
     public next: Scene;
 
-    private _entities: Dictionary;
+    private _entities: Map<any, any>;
     private _entityList: LinkedList;
-    private _entityNames: Dictionary;
+    private _entityNames: Map<any, any>;
 
     constructor(name: string = '') {
-        this._entities = new Dictionary();
+        this._entities = new Map();
         this.entityAdded = new MiniSignal();
         this.entityRemoved = new MiniSignal();
         this._entityList = new LinkedList();
-        this._entityNames = new Dictionary();
+        this._entityNames = new Map();
         this.nameChanged = new MiniSignal();
 
         if (name) {
@@ -83,7 +82,7 @@ export class Scene {
             entityClass = entity.constructor;
         }
         this._entityList.add(entity);
-        this._entityNames.add(entity.name, entity);
+        this._entityNames.set(entity.name, entity);
         this.entityAdded.dispatch(this, entityClass);
         entity.scene = this;
         return this;

@@ -18,8 +18,6 @@
  */
 
 import { Scene } from './Scene';
-import { Dictionary } from '../utils/Dictionary';
-
 const MiniSignal = require('mini-signals');
 
 export class Entity {
@@ -48,11 +46,11 @@ export class Entity {
 
     public previous: Entity;
     public next: Entity;
-    private _components: Dictionary;
+    private _components: Map<any, any>;
     private _addedToScene: Scene;
 
     constructor(name: string = '') {
-        this._components = new Dictionary();
+        this._components = new Map();
         this.componentAdded = new MiniSignal();
         this.componentRemoved = new MiniSignal();
         this.nameChanged = new MiniSignal();
@@ -102,7 +100,7 @@ export class Entity {
         if (this._components.has(componentClass)) {
             this.removeComponent(componentClass);
         }
-        this._components.add(componentClass, component);
+        this._components.set(componentClass, component);
         this.componentAdded.dispatch(this, componentClass);
         return this;
     }
@@ -114,9 +112,9 @@ export class Entity {
      * @return the component, or null if the component doesn't exist in the entity
      */
     public removeComponent(componentClass): any {
-        let component: any = this._components.getValue(componentClass);
+        let component: any = this._components.get(componentClass);
         if (component) {
-            this._components.remove(componentClass);
+            this._components.delete(componentClass);
             this.componentRemoved.dispatch(this, componentClass);
             return component;
         }
@@ -130,7 +128,7 @@ export class Entity {
      * @return The component, or null if none was found.
      */
     public getComponent(componentClass: string): any {
-        return this._components.getValue(componentClass);
+        return this._components.get(componentClass);
     }
 
     /**
@@ -153,7 +151,7 @@ export class Entity {
 
         this._components.forEach(
             (componentClass, component) => {
-                componentArray.push(component);
+                componentArray.push(componentClass);
             }
         );
         return componentArray;

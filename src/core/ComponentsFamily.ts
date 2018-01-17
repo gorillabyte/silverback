@@ -10,13 +10,12 @@ import { LinkedList } from '../utils/LinkedList';
 import { Engine } from './Engine';
 import { Entity } from './Entity';
 import { IFamily } from './IFamily';
-import { Dictionary } from '../utils/Dictionary';
 
 export class ComponentsFamily implements IFamily {
     private _nodes: LinkedList;
-    private _entities: Dictionary;
+    private _entities: Map<any, any>;
     private _nodeClass;
-    private _components: Dictionary;
+    private _components: Map<any, any>;
     private _nodePool: NodePool;
     private _engine: Engine;
 
@@ -40,14 +39,14 @@ export class ComponentsFamily implements IFamily {
      */
     private _init() {
         this._nodes = new LinkedList();
-        this._entities = new Dictionary();   // <Entity, Node>
-        this._components = new Dictionary(); // <Type, string>
+        this._entities = new Map();   // <Entity, Node>
+        this._components = new Map(); // <Type, string>
 
         let types = this._nodeClass['types'];
 
         for (let prop in types) {
             if (types.hasOwnProperty(prop)) {
-                this._components.add(prop, types[prop]);
+                this._components.set(prop, types[prop]);
             }
         }
         this._nodePool = new NodePool(this._nodeClass, this._components);
@@ -127,7 +126,7 @@ export class ComponentsFamily implements IFamily {
                 }
                 node.entity = entity;
 
-                this._entities.add(entity, node);
+                this._entities.set(entity, node);
                 this._nodes.add(node);
             }
         }
@@ -138,9 +137,9 @@ export class ComponentsFamily implements IFamily {
      */
     public removeIfMatch(entity: Entity) {
 
-        if (this._entities.getValue(entity)) {
-            let node = this._entities.getValue(entity);
-            this._entities.remove(entity);
+        if (this._entities.get(entity)) {
+            let node = this._entities.get(entity);
+            this._entities.delete(entity);
 
             for (let i = 0; i < this._nodes.size(); i++) {
                 if (this._nodes.item(i) === node) {
@@ -171,7 +170,7 @@ export class ComponentsFamily implements IFamily {
      */
     public cleanUp() {
         for (let i = 0; i < this._nodes.size(); i++) {
-            this._entities.remove(this._nodes.item(i).entity);
+            this._entities.delete(this._nodes.item(i).entity);
             this._nodes.remove(i);
         }
     }

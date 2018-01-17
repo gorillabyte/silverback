@@ -1,6 +1,5 @@
-import { Dictionary } from '../utils/Dictionary';
 import { EngineState } from './EngineState';
-import { Engine } from '../core/Engine';
+import { Engine } from '../core';
 import { ISystemProvider } from './ISystemProvider';
 
 /**
@@ -10,7 +9,7 @@ import { ISystemProvider } from './ISystemProvider';
  */
 export class EngineStateMachine {
     public engine: Engine;
-    private states: Dictionary;
+    private states: Map<any, any>;
     private currentState: EngineState;
 
     /**
@@ -18,7 +17,7 @@ export class EngineStateMachine {
      */
     constructor(engine: Engine) {
         this.engine = engine;
-        this.states = new Dictionary();
+        this.states = new Map();
     }
 
     /**
@@ -29,7 +28,7 @@ export class EngineStateMachine {
      * @return This state machine, so methods can be chained.
      */
     public addState(name: string, state: EngineState): EngineStateMachine {
-        this.states.add(name, state);
+        this.states.set(name, state);
         return this;
     }
 
@@ -42,7 +41,7 @@ export class EngineStateMachine {
      */
     public createState(name: string): EngineState {
         let state: EngineState = new EngineState();
-        this.states.add(name, state);
+        this.states.set(name, state);
         return state;
     }
 
@@ -53,8 +52,8 @@ export class EngineStateMachine {
      * @param name The name of the state to change to.
      */
     public changeState(name: string): void {
-        let newState: EngineState = this.states.getValue(name);
-        let toAdd: Dictionary = new Dictionary();
+        let newState: EngineState = this.states.get(name);
+        let toAdd: Map<any, any> = new Map();
         let id;
 
         if (!newState) {
@@ -67,16 +66,16 @@ export class EngineStateMachine {
 
         newState.providers.forEach(function (provider: ISystemProvider) {
             id = provider.identifier;
-            toAdd.add(id, provider);
+            toAdd.set(id, provider);
         });
         if (this.currentState) {
             this.currentState.providers.forEach((provider: ISystemProvider) => {
                 id = provider.identifier;
-                let other: ISystemProvider = toAdd.getValue(id);
+                let other: ISystemProvider = toAdd.get(id);
 
                 if (other) {
                     // TODO: disable because of error TS2703, need further investigation
-                    //delete toAdd.getValue(id);
+                    // delete toAdd.get(id);
                 } else {
                     this.engine.removeSystem(provider.getSystem());
                 }

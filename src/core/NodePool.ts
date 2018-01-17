@@ -6,18 +6,16 @@
  * while iterating through the NodeList, the pool also maintains a cache of nodes that are added to the pool
  * but should not be reused yet. They are then released into the pool by calling the releaseCache method.
  */
-import { Dictionary } from '../utils/Dictionary';
-
 export class NodePool {
     private _tail: any;
     private _nodeClass;
     private _cacheTail: any;
-    private _components: Dictionary;
+    private _components: Map<any, any>;
 
     /**
      * Creates a pool for the given node class.
      */
-    constructor(nodeClass, components: Dictionary) {
+    constructor(nodeClass, components: Map<any, any>) {
         this._nodeClass = nodeClass;
         this._components = components;
     }
