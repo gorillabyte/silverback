@@ -5,10 +5,9 @@ import { arrayContains } from '../utils/Array';
 
 export class RenderSystem extends System {
 
-    static stage;
-    private nodes:Silverback.LinkedList;
-    private displayObject:PIXI.DisplayObject;
+    private _nodes:Silverback.LinkedList;
     private _engine;
+    private static stage;
     private static renderer;
 
     constructor(renderer, canvasStage) {
@@ -16,25 +15,23 @@ export class RenderSystem extends System {
 
         RenderSystem.renderer = renderer;
         RenderSystem.stage = canvasStage;
-        return this;
     }
 
     public addToEngine(engine:Silverback.Engine):void {
-        this.nodes = engine.getNodeList(RenderNode);
-        for (let i = 0; i < this.nodes.size(); i++) {
-            this.addToDisplay(this.nodes.item(i));
+        this._nodes = engine.getNodeList(RenderNode);
+        for (let i = 0; i < this._nodes.size(); i++) {
+            this.addToDisplay(this._nodes.item(i));
         }
         this._engine = engine;
     }
 
     public removeFromEngine(engine:Silverback.Engine):void {
-        this.nodes = null;
+        this._nodes = null;
     }
 
     public addToDisplay(node:any):void {
 
         if (node.container !== null) {
-
             if (!arrayContains(RenderSystem.stage.children, node.container.container)) {
                 RenderSystem.stage.addChild(node.container.container);
                 node.container.container.addChild(node.display.displayObject);
@@ -79,10 +76,8 @@ export class RenderSystem extends System {
     }
 
     public update(time:number):void {
-
-        for (let i = 0; i < this.nodes.size(); i++) {
-
-            let node = this.nodes.item(i);
+        for (let node = this._nodes.first; node; node = node.next) {
+            // let node = this._nodes.item(i);
             let display:PIXI.DisplayObject = node.display.displayObject;
             let position:Vec2D = node.position.position;
 
@@ -94,7 +89,6 @@ export class RenderSystem extends System {
             display.position.y = position.y;
             display.rotation = node.position.rotation;
         }
-
         RenderSystem.renderer.render(RenderSystem.stage);
     }
 }

@@ -6,7 +6,7 @@
     "commit": "git-cz",
     "build": "webpack --progress --profile --colors --display-error-details --display-cached",
     "build:prod": "webpack --progress --profile --colors --display-error-details --display-cached --optimize-minimize",
-    "watch": "webpack --progress --profile --colors --display-error-details --display-cached --watch",
+    "dev": "webpack --progress --profile --colors --display-error-details --display-cached --watch",
     "test": "./node_modules/mocha/bin/mocha 'src/**/*.spec.{ts,tsx}' --require ts-node/register --require jsdom-global/register",
     "karma": "karma start --single-run",
     "karma:watch": "karma start",

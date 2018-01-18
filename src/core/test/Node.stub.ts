@@ -9,6 +9,9 @@ export class Matrix {
 export class Position {
 }
 
+export class CDisplay {
+}
+
 export const NodeMock = {
     name: 'NodeMock',
     entity: null,
@@ -41,7 +44,9 @@ export const NodeMock2 = {
     previous: null,
     next: null,
     position: null,
+    display: null,
     types: {
-        position: Position
+        position: Position,
+        display: CDisplay
     }
 };

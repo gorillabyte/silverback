@@ -27,9 +27,6 @@
     // To show something on the screen we add the PIXI bunny.
     let bunny = PIXI.Sprite.fromImage('assets/img/bunny.png');
     let characterContainer = new PIXI.Container();
-    characterContainer.name = 'character';
-    characterContainer.addChild(bunny);
-    stage.addChild(characterContainer);
 
     // We need to create a game entity and add it to the engine
     let playerEntity = new Silverback.Entity('playerEntity')
@@ -47,4 +44,5 @@
     }
 
     animate();
+
 })();

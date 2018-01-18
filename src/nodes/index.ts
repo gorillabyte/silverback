@@ -3,4 +3,4 @@
  * @namespace Silverback.nodes
  */
 
-export { RenderNode, RenderNodeNew } from './RenderNode';
+export { RenderNode } from './RenderNode';
