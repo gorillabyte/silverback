@@ -14,18 +14,3 @@ export const RenderNode = {
         container: CGroup
     }
 };
-
-export const RenderNodeNew = new Map();
-
-RenderNodeNew.set('name', 'RenderNode');
-RenderNodeNew.set('entity', null);
-RenderNodeNew.set('previous', null);
-RenderNodeNew.set('next', null);
-RenderNodeNew.set('position', null);
-RenderNodeNew.set('display', null);
-RenderNodeNew.set('container', null);
-RenderNodeNew.set('types', {
-    position: CPosition,
-    display: CDisplay,
-    container: CGroup
-});
