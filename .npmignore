@@ -3,7 +3,12 @@ types/
 coverage/
 examples/
 tools/
+src/
 
+globals.d.ts
+.babelrc
+.editorconfig
+.gitattributes
 tsconfig.json
 tslint.json
 typedoc.json
