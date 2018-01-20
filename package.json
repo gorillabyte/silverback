@@ -1,5 +1,5 @@
 {
-  "name": "silverback",
+  "name": "@gorillabyte/silverback",
   "version": "0.1.0",
   "description": "The Silverback Game Engine is a Typescript entity component framework.",
   "scripts": {
