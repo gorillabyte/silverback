@@ -1,6 +1,6 @@
 {
   "name": "silverback",
-  "version": "0.0.8",
+  "version": "0.0.0-development",
   "description": "The Silverback Game Engine is a Typescript entity component framework.",
   "scripts": {
     "commit": "git-cz",
@@ -13,12 +13,13 @@
     "bench": "tsc && node ./js/core/bench/index.js",
     "docs": "typedoc --json typedoc.json --out docs src/**/*.ts --mode modules --target ES6 --tsconfig ./tsconfig.json",
     "lint": "tslint -c tslint.json src/**/*.ts",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "examples": "node tools/server.js"
+    "semantic-release": "semantic-release",
+    "examples": "node tools/server.js",
+    "travis-deploy-once": "travis-deploy-once"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Herndl/silverback.git"
+    "url": "https://github.com/gorillabyte/silverback.git"
   },
   "engines": {
     "node": ">= 8.5.0"
@@ -90,14 +91,15 @@
     "karma-webpack": "^2.0.9",
     "mocha": "^4.1.0",
     "phantomjs": "^2.1.7",
-    "semantic-release": "^11.0.2",
+    "semantic-release": "^12.2.2",
     "ts-loader": "^3.2.0",
     "ts-node": "^4.1.0",
     "tslint": "^5.8.0",
     "typedoc": "^0.9.0",
     "typescript": "^2.6.2",
     "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.10.1"
+    "webpack-dev-server": "^2.10.1",
+    "travis-deploy-once": "^4.3.2"
   },
   "dependencies": {
     "mini-signals": "^1.1.1"
