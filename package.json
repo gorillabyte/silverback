@@ -13,9 +13,10 @@
     "bench": "tsc && node ./js/core/bench/index.js",
     "docs": "typedoc --json typedoc.json --out docs src/**/*.ts --mode modules --target ES6 --tsconfig ./tsconfig.json",
     "lint": "tslint -c tslint.json src/**/*.ts",
-    "semantic-release": "semantic-release",
-    "examples": "node tools/server.js",
-    "travis-deploy-once": "travis-deploy-once"
+    "publish-npm": "npm publish",
+    "semantic-release-pre": "semantic-release pre",
+    "semantic-release-post": "semantic-release post",
+    "examples": "node tools/server.js"
   },
   "repository": {
     "type": "git",
