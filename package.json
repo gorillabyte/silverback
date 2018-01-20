@@ -1,7 +1,7 @@
 {
-  "name": "@gorillabyte/silverback",
-  "version": "0.1.1",
-  "description": "The Silverback Game Engine is a Typescript entity component framework.",
+  "name": "silverback-engine",
+  "version": "0.0.0-development",
+  "description": "Silverback is a game framework for making games and interactive apps.",
   "scripts": {
     "commit": "git-cz",
     "build": "webpack --progress --profile --colors --display-error-details --display-cached",
