@@ -1,18 +1,15 @@
 node_modules/
-*.log
-*.tgz
-
-js/
-docs/
+types/
 coverage/
 examples/
-typings/
+tools/
 
 tsconfig.json
 tslint.json
-typings.json
 typedoc.json
 karma.conf.js
 webpack.config.js
+webpack.config.karma.js
+webpack.config.prod.js
 .travis.yml
 .idea

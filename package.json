@@ -5,7 +5,7 @@
   "scripts": {
     "commit": "git-cz",
     "build": "webpack --progress --profile --colors --display-error-details --display-cached",
-    "build:prod": "webpack --progress --profile --colors --display-error-details --display-cached --optimize-minimize",
+    "build:prod": "webpack --progress --profile --colors --display-error-details --display-cached --config webpack.config.prod.js",
     "dev": "webpack --progress --profile --colors --display-error-details --display-cached --watch",
     "test": "./node_modules/mocha/bin/mocha 'src/**/*.spec.{ts,tsx}' --require ts-node/register --require jsdom-global/register",
     "karma": "karma start --single-run",
@@ -28,7 +28,7 @@
     "name": "Stefan Herndlbauer",
     "url": "http://www.gorillabyte.com"
   },
-  "license": "MIT",
+  "license": "Apache-2.0",
   "main": "./dist/silverback.js",
   "config": {
     "ghooks": {
