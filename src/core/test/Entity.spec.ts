@@ -73,8 +73,8 @@ describe('Entity unit test', () => {
 
             let all = entity.getAll();
             expect(all.length).to.equal(2);
-            expect(all).to.include(component);
-            expect(all).to.include(component2);
+            expect(all).to.include(component.constructor.name);
+            expect(all).to.include(component2.constructor.name);
         });
 
         it('hasComponent should return false, if componentType is not present', () => {

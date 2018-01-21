@@ -18,6 +18,7 @@
  */
 
 import { Scene } from './Scene';
+import { IComponent } from './IComponent';
 const MiniSignal = require('mini-signals');
 
 export class Entity {
@@ -46,7 +47,7 @@ export class Entity {
 
     public previous: Entity;
     public next: Entity;
-    private _components: Map<any, any>;
+    private _components: Map<string, IComponent>;
     private _addedToScene: Scene;
 
     constructor(name: string = '') {
@@ -147,16 +148,14 @@ export class Entity {
      * @return An array containing all the components that are on the entity.
      */
     public getAll(): any[] {
-        let componentArray = [];
-
-        this._components.forEach(
-            (componentClass, component) => {
-                componentArray.push(componentClass);
-            }
-        );
-        return componentArray;
+        return [ ...this._components.keys() ];
     }
 
+    /**
+     *  Set the scene for the current entity
+     *
+     * @param {Scene} scene
+     */
     public set scene(scene: Scene) {
         this._addedToScene = scene;
     }
