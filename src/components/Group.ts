@@ -1,4 +1,4 @@
-export class CGroup {
+export class Group {
 
     public container:PIXI.Container;
 

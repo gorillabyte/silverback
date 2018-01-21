@@ -1,6 +1,6 @@
-export class CDisplay {
+export class Display {
 
-    public displayObject:PIXI.Container;
+    public displayObject:PIXI.DisplayObject;
 
     constructor(displayObject) {
         this.displayObject = displayObject;

@@ -1,6 +1,6 @@
 import { Vec2D } from '../utils/Vec2D';
 
-export class CPosition {
+export class Position {
 
     public position;
     public rotation;

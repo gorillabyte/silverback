@@ -1,4 +1,4 @@
-import { CDisplay, CPosition, CGroup } from '../components';
+import { Display, Position, Group } from '../components';
 
 export const RenderNode = {
     name: 'RenderNode',
@@ -9,8 +9,8 @@ export const RenderNode = {
     display: null,
     container: null,
     types: {
-        position: CPosition,
-        display: CDisplay,
-        container: CGroup
+        position: Position,
+        display: Display,
+        container: Group
     }
 };

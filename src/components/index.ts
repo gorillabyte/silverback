@@ -3,6 +3,6 @@
  * @namespace Silverback.components
  */
 
-export { CPosition } from './CPosition';
-export { CDisplay } from './CDisplay';
-export { CGroup } from './CGroup';
+export { Position } from './Position';
+export { Display } from './Display';
+export { Group } from './Group';
