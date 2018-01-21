@@ -44,9 +44,7 @@
     "analyzeCommits": {
       "preset": "angular",
       "releaseRules": [
-        {"type": "docs", "scope":"readme", "release": "patch"},
         {"type": "refactor", "release": "patch"},
-        {"type": "style", "release": "patch"},
         {"type": "chore", "release": "patch"}
       ],
       "parserOpts": {

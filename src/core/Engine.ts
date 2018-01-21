@@ -20,9 +20,8 @@ const MiniSignal = require('mini-signals');
 export class Engine {
 
     private _systemList: Array<System>;
-    private _entityList: LinkedList;
     private _sceneList: LinkedList;
-    private _entityNames: Map<any, any>;
+    private _entitiesList: Map<string, Entity>;
     private _sceneNames: Map<any, any>;
     private _families: Map<any, any>;
 
@@ -49,9 +48,8 @@ export class Engine {
 
     constructor() {
         this._systemList = [];
-        this._entityList = new LinkedList();
         this._sceneList = new LinkedList();
-        this._entityNames = new Map();
+        this._entitiesList = new Map();
         this._sceneNames = new Map();
         this._families = new Map();
         this.updateComplete = new MiniSignal();
@@ -63,7 +61,7 @@ export class Engine {
      * Returns an array containing all the entities in the engine.
      */
     public get entities(): Array<Entity> {
-        return this._entityList.toArray();
+        return [...this._entitiesList.values()] as any;
     }
 
     /**
@@ -86,24 +84,23 @@ export class Engine {
      * @param entity The entity to add.
      */
     public addEntity(entity: Entity): void {
-        if (this._entityNames.has(entity.name)) {
+        if (this._entitiesList.has(entity.name)) {
             throw new Error('The entity name ' + entity.name + ' is already in use by another entity.');
         }
-        this._entityList.add(entity);
-        this._entityNames.set(entity.name, entity);
+        this._entitiesList.set(entity.name, entity);
         entity.componentAdded.add(this._componentAdded, this);
         entity.componentRemoved.add(this._componentRemoved, this);
         entity.nameChanged.add(this._entityNameChanged, this);
 
-        this._families.forEach((nodeObject, family: IFamily) => {
-            nodeObject.newEntity(entity);
+        this._families.forEach((family: IFamily, nodeObject) => {
+            family.newEntity(entity);
         });
     }
 
     /**
      * Remove an entity from the engine.
      *
-     * @param entity The entity to remove.
+     * @param entity:Entity The entity to remove.
      * @param index The index of the entity list.
      */
     public removeEntity(entity: Entity, index?: number): void {
@@ -112,18 +109,16 @@ export class Engine {
         entity.nameChanged.detachAll();
 
         if (typeof index === 'undefined') {
-            for (let i = 0; i < this._entityList.size(); i++) {
-                if (this._entityList.item(i) === entity) {
-                    this._entityList.remove(i);
-                    this._entityNames.delete(entity.name);
+            for (const [savedEntityName, savedEntity] of this._entitiesList) {
+                if (savedEntity === entity) {
+                    this._entitiesList.delete(savedEntityName);
                 }
             }
         } else {
-            this._entityList.remove(index);
-            this._entityNames.delete(entity.name);
+            this._entitiesList.delete(entity.name);
         }
-        this._families.forEach((nodeObject, family: IFamily) => {
-            nodeObject.removeEntity(entity);
+        this._families.forEach((family: IFamily, nodeObject:Object) => {
+            family.removeEntity(entity);
         });
     }
 
@@ -134,8 +129,8 @@ export class Engine {
      * @return The entity, or null if no entity with that name exists on the engine
      */
     public getEntityByName(name: string): Entity {
-        if (this._entityNames.has(name)) {
-            return this._entityNames.get(name);
+        if (this._entitiesList.has(name)) {
+            return this._entitiesList.get(name);
         }
         return null;
     }
@@ -144,10 +139,10 @@ export class Engine {
      * Remove all entities from the engine.
      */
     public removeAllEntities(): void {
-        let listSize = this._entityList.size() - 1;
-        for (let i = listSize; i >= 0; i--) {
-            this.removeEntity(this._entityList.item(i), i);
-        }
+        this._families.forEach((family: IFamily, nodeObject:any) => {
+            family.removeEntity(nodeObject.entity);
+        });
+        this._entitiesList.clear();
     }
 
     /**
@@ -234,8 +229,9 @@ export class Engine {
         } else {
             let family: IFamily = new this.familyClass(nodeClass, this);
             this._families.set(nodeClass, family);
-            for (let i = 0; i < this._entityList.size(); i++) {
-                family.newEntity(this._entityList.item(i));
+
+            for (const [savedEntityName, savedEntity] of this._entitiesList) {
+                family.newEntity(savedEntity);
             }
             return family.nodeList;
         }
@@ -343,9 +339,9 @@ export class Engine {
      * @private
      */
     private _entityNameChanged(entity: Entity, oldName: string): void {
-        if (this._entityNames.has(oldName)) {
-            this._entityNames.delete(oldName);
-            this._entityNames.set(entity.name, entity);
+        if (this._entitiesList.has(oldName)) {
+            this._entitiesList.delete(oldName);
+            this._entitiesList.set(entity.name, entity);
         } else {
             throw new Error('The given name was not found in the entity list.');
         }

@@ -80,8 +80,8 @@ describe('Engine', () => {
             engine.addEntity(entity);
             engine.addEntity(entity2);
             engine.removeAllEntities();
-            expect(FamilyMock.instances[0].removeEntityCalls).to.deep.equal(2);
-            expect(FamilyMock.instances[1].removeEntityCalls).to.deep.equal(2);
+            expect(FamilyMock.instances[0].removeEntityCalls).to.deep.equal(1);
+            expect(FamilyMock.instances[1].removeEntityCalls).to.deep.equal(1);
         });
 
         it('should select a NodeList, if an appropriate NodeList was already created', () => {

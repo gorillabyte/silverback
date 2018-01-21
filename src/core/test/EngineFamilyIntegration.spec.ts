@@ -189,8 +189,8 @@ describe('EngineFamilyIntegration', () => {
             entity.addComponent(new Vec2D(0, 0));
             entity.addComponent(new Matrix());
             engine.addEntity(entity);
-            let nodes: LinkedList = engine.getNodeList(NewNodeMock);
             engine.removeAllEntities();
+            let nodes: LinkedList = engine.getNodeList(NewNodeMock);
             expect(nodes.item(0)).to.be.null;
         });
     });
