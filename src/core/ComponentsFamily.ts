@@ -88,7 +88,7 @@ export class ComponentsFamily implements IFamily {
     }
 
     /**
-     * Called by the engine when an entity has been rmoved from it. We check if the entity is in
+     * Called by the engine when an entity has been removed from it. We check if the entity is in
      * this family's NodeList and remove it if so.
      */
     public removeEntity(entity: Entity) {

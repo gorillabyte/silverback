@@ -1,13 +1,16 @@
 import chai = require('chai');
 import { Engine } from '../Engine';
 import { SystemMock, SystemMock2 } from './System.stub';
+import { Matrix, Vec2D } from './Node.stub';
+import { Entity } from '../Entity';
 
 const expect = chai.expect;
 
 describe('System unit test', () => {
     let engine: Engine;
     let system1: SystemMock;
-    let system2: SystemMock;
+    let system11: SystemMock;
+    let system2: SystemMock2;
 
     beforeEach(() => {
         engine = new Engine();
@@ -22,11 +25,11 @@ describe('System unit test', () => {
         it('should return all the registered systems', () => {
             system1 = new SystemMock();
             engine.addSystem(system1, 1);
-            system2 = new SystemMock();
-            engine.addSystem(system2, 1);
+            system11 = new SystemMock();
+            engine.addSystem(system11, 1);
             expect(engine.systems.length).to.be.equal(2);
             expect(engine.systems).to.include(system1);
-            expect(engine.systems).to.include(system2);
+            expect(engine.systems).to.include(system11);
         });
 
         it('should call AddToEngine after adding to the engine', () => {
@@ -115,6 +118,17 @@ describe('System unit test', () => {
             expect(engine.getSystem(system1)).to.be.null;
             expect(engine.getSystem(SystemMock2)).to.be.null;
             expect(engine.systems.length).to.deep.equal(0);
+        });
+
+        it('should register a system and find all entities for the given system node', () => {
+            system1 = new SystemMock();
+            let entity: Entity = new Entity();
+            entity.addComponent(new Vec2D(0, 0));
+            entity.addComponent(new Matrix());
+            engine.addEntity(entity);
+            engine.addSystem(system1, 10);
+            let fetchedSystem = engine.getSystem(SystemMock) as SystemMock;
+            expect(fetchedSystem.nodes.size()).to.deep.equal(1);
         });
     });
 });
