@@ -1,6 +1,7 @@
 import { Vec2D } from '../utils/Vec2D';
+import { IComponent } from '../core/IComponent';
 
-export class Position {
+export class Position implements IComponent {
 
     public position;
     public rotation;

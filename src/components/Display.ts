@@ -1,4 +1,6 @@
-export class Display {
+import { IComponent } from '../core/IComponent';
+
+export class Display implements IComponent {
 
     public displayObject:PIXI.DisplayObject;
 

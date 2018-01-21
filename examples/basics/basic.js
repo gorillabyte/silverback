@@ -30,9 +30,9 @@
 
     // We need to create a game entity and add it to the engine
     let playerEntity = new Silverback.Entity('playerEntity')
-        .addComponent(new Silverback.components.CPosition(100, 100, 0))
-        .addComponent(new Silverback.components.CDisplay(bunny))
-        .addComponent(new Silverback.components.CGroup(characterContainer));
+        .addComponent(new Silverback.components.Position(100, 100, 0))
+        .addComponent(new Silverback.components.Display(bunny))
+        .addComponent(new Silverback.components.Group(characterContainer));
     engine.addEntity(playerEntity);
 
     // The animate function is our game loop
