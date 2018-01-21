@@ -38,6 +38,23 @@
       "path": "node_modules/cz-conventional-changelog/"
     }
   },
+  "release": {
+    "verifyConditions": ["@semantic-release/npm", "@semantic-release/github"],
+    "getLastRelease": "@semantic-release/npm",
+    "analyzeCommits": {
+      "preset": "angular",
+      "releaseRules": [
+        {"type": "docs", "scope":"readme", "release": "patch"},
+        {"type": "refactor", "release": "patch"},
+        {"type": "style", "release": "patch"},
+        {"type": "chore", "release": "patch"}
+      ],
+      "parserOpts": {
+        "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES", "BREAKING"]
+      }
+    },
+    "publish": ["@semantic-release/npm", "@semantic-release/github"]
+  },
   "keywords": [
     "typescript",
     "game",
