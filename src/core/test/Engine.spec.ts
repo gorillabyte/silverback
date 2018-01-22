@@ -1,7 +1,7 @@
 import { Engine } from '../Engine';
 import { Entity } from '../Entity';
 import { FamilyMock } from './Family.stub';
-import { NodeMock, NodeMock2, Vec2D } from './Node.stub';
+import { NodeMock, NodeMock2, Vec2D, Position } from './Node.stub';
 import { System } from '../System';
 import { SystemMock } from './System.stub';
 import { Scene } from '../Scene';
@@ -174,6 +174,24 @@ describe('Engine', () => {
             expect(() => {
                 entity.nameChanged.dispatch(this, 'noResultFound');
             }).to.throw('The given name was not found in the entity list.');
+        });
+
+        it('should parse a component, create the class and add it to the entity', () => {
+            const writtenComponenet = JSON.parse('{ "type": "Position", "props": { "x": "0", "y": "0" } }');
+            engine.getNodeList(NodeMock2);
+            let entity: Entity = new Entity();
+            engine.addEntity(entity);
+            let allComponent = new Map([['Position', Position]]);
+            let testClass = allComponent.get(writtenComponenet.type);
+            let testProps = writtenComponenet.props;
+            let test = new testClass();
+            for (let pro in testProps) {
+                if( testProps.hasOwnProperty(pro)) {
+                    test[pro] = testProps[pro];
+                }
+            }
+            entity.addComponent(test);
+            expect(FamilyMock.instances[0].componentAddedCalls).to.deep.equal(1);
         });
     });
 
