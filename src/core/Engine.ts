@@ -10,6 +10,7 @@ import systemSort from '../utils/SystemSort';
 import { System } from './System';
 import { ComponentsFamily } from './ComponentsFamily';
 import { IFamily } from './IFamily';
+import { IComponent } from './IComponent';
 
 const MiniSignal = require('mini-signals');
 
@@ -46,6 +47,14 @@ export class Engine {
      */
     public familyClass = null;
 
+    /**
+     * This map can be initialized after creating the engine and sets the dictionary for all possible components.
+     * The Map object is specially useful for the JSON paring of entities and components assignment.
+     *
+     * @type {Map<string, IComponent>}
+     */
+    public componentClasses: Map<string, any> = null;
+
     constructor() {
         this._systemList = [];
         this._sceneList = new LinkedList();
@@ -55,6 +64,7 @@ export class Engine {
         this.updateComplete = new MiniSignal();
 
         this.familyClass = ComponentsFamily;
+        this.componentClasses = new Map();
     }
 
     /**
@@ -79,6 +89,13 @@ export class Engine {
     }
 
     /**
+     * Returns an Map object containing all the components in the engine.
+     */
+    public get components(): Map<string, IComponent> {
+        return this.componentClasses;
+    }
+
+    /**
      * Add an entity to the engine.
      *
      * @param entity The entity to add.
@@ -94,6 +111,42 @@ export class Engine {
 
         this._families.forEach((family: IFamily, nodeObject) => {
             family.newEntity(entity);
+        });
+    }
+
+
+    public addEntityJSON(data):void {
+        const allEntities = JSON.parse(data);
+        allEntities['entities'].forEach((oneEntity) => {
+            let entity = new Entity(oneEntity.name);
+            this.addEntity(entity);
+
+            this.addComponenetJSON(oneEntity['components'], entity);
+        });
+    }
+
+    addComponenetJSON(components, entity: Entity) {
+        components.forEach((comp: any) => {
+            const compClass: any = this.componentClasses.get(comp.type);
+            let component = new compClass();
+
+            let compProps = comp.props;
+            let compPropsTypes = comp.propsTypes;
+            for (let prop in compProps) {
+                if (compProps.hasOwnProperty(prop)) {
+                    let compValue;
+                    if (compPropsTypes[prop] === 'number') {
+                        compValue = parseFloat(compProps[prop]);
+                        component.props[prop] = compValue;
+                    } else if (compPropsTypes[prop] === 'PIXI.DisplayObject') {
+                        component = new compClass(compProps[prop]);
+                    } else if (compPropsTypes[prop] === 'string') {
+                        compValue = compProps[prop].toString();
+                        component.props[prop] = compValue;
+                    }
+                }
+            }
+            entity.addComponent(component);
         });
     }
 
