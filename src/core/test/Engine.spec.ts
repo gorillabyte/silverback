@@ -1,7 +1,8 @@
 import { Engine } from '../Engine';
 import { Entity } from '../Entity';
 import { FamilyMock } from './Family.stub';
-import { NodeMock, NodeMock2, Vec2D, Position } from './Node.stub';
+import { NodeMock, NodeMock2 } from './Node.stub';
+import { Vec2D, Position } from './Component.stub';
 import { System } from '../System';
 import { SystemMock } from './System.stub';
 import { Scene } from '../Scene';
@@ -182,7 +183,7 @@ describe('Engine', () => {
             let entity: Entity = new Entity();
             engine.addEntity(entity);
             let allComponent = new Map([['Position', Position]]);
-            let testClass = allComponent.get(writtenComponenet.type);
+            let testClass:any = allComponent.get(writtenComponenet.type);
             let testProps = writtenComponenet.props;
             let test = new testClass();
             for (let pro in testProps) {

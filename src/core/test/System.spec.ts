@@ -1,7 +1,7 @@
 import chai = require('chai');
 import { Engine } from '../Engine';
 import { SystemMock, SystemMock2 } from './System.stub';
-import { Matrix, Vec2D } from './Node.stub';
+import { Matrix, Vec2D } from './Component.stub';
 import { Entity } from '../Entity';
 
 const expect = chai.expect;
