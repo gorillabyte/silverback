@@ -1,9 +1,8 @@
 {
   "name": "silverback-engine",
-  "version": "0.0.0-development",
+  "version": "1.1.0",
   "description": "Silverback is a game framework for making games and interactive apps.",
   "scripts": {
-    "commit": "git-cz",
     "build": "webpack --progress --profile --colors --display-error-details --display-cached",
     "build:prod": "webpack --progress --profile --colors --display-error-details --display-cached --config webpack.config.prod.js",
     "dev": "webpack --progress --profile --colors --display-error-details --display-cached --watch",
@@ -13,7 +12,6 @@
     "bench": "tsc && node ./js/core/bench/index.js",
     "docs": "typedoc --json typedoc.json --out docs src/**/*.ts --mode modules --target ES6 --tsconfig ./tsconfig.json",
     "lint": "tslint -c tslint.json src/**/*.ts",
-    "semantic-release": "semantic-release",
     "examples": "node tools/server.js"
   },
   "repository": {
@@ -30,14 +28,6 @@
   },
   "license": "Apache-2.0",
   "main": "./dist/silverback.js",
-  "config": {
-    "ghooks": {
-      "pre-commit": "npm run test"
-    },
-    "commitizen": {
-      "path": "node_modules/cz-conventional-changelog/"
-    }
-  },
   "keywords": [
     "typescript",
     "game",
@@ -64,8 +54,6 @@
     "babel-preset-env": "^1.6.1",
     "benchmark": "^2.1.0",
     "chai": "^4.1.2",
-    "commitizen": "2.9.6",
-    "cz-conventional-changelog": "2.1.0",
     "express": "^4.16.2",
     "ghooks": "2.0.2",
     "istanbul": "^1.1.0-alpha.1",
@@ -87,7 +75,6 @@
     "mini-signals": "^1.2.0",
     "mocha": "^4.1.0",
     "phantomjs-prebuilt": "^2.1.16",
-    "semantic-release": "^12.2.2",
     "ts-loader": "^3.2.0",
     "ts-node": "^4.1.0",
     "tslint": "^5.8.0",
