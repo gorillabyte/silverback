@@ -3,11 +3,11 @@ import { IComponent } from '../core/IComponent';
 
 export class Position implements IComponent {
 
-    public position;
-    public rotation;
+    public pos;
+    public rot;
 
     constructor(x: number, y: number, rotation = 0) {
-        this.position = new Vec2D(x, y);
-        this.rotation = rotation;
+        this.pos = new Vec2D(x, y);
+        this.rot = rotation;
     }
 }

@@ -1,6 +1,4 @@
 import { IComponent } from '../IComponent';
-require('pixi-shim');
-const PIXI = require('pixi.js');
 
 export class ComponentMock {
     public value: number;
@@ -22,16 +20,31 @@ export class Vec2D {
 export class Matrix {
 }
 
+declare module MockPIXI {
+    export class Sprite {
+    }
+    export class Container {
+    }
+}
+
 export class Position implements IComponent {
-    public props = {
-        x: null,
-        y: null
-    };
+    public pos: Vec2D;
+    public rot:number;
+
+    constructor(x: number, y: number, rotation = 0) {
+        this.pos = new Vec2D(x, y);
+        this.rot = rotation;
+    }
 }
 
 export class Display implements IComponent {
-    constructor(path) {
-        this.obj = new PIXI.DisplayObject();
+    constructor(path:string) {
+        /* mocking object */
     }
-    public obj: PIXI.DisplayObject;
+}
+
+export class Group implements IComponent {
+    constructor() {
+        /* mocking object */
+    }
 }

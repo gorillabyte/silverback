@@ -18,12 +18,10 @@ describe('Entity unit test', () => {
                 {
                     "type":"Position",
                     "props":{
-                        "x":0,
-                        "y":0
+                        "pos": "100 100"
                     },
                     "propsTypes":{
-                        "x":"number",
-                        "y":"number"
+                        "pos":"Vec2D"
                     }
                 },
                 {
@@ -41,9 +39,9 @@ describe('Entity unit test', () => {
 }`;
 
     beforeEach(() => {
-        // entity = new Entity();
         engine = new Engine();
         engine.familyClass = FamilyMock;
+        engine.componentClasses = new Map();
         engine.componentClasses.set('Position', Position);
         engine.componentClasses.set('Display', Display);
         FamilyMock.reset();
@@ -63,19 +61,16 @@ describe('Entity unit test', () => {
 
         it('should create an entity object and also add the components to it', () => {
             engine.addEntityJSON(data);
-            let componentP: Position = new Position();
             let componentD: Display = new Display('assets/img/bunny.png');
             expect(engine.entities.length).to.deep.equal(1);
             expect(engine.entities[0].name).to.deep.equal('entity01');
-            expect(Object.keys(engine.entities[0].getComponent('Position').props))
-                .to.deep.equal(Object.keys(componentP.props));
-            expect(typeof engine.entities[0].getComponent('Position').props.x)
+            expect(typeof engine.entities[0].getComponent('Position').pos.x)
                 .to.be.equal('number');
-            expect(engine.entities[0].getComponent('Position').props.x)
-                .to.be.equal(0);
-            expect(Object.keys(engine.entities[0].getComponent('Display').obj))
-                .to.deep.equal(Object.keys(componentD.obj));
-            expect(typeof engine.entities[0].getComponent('Display').obj)
+            expect(engine.entities[0].getComponent('Position').pos.x)
+                .to.be.equal(100);
+            expect(engine.entities[0].getComponent('Display').constructor.name)
+                .to.be.equal(componentD.constructor.name);
+            expect(typeof engine.entities[0].getComponent('Display'))
                 .to.be.equal('object');
         });
     });

@@ -11,6 +11,7 @@ import { System } from './System';
 import { ComponentsFamily } from './ComponentsFamily';
 import { IFamily } from './IFamily';
 import { IComponent } from './IComponent';
+import { Display, Position, Group } from '../components';
 
 const MiniSignal = require('mini-signals');
 
@@ -65,6 +66,9 @@ export class Engine {
 
         this.familyClass = ComponentsFamily;
         this.componentClasses = new Map();
+        this.componentClasses.set('Position', Position);
+        this.componentClasses.set('Display', Display);
+        this.componentClasses.set('Group', Group);
     }
 
     /**
@@ -135,11 +139,13 @@ export class Engine {
             for (let prop in compProps) {
                 if (compProps.hasOwnProperty(prop)) {
                     let compValue;
-                    if (compPropsTypes[prop] === 'number') {
-                        compValue = parseFloat(compProps[prop]);
-                        component.props[prop] = compValue;
-                    } else if (compPropsTypes[prop] === 'PIXI.DisplayObject') {
+                    if (compPropsTypes[prop] === 'Vec2D') {
+                        compValue = compProps[prop].split(' ');
+                        component = new compClass(parseFloat(compValue[0]), parseFloat(compValue[0]));
+                    } else if (compPropsTypes[prop] === 'PIXI.Sprite') {
                         component = new compClass(compProps[prop]);
+                    } else if (compPropsTypes[prop] === 'PIXI.Container') {
+                        component = new compClass();
                     } else if (compPropsTypes[prop] === 'string') {
                         compValue = compProps[prop].toString();
                         component.props[prop] = compValue;

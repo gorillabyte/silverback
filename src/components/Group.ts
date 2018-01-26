@@ -4,7 +4,7 @@ export class Group implements IComponent {
 
     public container:PIXI.Container;
 
-    constructor(container) {
-        this.container = container;
+    constructor() {
+        this.container = new PIXI.Container();
     }
 }

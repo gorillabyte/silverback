@@ -1,12 +1,12 @@
 import { IComponent } from '../core/IComponent';
-require('pixi-shim');
-const PIXI = require('pixi.js');
 
 export class Display implements IComponent {
 
-    public obj:PIXI.DisplayObject;
+    public obj:PIXI.Sprite;
 
-    constructor(objectPath) {
-        this.obj = PIXI.Sprite.fromImage(objectPath);
+    constructor(path) {
+        if(path) {
+            this.obj = PIXI.Sprite.fromImage(path, true);
+        }
     }
 }
