@@ -7,30 +7,30 @@
  * but should not be reused yet. They are then released into the pool by calling the releaseCache method.
  */
 export class NodePool {
-    private _tail: any;
-    private _nodeClass;
-    private _cacheTail: any;
-    private _components: Map<any, any>;
+    private tail: any;
+    private nodeClass;
+    private cacheTail: any;
+    private components: Map<any, any>;
 
     /**
      * Creates a pool for the given node class.
      */
     constructor(nodeClass, components: Map<any, any>) {
-        this._nodeClass = nodeClass;
-        this._components = components;
+        this.nodeClass = nodeClass;
+        this.components = components;
     }
 
     /**
      * Fetches a node from the pool.
      */
     public get() {
-        if (this._tail) {
-            const node = this._tail;
-            this._tail = this._tail.previous;
+        if (this.tail) {
+            const node = this.tail;
+            this.tail = this.tail.previous;
             node.previous = null;
             return node;
         } else {
-            return Object.create(this._nodeClass);
+            return Object.create(this.nodeClass);
         }
     }
 
@@ -40,25 +40,25 @@ export class NodePool {
     public dispose(node: any): void {
         node.entity = null;
         node.next = null;
-        node.previous = this._tail;
-        this._tail = node;
+        node.previous = this.tail;
+        this.tail = node;
     }
 
     /**
      * Adds a node to the cache
      */
     public cache(node): void {
-        node.previous = this._cacheTail;
-        this._cacheTail = node;
+        node.previous = this.cacheTail;
+        this.cacheTail = node;
     }
 
     /**
      * Releases all nodes from the cache into the pool
      */
     public releaseCache(): void {
-        while (this._cacheTail) {
-            const node: any = this._cacheTail;
-            this._cacheTail = node.previous;
+        while (this.cacheTail) {
+            const node: any = this.cacheTail;
+            this.cacheTail = node.previous;
             this.dispose(node);
         }
     }

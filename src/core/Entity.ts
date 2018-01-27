@@ -27,10 +27,9 @@ export class Entity {
      * Optional, give the entity a name. This can help with debugging and with serialising the entity.
      */
     private static nameCount = 0;
+    private components: Map<string, IComponent>;
+    private addedToScene: Scene;
     private _name: string;
-
-    private _components: Map<string, IComponent>;
-    private _addedToScene: Scene;
 
     /**
      * This signal is dispatched when a component is added to the entity.
@@ -52,7 +51,7 @@ export class Entity {
     public next: Entity;
 
     constructor(name = '') {
-        this._components = new Map();
+        this.components = new Map();
         this.componentAdded = new MiniSignal();
         this.componentRemoved = new MiniSignal();
         this.nameChanged = new MiniSignal();
@@ -95,10 +94,10 @@ export class Entity {
         if (typeof componentClass === 'undefined') {
             componentClass = component.constructor.name;
         }
-        if (this._components.has(componentClass)) {
+        if (this.components.has(componentClass)) {
             this.removeComponent(componentClass);
         }
-        this._components.set(componentClass, component);
+        this.components.set(componentClass, component);
         this.componentAdded.dispatch(this, componentClass);
         return this;
     }
@@ -110,9 +109,9 @@ export class Entity {
      * @return the component, or null if the component doesn't exist in the entity
      */
     public removeComponent(componentClass): any {
-        const component: any = this._components.get(componentClass);
+        const component: any = this.components.get(componentClass);
         if (component) {
-            this._components.delete(componentClass);
+            this.components.delete(componentClass);
             this.componentRemoved.dispatch(this, componentClass);
             return component;
         }
@@ -126,7 +125,7 @@ export class Entity {
      * @return The component, or null if none was found.
      */
     public getComponent(componentClass: string): any {
-        return this._components.get(componentClass);
+        return this.components.get(componentClass);
     }
 
     /**
@@ -136,7 +135,7 @@ export class Entity {
      * @return true if the entity has a component of the type, false if not.
      */
     public hasComponent(componentClass: string): boolean {
-        return this._components.has(componentClass);
+        return this.components.has(componentClass);
     }
 
     /**
@@ -145,7 +144,7 @@ export class Entity {
      * @return An array containing all the components that are on the entity.
      */
     public getAll(): any[] {
-        return [...this._components.keys()];
+        return [...this.components.keys()];
     }
 
     /**
@@ -154,7 +153,7 @@ export class Entity {
      * @param {Scene} scene
      */
     public set scene(scene: Scene) {
-        this._addedToScene = scene;
+        this.addedToScene = scene;
     }
 
     public toString() {

@@ -51,18 +51,18 @@ export class Engine {
      */
     public componentClasses: Map<string, any> = null;
 
-    private _systemList: System[];
-    private _sceneList: LinkedList;
-    private _entitiesList: Map<string, Entity>;
-    private _sceneNames: Map<any, any>;
-    private _families: Map<any, any>;
+    private systemList: System[];
+    private sceneList: LinkedList;
+    private entitiesList: Map<string, Entity>;
+    private sceneNames: Map<any, any>;
+    private families: Map<any, any>;
 
     constructor() {
-        this._systemList = [];
-        this._sceneList = new LinkedList();
-        this._entitiesList = new Map();
-        this._sceneNames = new Map();
-        this._families = new Map();
+        this.systemList = [];
+        this.sceneList = new LinkedList();
+        this.entitiesList = new Map();
+        this.sceneNames = new Map();
+        this.families = new Map();
         this.updateComplete = new MiniSignal();
 
         this.familyClass = ComponentsFamily;
@@ -76,21 +76,21 @@ export class Engine {
      * Returns an array containing all the entities in the engine.
      */
     public get entities(): Entity[] {
-        return [...this._entitiesList.values()] as any;
+        return [...this.entitiesList.values()] as any;
     }
 
     /**
      * Returns an array containing all the scenes in the engine.
      */
     public get scenes(): Scene[] {
-        return this._sceneList.toArray();
+        return this.sceneList.toArray();
     }
 
     /**
      * Returns an array containing all the systems in the engine.
      */
     public get systems(): System[] {
-        return this._systemList;
+        return this.systemList;
     }
 
     /**
@@ -106,15 +106,15 @@ export class Engine {
      * @param entity The entity to add.
      */
     public addEntity(entity: Entity): void {
-        if (this._entitiesList.has(entity.name)) {
+        if (this.entitiesList.has(entity.name)) {
             throw new Error('The entity name ' + entity.name + ' is already in use by another entity.');
         }
-        this._entitiesList.set(entity.name, entity);
+        this.entitiesList.set(entity.name, entity);
         entity.componentAdded.add(this._componentAdded, this);
         entity.componentRemoved.add(this._componentRemoved, this);
         entity.nameChanged.add(this._entityNameChanged, this);
 
-        this._families.forEach((family: IFamily, nodeObject) => {
+        this.families.forEach((family: IFamily, nodeObject) => {
             family.newEntity(entity);
         });
     }
@@ -168,15 +168,15 @@ export class Engine {
         entity.nameChanged.detachAll();
 
         if (typeof index === 'undefined') {
-            for (const [savedEntityName, savedEntity] of this._entitiesList) {
+            for (const [savedEntityName, savedEntity] of this.entitiesList) {
                 if (savedEntity === entity) {
-                    this._entitiesList.delete(savedEntityName);
+                    this.entitiesList.delete(savedEntityName);
                 }
             }
         } else {
-            this._entitiesList.delete(entity.name);
+            this.entitiesList.delete(entity.name);
         }
-        this._families.forEach((family: IFamily, nodeObject: object) => {
+        this.families.forEach((family: IFamily, nodeObject: object) => {
             family.removeEntity(entity);
         });
     }
@@ -188,8 +188,8 @@ export class Engine {
      * @return The entity, or null if no entity with that name exists on the engine
      */
     public getEntityByName(name: string): Entity {
-        if (this._entitiesList.has(name)) {
-            return this._entitiesList.get(name);
+        if (this.entitiesList.has(name)) {
+            return this.entitiesList.get(name);
         }
         return null;
     }
@@ -198,10 +198,10 @@ export class Engine {
      * Remove all entities from the engine.
      */
     public removeAllEntities(): void {
-        this._families.forEach((family: IFamily, nodeObject: any) => {
+        this.families.forEach((family: IFamily, nodeObject: any) => {
             family.removeEntity(nodeObject.entity);
         });
-        this._entitiesList.clear();
+        this.entitiesList.clear();
     }
 
     /**
@@ -210,8 +210,8 @@ export class Engine {
      * @param scene The scene to add.
      */
     public addScene(scene: Scene): void {
-        this._sceneList.add(scene);
-        this._sceneNames.set(scene.name, scene);
+        this.sceneList.add(scene);
+        this.sceneNames.set(scene.name, scene);
         scene.nameChanged.add(this._sceneNameChanged, this);
     }
 
@@ -223,15 +223,15 @@ export class Engine {
      */
     public removeScene(scene: Scene, index?: number): void {
         if (typeof index === 'undefined') {
-            for (let i = 0; i < this._sceneList.size(); i++) {
-                if (this._sceneList.item(i) === scene) {
-                    this._sceneList.remove(i);
+            for (let i = 0; i < this.sceneList.size(); i++) {
+                if (this.sceneList.item(i) === scene) {
+                    this.sceneList.remove(i);
                 }
             }
         } else {
-            this._sceneList.remove(index);
+            this.sceneList.remove(index);
         }
-        this._sceneNames.delete(scene.name);
+        this.sceneNames.delete(scene.name);
         scene.nameChanged.detachAll();
     }
 
@@ -239,9 +239,9 @@ export class Engine {
      * Remove all scenes from the engine.
      */
     public removeAllScenes(): void {
-        const listSize = this._sceneList.size() - 1;
+        const listSize = this.sceneList.size() - 1;
         for (let i = listSize; i >= 0; i--) {
-            this.removeScene(this._sceneList.item(i), i);
+            this.removeScene(this.sceneList.item(i), i);
         }
     }
 
@@ -252,8 +252,8 @@ export class Engine {
      * @return The scene, or null if no scene with that name exists on the engine
      */
     public getSceneByName(name: string): Scene {
-        if (this._sceneNames.has(name)) {
-            return this._sceneNames.get(name);
+        if (this.sceneNames.has(name)) {
+            return this.sceneNames.get(name);
         }
         return null;
     }
@@ -266,7 +266,7 @@ export class Engine {
      * null if no scene of this type are in the engine.
      */
     public getScene(type): Scene {
-        return this._sceneList.get(type);
+        return this.sceneList.get(type);
     }
 
     /**
@@ -282,13 +282,13 @@ export class Engine {
      * @return A linked list of all nodes of this type from all entities in the engine.
      */
     public getNodeList(nodeClass): LinkedList {
-        if (this._families.has(nodeClass)) {
-            return this._families.get(nodeClass).nodeList;
+        if (this.families.has(nodeClass)) {
+            return this.families.get(nodeClass).nodeList;
         } else {
             const family: IFamily = new this.familyClass(nodeClass, this);
-            this._families.set(nodeClass, family);
+            this.families.set(nodeClass, family);
 
-            for (const [savedEntityName, savedEntity] of this._entitiesList) {
+            for (const [savedEntityName, savedEntity] of this.entitiesList) {
                 family.newEntity(savedEntity);
             }
             return family.nodeList;
@@ -306,12 +306,12 @@ export class Engine {
      * @param nodeClass The type of the node class if the list to be released.
      */
     public releaseNodeList(nodeClass) {
-        if (this._families.has(nodeClass)) {
-            this._families.get(nodeClass).cleanUp();
+        if (this.families.has(nodeClass)) {
+            this.families.get(nodeClass).cleanUp();
         } else {
             throw new Error('The given nodeClass was not found and can not be released.');
         }
-        this._families.delete(nodeClass);
+        this.families.delete(nodeClass);
     }
 
     /**
@@ -329,8 +329,8 @@ export class Engine {
     public addSystem(system: System, priority?: number) {
         system.priority = priority | 0;
         system.addToEngine(this);
-        this._systemList.push(system);
-        this._systemList = systemSort(this._systemList);
+        this.systemList.push(system);
+        this.systemList = systemSort(this.systemList);
     }
 
     /**
@@ -341,9 +341,9 @@ export class Engine {
      * null if no systems of this type are in the engine.
      */
     public getSystem(type): System {
-        for (let i = 0, len = this._systemList.length; i < len; i++) {
-            if (this._systemList[i].is(type)) {
-                return this._systemList[i];
+        for (let i = 0, len = this.systemList.length; i < len; i++) {
+            if (this.systemList[i].is(type)) {
+                return this.systemList[i];
             }
         }
         return null;
@@ -357,13 +357,13 @@ export class Engine {
      */
     public removeSystem(system: System, index?: number) {
         if (typeof index === 'undefined') {
-            for (let i = 0, len = this._systemList.length; i < len; i++) {
-                if (this._systemList[i] === system) {
-                    this._systemList.splice(i, 1);
+            for (let i = 0, len = this.systemList.length; i < len; i++) {
+                if (this.systemList[i] === system) {
+                    this.systemList.splice(i, 1);
                 }
             }
         } else {
-            this._systemList.splice(index - 1, 1);
+            this.systemList.splice(index - 1, 1);
         }
         system.removeFromEngine(this);
     }
@@ -372,8 +372,8 @@ export class Engine {
      * Remove all systems from the engine.
      */
     public removeAllSystems(): void {
-        for (let i = this._systemList.length - 1; i >= 0; i--) {
-            this.removeSystem(this._systemList[i], i);
+        for (let i = this.systemList.length - 1; i >= 0; i--) {
+            this.removeSystem(this.systemList[i], i);
         }
         return;
     }
@@ -386,8 +386,8 @@ export class Engine {
      */
     public update(time: number): void {
         this.updating = true;
-        for (let i = 0, len = this._systemList.length; i < len; i++) {
-            this._systemList[i].update(time);
+        for (let i = 0, len = this.systemList.length; i < len; i++) {
+            this.systemList[i].update(time);
         }
         this.updating = false;
         this.updateComplete.dispatch();
@@ -397,9 +397,9 @@ export class Engine {
      * @private
      */
     private _entityNameChanged(entity: Entity, oldName: string): void {
-        if (this._entitiesList.has(oldName)) {
-            this._entitiesList.delete(oldName);
-            this._entitiesList.set(entity.name, entity);
+        if (this.entitiesList.has(oldName)) {
+            this.entitiesList.delete(oldName);
+            this.entitiesList.set(entity.name, entity);
         } else {
             throw new Error('The given name was not found in the entity list.');
         }
@@ -409,9 +409,9 @@ export class Engine {
      * @private
      */
     private _sceneNameChanged(scene: Scene, oldName: string): void {
-        if (this._sceneNames.has(oldName)) {
-            this._sceneNames.delete(oldName);
-            this._sceneNames.set(scene.name, scene);
+        if (this.sceneNames.has(oldName)) {
+            this.sceneNames.delete(oldName);
+            this.sceneNames.set(scene.name, scene);
         } else {
             throw new Error('The given name was not found in the scene list.');
         }
@@ -421,7 +421,7 @@ export class Engine {
      * @private
      */
     private _componentAdded(entity: Entity, componentClass: () => any): void {
-        this._families.forEach((nodeObject, family: IFamily) => {
+        this.families.forEach((nodeObject, family: IFamily) => {
             nodeObject.componentAddedToEntity(entity, componentClass);
         });
     }
@@ -430,7 +430,7 @@ export class Engine {
      * @private
      */
     private _componentRemoved(entity: Entity, componentClass: () => any): void {
-        this._families.forEach((nodeObject, family: IFamily) => {
+        this.families.forEach((nodeObject, family: IFamily) => {
             nodeObject.componentRemovedFromEntity(entity, componentClass);
         });
     }

@@ -9,23 +9,19 @@ export class Scene {
      * Optional, give the scene a name. This can help with debugging and with serialising the scenes.
      */
     private _name: string;
-    private _entities: Map<any, any>;
-    private _entityList: LinkedList;
-    private _entityNames: Map<any, any>;
+    private entities: Map<any, any>;
+    private entityList: LinkedList;
+    private entityNames: Map<any, any>;
 
     constructor(name = '') {
-        this._entities = new Map();
+        this.entities = new Map();
         this.entityAdded = new MiniSignal();
         this.entityRemoved = new MiniSignal();
-        this._entityList = new LinkedList();
-        this._entityNames = new Map();
+        this.entityList = new LinkedList();
+        this.entityNames = new Map();
         this.nameChanged = new MiniSignal();
 
-        if (name) {
-            this._name = name;
-        } else {
-            this._name = '_scene' + ++Scene.nameCount;
-        }
+        this._name = name ? name : '_scene' + ++Scene.nameCount;
     }
 
     /**
@@ -79,8 +75,8 @@ export class Scene {
         if (typeof entityClass === 'undefined') {
             entityClass = entity.constructor;
         }
-        this._entityList.add(entity);
-        this._entityNames.set(entity.name, entity);
+        this.entityList.add(entity);
+        this.entityNames.set(entity.name, entity);
         this.entityAdded.dispatch(this, entityClass);
         entity.scene = this;
         return this;
@@ -94,13 +90,13 @@ export class Scene {
      */
     public removeEntity(entity: Entity, index?: number): void {
         if (typeof index === 'undefined') {
-            for (let i = 0; i < this._entityList.size(); i++) {
-                if (this._entityList.item(i) === entity) {
-                    this._entityList.remove(i);
+            for (let i = 0; i < this.entityList.size(); i++) {
+                if (this.entityList.item(i) === entity) {
+                    this.entityList.remove(i);
                 }
             }
         } else {
-            this._entityList.remove(index);
+            this.entityList.remove(index);
         }
     }
 
@@ -111,9 +107,9 @@ export class Scene {
      * @return The entity, or null if none was found.
      */
     public getEntityWithName(entityName: any): Entity {
-        for (let i = 0; i < this._entityList.size(); i++) {
-            if (this._entityList.item(i).name === entityName) {
-                return this._entityList.item(i);
+        for (let i = 0; i < this.entityList.size(); i++) {
+            if (this.entityList.item(i).name === entityName) {
+                return this.entityList.item(i);
             }
         }
         return null;
@@ -125,7 +121,7 @@ export class Scene {
      * @return An array containing all the entities that are on the scene.
      */
     public getAllEntities(): any[] {
-        return this._entityList.toArray();
+        return this.entityList.toArray();
     }
 
     /**
@@ -135,8 +131,8 @@ export class Scene {
      * @return true if the entity has a entity of the type, false if not.
      */
     public hasEntityWithName(entityName: any): boolean {
-        for (let i = 0, len = this._entityList.size(); i < len; i++) {
-            if (this._entityList.item(i).name === entityName) {
+        for (let i = 0, len = this.entityList.size(); i < len; i++) {
+            if (this.entityList.item(i).name === entityName) {
                 return true;
             }
         }

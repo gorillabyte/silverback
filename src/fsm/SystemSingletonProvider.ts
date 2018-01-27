@@ -6,9 +6,9 @@ import { ISystemProvider } from './ISystemProvider';
  * is created when first required and is of the type passed in to the constructor.
  */
 export class SystemSingletonProvider implements ISystemProvider {
-    private _componentType;
-    private _instance: System;
-    private _systemPriority = 0;
+    private componentType;
+    private instance: System;
+    private systemPriority = 0;
 
     /**
      * Constructor
@@ -16,7 +16,7 @@ export class SystemSingletonProvider implements ISystemProvider {
      * @param type The type of the single System instance
      */
     constructor(type: any) {
-        this._componentType = type;
+        this.componentType = type;
     }
 
     /**
@@ -25,10 +25,10 @@ export class SystemSingletonProvider implements ISystemProvider {
      * @return The single instance
      */
     public getSystem(): System {
-        if (!this._instance) {
-            this._instance = new this._componentType();
+        if (!this.instance) {
+            this.instance = new this.componentType();
         }
-        return this._instance;
+        return this.instance;
     }
 
     /**
@@ -45,13 +45,13 @@ export class SystemSingletonProvider implements ISystemProvider {
      * The priority at which the System should be added to the Engine
      */
     public get priority(): number {
-        return this._systemPriority;
+        return this.systemPriority;
     }
 
     /**
      * @private
      */
     public set priority(value: number) {
-        this._systemPriority = value;
+        this.systemPriority = value;
     }
 }

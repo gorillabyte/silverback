@@ -7,20 +7,21 @@
  * to the list obtained by the system. The engine keeps the list up to date as entities are added
  * to and removed from the engine and as the components on entities change.</p>
  */
+import { Entity } from '../core';
 
-export class Node {
+export interface INode {
     /**
      * The entity whose components are included in the node.
      */
-    public entity: any = null;
+    entity: Entity,
 
     /**
      * Used by the NodeList class. The previous node in a node list.
      */
-    public previous: any = null;
+    previous: INode,
 
     /**
      * Used by the NodeList class. The next node in a node list.
      */
-    public next: any = null;
-}
+    next: INode,
+};

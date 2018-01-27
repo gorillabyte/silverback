@@ -6,8 +6,8 @@ import { ISystemProvider } from './ISystemProvider';
  * is passed to the provider at initialisation.
  */
 export class DynamicSystemProvider implements ISystemProvider {
-    private _method: () => {};
-    private _systemPriority = 0;
+    private method: () => {};
+    private systemPriority = 0;
 
     /**
      * Constructor
@@ -15,7 +15,7 @@ export class DynamicSystemProvider implements ISystemProvider {
      * @param method The method that returns the System instance;
      */
     constructor(method: () => {}) {
-        this._method = method;
+        this.method = method;
     }
 
     /**
@@ -24,7 +24,7 @@ export class DynamicSystemProvider implements ISystemProvider {
      * @return The instance of the System
      */
     public getSystem(): System {
-        return this._method() as System;
+        return this.method() as System;
     }
 
     /**
@@ -34,17 +34,17 @@ export class DynamicSystemProvider implements ISystemProvider {
      * @return The method used to call the System instances
      */
     public get identifier() {
-        return this._method;
+        return this.method;
     }
 
     /**
      * The priority at which the System should be added to the Engine
      */
     public get priority(): number {
-        return this._systemPriority;
+        return this.systemPriority;
     }
 
     public set priority(value: number) {
-        this._systemPriority = value;
+        this.systemPriority = value;
     }
 }

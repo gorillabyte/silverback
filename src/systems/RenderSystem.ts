@@ -6,8 +6,8 @@ import { Vec2D } from '../utils/Vec2D';
 export class RenderSystem extends System {
     private static stage;
     private static renderer;
-    private _nodes: Silverback.LinkedList;
-    private _engine;
+    private nodes: Silverback.LinkedList;
+    private engine;
 
     constructor(renderer, canvasStage) {
         super();
@@ -17,15 +17,15 @@ export class RenderSystem extends System {
     }
 
     public addToEngine(engine: Silverback.Engine): void {
-        this._nodes = engine.getNodeList(RenderNode);
-        for (let node = this._nodes.first; node; node = node.next) {
+        this.nodes = engine.getNodeList(RenderNode);
+        for (let node = this.nodes.first; node; node = node.next) {
             this.addToDisplay(node);
         }
-        this._engine = engine;
+        this.engine = engine;
     }
 
     public removeFromEngine(engine: Silverback.Engine): void {
-        this._nodes = null;
+        this.nodes = null;
     }
 
     public addToDisplay(node: any): void {
@@ -44,7 +44,7 @@ export class RenderSystem extends System {
     }
 
     public update(time: number): void {
-        for (let node = this._nodes.first; node; node = node.next) {
+        for (let node = this.nodes.first; node; node = node.next) {
             const display: PIXI.DisplayObject = node.display.obj;
             const position: Vec2D = node.position.pos;
 

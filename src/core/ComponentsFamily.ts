@@ -12,12 +12,12 @@ import { IFamily } from './IFamily';
 import { NodePool } from './NodePool';
 
 export class ComponentsFamily implements IFamily {
-    private _nodes: LinkedList;
-    private _entities: Map<any, any>;
-    private _nodeClass;
-    private _components: Map<any, any>;
-    private _nodePool: NodePool;
-    private _engine: Engine;
+    private nodes: LinkedList;
+    private entities: Map<any, any>;
+    private nodeClass;
+    private components: Map<any, any>;
+    private nodePool: NodePool;
+    private engine: Engine;
 
     /**
      * The constructor. Creates a ComponentsFamily to provide a NodeList for the
@@ -27,19 +27,19 @@ export class ComponentsFamily implements IFamily {
      * @param engine The engine that this family is managing teh NodeList for.
      */
     constructor(nodeClass: any, engine: Engine) {
-        this._nodeClass = nodeClass;
-        this._engine = engine;
+        this.nodeClass = nodeClass;
+        this.engine = engine;
 
         this._init();
     }
 
     /**
-     * The nodelist managed by this family. This is a reference that remains valid always
+     * The node ist managed by this family. This is a reference that remains valid always
      * since it is retained and reused by Systems that use the list. i.e. we never recreate the list,
      * we always modify it in place.
      */
     public get nodeList(): LinkedList {
-        return this._nodes;
+        return this.nodes;
     }
 
     /**
@@ -80,15 +80,15 @@ export class ComponentsFamily implements IFamily {
      * if it should be in this NodeList and adds it if so.
      */
     public addIfMatch(entity: Entity) {
-        if (!this._entities.has(entity)) {
-            this._components.forEach(componentClass => {
+        if (!this.entities.has(entity)) {
+            this.components.forEach(componentClass => {
                 if (!entity.hasComponent(componentClass)) {
                     return;
                 }
             });
             // If the entity has not components, don't add it.
             if (entity.getAll().length > 0) {
-                const node = this._nodePool.get();
+                const node = this.nodePool.get();
                 const types = node.types;
 
                 for (const prop in types) {
@@ -104,8 +104,8 @@ export class ComponentsFamily implements IFamily {
                 }
                 node.entity = entity;
 
-                this._entities.set(entity, node);
-                this._nodes.add(node);
+                this.entities.set(entity, node);
+                this.nodes.add(node);
             }
         }
     }
@@ -114,21 +114,21 @@ export class ComponentsFamily implements IFamily {
      * Removes the entity if it is in this family's NodeList.
      */
     public removeIfMatch(entity: Entity) {
-        if (this._entities.get(entity)) {
-            const node = this._entities.get(entity);
-            this._entities.delete(entity);
+        if (this.entities.get(entity)) {
+            const node = this.entities.get(entity);
+            this.entities.delete(entity);
 
-            for (let i = 0; i < this._nodes.size(); i++) {
-                if (this._nodes.item(i) === node) {
-                    this._nodes.remove(i);
+            for (let i = 0; i < this.nodes.size(); i++) {
+                if (this.nodes.item(i) === node) {
+                    this.nodes.remove(i);
                 }
             }
 
-            if (this._engine.updating) {
-                this._nodePool.cache(node);
-                this._engine.updateComplete.add(this._releaseNodePoolCache, this);
+            if (this.engine.updating) {
+                this.nodePool.cache(node);
+                this.engine.updateComplete.add(this._releaseNodePoolCache, this);
             } else {
-                this._nodePool.dispose(node);
+                this.nodePool.dispose(node);
             }
         }
     }
@@ -137,9 +137,9 @@ export class ComponentsFamily implements IFamily {
      * Removes all nodes from the NodeList.
      */
     public cleanUp() {
-        for (let i = 0; i < this._nodes.size(); i++) {
-            this._entities.delete(this._nodes.item(i).entity);
-            this._nodes.remove(i);
+        for (let i = 0; i < this.nodes.size(); i++) {
+            this.entities.delete(this.nodes.item(i).entity);
+            this.nodes.remove(i);
         }
     }
 
@@ -148,8 +148,8 @@ export class ComponentsFamily implements IFamily {
      * be reused.
      */
     private _releaseNodePoolCache() {
-        this._engine.updateComplete.detachAll();
-        this._nodePool.releaseCache();
+        this.engine.updateComplete.detachAll();
+        this.nodePool.releaseCache();
     }
 
     /**
@@ -157,18 +157,18 @@ export class ComponentsFamily implements IFamily {
      * what component types the node requires.
      */
     private _init() {
-        this._nodes = new LinkedList();
-        this._entities = new Map(); // <Entity, Node>
-        this._components = new Map(); // <Type, string>
+        this.nodes = new LinkedList();
+        this.entities = new Map(); // <Entity, Node>
+        this.components = new Map(); // <Type, string>
 
-        const types = this._nodeClass['types'];
+        const types = this.nodeClass['types'];
 
         for (const prop in types) {
             if (types.hasOwnProperty(prop)) {
-                this._components.set(prop, types[prop]);
+                this.components.set(prop, types[prop]);
             }
         }
-        this._nodePool = new NodePool(this._nodeClass, this._components);
-        this._nodePool.dispose(this._nodePool.get());
+        this.nodePool = new NodePool(this.nodeClass, this.components);
+        this.nodePool.dispose(this.nodePool.get());
     }
 }

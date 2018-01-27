@@ -6,8 +6,8 @@ import { ISystemProvider } from './ISystemProvider';
  * is passed to the provider at initialisation.
  */
 export class SystemInstanceProvider implements ISystemProvider {
-    private _instance: System;
-    private _systemPriority = 0;
+    private instance: System;
+    private systemPriority = 0;
 
     /**
      * Constructor
@@ -15,7 +15,7 @@ export class SystemInstanceProvider implements ISystemProvider {
      * @param instance The instance to return whenever a System is requested.
      */
     constructor(instance: System) {
-        this._instance = instance;
+        this.instance = instance;
     }
 
     /**
@@ -24,7 +24,7 @@ export class SystemInstanceProvider implements ISystemProvider {
      * @return The instance of the System
      */
     public getSystem(): System {
-        return this._instance;
+        return this.instance;
     }
 
     /**
@@ -34,20 +34,20 @@ export class SystemInstanceProvider implements ISystemProvider {
      * @return The instance
      */
     public get identifier() {
-        return this._instance;
+        return this.instance;
     }
 
     /**
      * The priority at which the System should be added to the Engine
      */
     public get priority(): number {
-        return this._systemPriority;
+        return this.systemPriority;
     }
 
     /**
      * @private
      */
     public set priority(value: number) {
-        this._systemPriority = value;
+        this.systemPriority = value;
     }
 }
