@@ -4,5 +4,4 @@ export class SceneMock extends Scene {
     constructor() {
         super();
     }
-
 }

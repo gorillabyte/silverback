@@ -1,12 +1,11 @@
-import { System } from '../core/System';
-import { ISystemProvider } from './ISystemProvider';
+import { System } from '../core';
 import { EngineState } from './EngineState';
+import { ISystemProvider } from './ISystemProvider';
 
 /**
  * Used by the SystemState class to create the mappings of Systems to providers via a fluent interface.
  */
 export class StateSystemMapping {
-
     private creatingState: EngineState;
     private provider: ISystemProvider;
 
@@ -67,7 +66,7 @@ export class StateSystemMapping {
      * @param method The method to provide the System instance.
      * @return This StateSystemMapping, so more modifications can be applied.
      */
-    public addMethod(method: Function): StateSystemMapping {
+    public addMethod(method: () => {}): StateSystemMapping {
         return this.creatingState.addMethod(method);
     }
 

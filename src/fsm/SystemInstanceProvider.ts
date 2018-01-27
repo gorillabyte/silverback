@@ -1,14 +1,13 @@
+import { System } from '../core';
 import { ISystemProvider } from './ISystemProvider';
-import { System } from '../core/System';
 
 /**
  * This System provider always returns the same instance of the component. The system
  * is passed to the provider at initialisation.
  */
 export class SystemInstanceProvider implements ISystemProvider {
-
     private _instance: System;
-    private _systemPriority: number = 0;
+    private _systemPriority = 0;
 
     /**
      * Constructor

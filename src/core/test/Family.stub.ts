@@ -4,16 +4,14 @@ import { LinkedList } from '../../';
 import { IFamily } from '../IFamily';
 
 export class FamilyMock implements IFamily {
-
     public static instances: Array<FamilyMock> = [];
     private _nodes: LinkedList;
 
-    public newEntityCalls: number = 0;
-    public removeEntityCalls: number = 0;
-    public componentAddedCalls: number = 0;
-    public componentRemovedCalls: number = 0;
-    public cleanUpCalls: number = 0;
-
+    public newEntityCalls = 0;
+    public removeEntityCalls = 0;
+    public componentAddedCalls = 0;
+    public componentRemovedCalls = 0;
+    public cleanUpCalls = 0;
 
     constructor(nodeClass: any, engine: Engine) {
         FamilyMock.instances.push(this);

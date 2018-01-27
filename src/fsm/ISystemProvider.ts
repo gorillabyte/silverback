@@ -1,8 +1,7 @@
-import { System } from '../core/System';
+import { System } from '../core';
 
 export interface ISystemProvider {
-    getSystem(): System;
-
     identifier;
     priority: number;
+    getSystem(): System;
 }

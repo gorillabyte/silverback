@@ -11,7 +11,6 @@
  * that match the node.</p>
  */
 export abstract class System {
-
     /**
      * Used internally to manage the list of systems within the engine. The previous system in the list.
      */
@@ -26,7 +25,7 @@ export abstract class System {
      * Used internally to hold the priority of this system within the system list. This is
      * used to order the systems so they are updated in the correct order.
      */
-    public priority: number = 0;
+    public priority = 0;
 
     /**
      * Called just after the system is added to the engine, before any calls to the update method.
@@ -35,7 +34,7 @@ export abstract class System {
      * @param engine The engine the system was added to.
      */
     public addToEngine(engine: any): void {
-        throw new Error('Don\'t call the abstract class directly, this method must be overridden.');
+        throw new Error("Don't call the abstract class directly, this method must be overridden.");
     }
 
     /**
@@ -45,7 +44,7 @@ export abstract class System {
      * @param engine The engine the system was removed from.
      */
     public removeFromEngine(engine: any): void {
-        throw new Error('Don\'t call the abstract class directly, this method must be overridden.');
+        throw new Error("Don't call the abstract class directly, this method must be overridden.");
     }
 
     /**
@@ -59,7 +58,7 @@ export abstract class System {
      * @param time The duration, in seconds, of the frame.
      */
     public update(time: number) {
-        throw new Error('Don\'t call the abstract class directly, this method must be overridden.');
+        throw new Error("Don't call the abstract class directly, this method must be overridden.");
     }
 
     public is(type) {

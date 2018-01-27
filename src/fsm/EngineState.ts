@@ -1,17 +1,16 @@
-import { System } from '../core/System';
+import { System } from '../core';
+import { DynamicSystemProvider } from './DynamicSystemProvider';
 import { ISystemProvider } from './ISystemProvider';
 import { StateSystemMapping } from './StateSystemMapping';
 import { SystemInstanceProvider } from './SystemInstanceProvider';
 import { SystemSingletonProvider } from './SystemSingletonProvider';
-import { DynamicSystemProvider } from './DynamicSystemProvider';
 
 /**
  * Represents a state for a SystemStateMachine. The state contains any number of SystemProviders which
  * are used to add Systems to the Engine when this state is entered.
  */
 export class EngineState {
-
-    public providers: Array<ISystemProvider> = [];
+    public providers: ISystemProvider[] = [];
 
     /**
      * Creates a mapping for the System type to a specific System instance. A
@@ -46,7 +45,7 @@ export class EngineState {
      * @param method The method to provide the System instance.
      * @return This StateSystemMapping, so more modifications can be applied.
      */
-    public addMethod(method: Function): StateSystemMapping {
+    public addMethod(method: () => {}): StateSystemMapping {
         return this.addProvider(new DynamicSystemProvider(method));
     }
 
@@ -57,7 +56,7 @@ export class EngineState {
      * @return This StateSystemMapping, so more modifications can be applied.
      */
     public addProvider(provider: ISystemProvider): StateSystemMapping {
-        let mapping: StateSystemMapping = new StateSystemMapping(this, provider);
+        const mapping: StateSystemMapping = new StateSystemMapping(this, provider);
         this.providers.push(provider);
         return mapping;
     }

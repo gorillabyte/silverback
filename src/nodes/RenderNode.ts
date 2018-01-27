@@ -1,16 +1,16 @@
-import { Display, Position, Group } from '../components';
+import { Display, Group, Position } from '../components';
 
 export const RenderNode = {
-    name: 'RenderNode',
+    container: null,
+    display: null,
     entity: null,
-    previous: null,
+    name: 'RenderNode',
     next: null,
     position: null,
-    display: null,
-    container: null,
+    previous: null,
     types: {
-        position: Position,
+        container: Group,
         display: Display,
-        container: Group
-    }
+        position: Position,
+    },
 };

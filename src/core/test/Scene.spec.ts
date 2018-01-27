@@ -8,7 +8,6 @@ describe('Scene unit test', () => {
     let scene: Scene;
 
     describe('- Scene', () => {
-
         it('should have a name by default', () => {
             scene = new Scene();
             expect(scene.name.length).to.be.greaterThan(0);

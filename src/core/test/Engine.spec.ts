@@ -23,7 +23,6 @@ describe('Engine', () => {
         engine = null;
     });
     describe('- Entity', () => {
-
         it('should return all entities added to the engine', () => {
             let entity1: Entity = new Entity();
             engine.addEntity(entity1);
@@ -183,11 +182,11 @@ describe('Engine', () => {
             let entity: Entity = new Entity();
             engine.addEntity(entity);
             let allComponent = new Map([['Position', Position]]);
-            let testClass:any = allComponent.get(writtenComponenet.type);
+            let testClass: any = allComponent.get(writtenComponenet.type);
             let testProps = writtenComponenet.props;
             let test = new testClass();
             for (let pro in testProps) {
-                if( testProps.hasOwnProperty(pro)) {
+                if (testProps.hasOwnProperty(pro)) {
                     test[pro] = testProps[pro];
                 }
             }
@@ -197,7 +196,6 @@ describe('Engine', () => {
     });
 
     describe('- System', () => {
-
         it('should add a system correctly to the engine', () => {
             let system: System = new SystemMock();
             engine.addSystem(system, 0);

@@ -25,7 +25,7 @@ export class NodePool {
      */
     public get() {
         if (this._tail) {
-            let node = this._tail;
+            const node = this._tail;
             this._tail = this._tail.previous;
             node.previous = null;
             return node;
@@ -57,7 +57,7 @@ export class NodePool {
      */
     public releaseCache(): void {
         while (this._cacheTail) {
-            let node: any = this._cacheTail;
+            const node: any = this._cacheTail;
             this._cacheTail = node.previous;
             this.dispose(node);
         }

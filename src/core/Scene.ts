@@ -1,15 +1,32 @@
 import { LinkedList } from '../utils/LinkedList';
 import { Entity } from './Entity';
-
+// tslint:disable-next-line
 const MiniSignal = require('mini-signals');
 
 export class Scene {
-
     private static nameCount = 0;
     /**
      * Optional, give the scene a name. This can help with debugging and with serialising the scenes.
      */
     private _name: string;
+    private _entities: Map<any, any>;
+    private _entityList: LinkedList;
+    private _entityNames: Map<any, any>;
+
+    constructor(name = '') {
+        this._entities = new Map();
+        this.entityAdded = new MiniSignal();
+        this.entityRemoved = new MiniSignal();
+        this._entityList = new LinkedList();
+        this._entityNames = new Map();
+        this.nameChanged = new MiniSignal();
+
+        if (name) {
+            this._name = name;
+        } else {
+            this._name = '_scene' + ++Scene.nameCount;
+        }
+    }
 
     /**
      * This signal is dispatched when a entity is added to the scene.
@@ -30,25 +47,6 @@ export class Scene {
     public previous: Scene;
     public next: Scene;
 
-    private _entities: Map<any, any>;
-    private _entityList: LinkedList;
-    private _entityNames: Map<any, any>;
-
-    constructor(name: string = '') {
-        this._entities = new Map();
-        this.entityAdded = new MiniSignal();
-        this.entityRemoved = new MiniSignal();
-        this._entityList = new LinkedList();
-        this._entityNames = new Map();
-        this.nameChanged = new MiniSignal();
-
-        if (name) {
-            this._name = name;
-        } else {
-            this._name = '_scene' + (++Scene.nameCount);
-        }
-    }
-
     /**
      * All scenes have a name. If no name is set, a default name is used. Names are used to
      * fetch specific scenes from the engine, and can also help to identify an entity when debugging.
@@ -59,7 +57,7 @@ export class Scene {
 
     public set name(value: string) {
         if (this._name !== value) {
-            let previous: string = this._name;
+            const previous: string = this._name;
             this._name = value;
             this.nameChanged.dispatch(this, previous);
         }

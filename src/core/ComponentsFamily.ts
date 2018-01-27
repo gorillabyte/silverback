@@ -5,11 +5,11 @@
  * It uses the basic entity matching pattern of an entity system - entities are added to the list if
  * they contain components matching all the public properties of the node class.
  */
-import { NodePool } from './NodePool';
 import { LinkedList } from '../utils/LinkedList';
 import { Engine } from './Engine';
 import { Entity } from './Entity';
 import { IFamily } from './IFamily';
+import { NodePool } from './NodePool';
 
 export class ComponentsFamily implements IFamily {
     private _nodes: LinkedList;
@@ -31,26 +31,6 @@ export class ComponentsFamily implements IFamily {
         this._engine = engine;
 
         this._init();
-    }
-
-    /**
-     * Initialises the class. Creates the nodelist and other tools. Analyses the node to determine
-     * what component types the node requires.
-     */
-    private _init() {
-        this._nodes = new LinkedList();
-        this._entities = new Map();   // <Entity, Node>
-        this._components = new Map(); // <Type, string>
-
-        let types = this._nodeClass['types'];
-
-        for (let prop in types) {
-            if (types.hasOwnProperty(prop)) {
-                this._components.set(prop, types[prop]);
-            }
-        }
-        this._nodePool = new NodePool(this._nodeClass, this._components);
-        this._nodePool.dispose(this._nodePool.get());
     }
 
     /**
@@ -101,20 +81,18 @@ export class ComponentsFamily implements IFamily {
      */
     public addIfMatch(entity: Entity) {
         if (!this._entities.has(entity)) {
-
-            this._components.forEach((componentClass) => {
+            this._components.forEach(componentClass => {
                 if (!entity.hasComponent(componentClass)) {
                     return;
                 }
             });
             // If the entity has not components, don't add it.
             if (entity.getAll().length > 0) {
-                let node = this._nodePool.get();
-                let types = node.types;
+                const node = this._nodePool.get();
+                const types = node.types;
 
-                for (let prop in types) {
+                for (const prop in types) {
                     if (types.hasOwnProperty(prop)) {
-
                         if (!entity.hasComponent(types[prop].name)) {
                             // Node prop was not found in the entity
                             return;
@@ -136,9 +114,8 @@ export class ComponentsFamily implements IFamily {
      * Removes the entity if it is in this family's NodeList.
      */
     public removeIfMatch(entity: Entity) {
-
         if (this._entities.get(entity)) {
-            let node = this._entities.get(entity);
+            const node = this._entities.get(entity);
             this._entities.delete(entity);
 
             for (let i = 0; i < this._nodes.size(); i++) {
@@ -157,6 +134,16 @@ export class ComponentsFamily implements IFamily {
     }
 
     /**
+     * Removes all nodes from the NodeList.
+     */
+    public cleanUp() {
+        for (let i = 0; i < this._nodes.size(); i++) {
+            this._entities.delete(this._nodes.item(i).entity);
+            this._nodes.remove(i);
+        }
+    }
+
+    /**
      * Releases the nodes that were added to the node pool during this engine update, so they can
      * be reused.
      */
@@ -166,12 +153,22 @@ export class ComponentsFamily implements IFamily {
     }
 
     /**
-     * Removes all nodes from the NodeList.
+     * Initialises the class. Creates the nodelist and other tools. Analyses the node to determine
+     * what component types the node requires.
      */
-    public cleanUp() {
-        for (let i = 0; i < this._nodes.size(); i++) {
-            this._entities.delete(this._nodes.item(i).entity);
-            this._nodes.remove(i);
+    private _init() {
+        this._nodes = new LinkedList();
+        this._entities = new Map(); // <Entity, Node>
+        this._components = new Map(); // <Type, string>
+
+        const types = this._nodeClass['types'];
+
+        for (const prop in types) {
+            if (types.hasOwnProperty(prop)) {
+                this._components.set(prop, types[prop]);
+            }
         }
+        this._nodePool = new NodePool(this._nodeClass, this._components);
+        this._nodePool.dispose(this._nodePool.get());
     }
 }

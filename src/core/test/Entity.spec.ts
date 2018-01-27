@@ -16,7 +16,6 @@ describe('Entity unit test', () => {
     });
 
     describe('- Entity', () => {
-
         it('should add returns reference to the entity', () => {
             let component: ComponentMock = new ComponentMock();
             let e: Entity = entity.addComponent(component);

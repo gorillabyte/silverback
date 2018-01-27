@@ -21,10 +21,7 @@ export * from './core';
 import * as components from './components';
 import * as systems from './systems';
 
-export {
-    components,
-    systems,
-};
+export { components, systems };
 
 // Always export Silverback globally.
 window.Silverback = exports; // eslint-disable-line

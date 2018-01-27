@@ -1,5 +1,5 @@
-import { EngineState } from './EngineState';
 import { Engine } from '../core';
+import { EngineState } from './EngineState';
 import { ISystemProvider } from './ISystemProvider';
 
 /**
@@ -40,7 +40,7 @@ export class EngineStateMachine {
      * the appropriate component providers.
      */
     public createState(name: string): EngineState {
-        let state: EngineState = new EngineState();
+        const state: EngineState = new EngineState();
         this.states.set(name, state);
         return state;
     }
@@ -53,25 +53,25 @@ export class EngineStateMachine {
      */
     public changeState(name: string): void {
         let newState: EngineState = this.states.get(name);
-        let toAdd: Map<any, any> = new Map();
+        const toAdd: Map<any, any> = new Map();
         let id;
 
         if (!newState) {
-            throw(new Error('Engine state ' + name + ' doesn\'t exist'));
+            throw new Error('Engine state ' + name + " doesn't exist");
         }
         if (newState === this.currentState) {
             newState = null;
             return;
         }
 
-        newState.providers.forEach(function (provider: ISystemProvider) {
+        newState.providers.forEach((provider: ISystemProvider) => {
             id = provider.identifier;
             toAdd.set(id, provider);
         });
         if (this.currentState) {
             this.currentState.providers.forEach((provider: ISystemProvider) => {
                 id = provider.identifier;
-                let other: ISystemProvider = toAdd.get(id);
+                const other: ISystemProvider = toAdd.get(id);
 
                 if (other) {
                     // TODO: disable because of error TS2703, need further investigation
@@ -81,7 +81,7 @@ export class EngineStateMachine {
                 }
             });
         }
-        toAdd.forEach((provider) => {
+        toAdd.forEach(provider => {
             this.engine.addSystem(provider, provider.priority);
         });
         this.currentState = newState;

@@ -17,17 +17,20 @@
  * position component. Systems operate on entities based on the components they have.</p>
  */
 
-import { Scene } from './Scene';
 import { IComponent } from './IComponent';
+import { Scene } from './Scene';
+// tslint:disable-next-line
 const MiniSignal = require('mini-signals');
 
 export class Entity {
-
-    private static nameCount = 0;
     /**
      * Optional, give the entity a name. This can help with debugging and with serialising the entity.
      */
+    private static nameCount = 0;
     private _name: string;
+
+    private _components: Map<string, IComponent>;
+    private _addedToScene: Scene;
 
     /**
      * This signal is dispatched when a component is added to the entity.
@@ -47,20 +50,14 @@ export class Entity {
 
     public previous: Entity;
     public next: Entity;
-    private _components: Map<string, IComponent>;
-    private _addedToScene: Scene;
 
-    constructor(name: string = '') {
+    constructor(name = '') {
         this._components = new Map();
         this.componentAdded = new MiniSignal();
         this.componentRemoved = new MiniSignal();
         this.nameChanged = new MiniSignal();
 
-        if (name.length > 0) {
-            this._name = name;
-        } else {
-            this._name = 'entity' + (++Entity.nameCount);
-        }
+        this._name = name.length > 0 ? name : 'entity' + ++Entity.nameCount;
     }
 
     /**
@@ -73,7 +70,7 @@ export class Entity {
 
     public set name(value: string) {
         if (this._name !== value) {
-            let previous: string = this._name;
+            const previous: string = this._name;
             this._name = value;
             this.nameChanged.dispatch(this, previous);
         }
@@ -113,7 +110,7 @@ export class Entity {
      * @return the component, or null if the component doesn't exist in the entity
      */
     public removeComponent(componentClass): any {
-        let component: any = this._components.get(componentClass);
+        const component: any = this._components.get(componentClass);
         if (component) {
             this._components.delete(componentClass);
             this.componentRemoved.dispatch(this, componentClass);
@@ -148,7 +145,7 @@ export class Entity {
      * @return An array containing all the components that are on the entity.
      */
     public getAll(): any[] {
-        return [ ...this._components.keys() ];
+        return [...this._components.keys()];
     }
 
     /**
@@ -161,15 +158,19 @@ export class Entity {
     }
 
     public toString() {
-        let seen = [];
-        return JSON.stringify(this, function (key, val) {
-            if (typeof val === 'object') {
-                if (seen.indexOf(val) >= 0) {
-                    return;
+        const seen = [];
+        return JSON.stringify(
+            this,
+            function(key, val) {
+                if (typeof val === 'object') {
+                    if (seen.indexOf(val) >= 0) {
+                        return;
+                    }
+                    seen.push(val);
                 }
-                seen.push(val);
-            }
-            return val;
-        }, 4);
+                return val;
+            },
+            4
+        );
     }
 }

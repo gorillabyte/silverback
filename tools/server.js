@@ -7,11 +7,11 @@ const app = express();
 app.use('/dist', express.static(path.join(__dirname, '../dist')));
 app.use('/', express.static(path.join(__dirname, '../examples')));
 
-app.get('/index.html', function (req, res) {
+app.get('/index.html', function(req, res) {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.listen(port, function (err) {
+app.listen(port, function(err) {
     if (err) {
         console.error(err);
     } else {

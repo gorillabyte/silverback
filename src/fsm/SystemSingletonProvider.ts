@@ -1,5 +1,5 @@
+import { System } from '../core';
 import { ISystemProvider } from './ISystemProvider';
-import { System } from '../core/System';
 
 /**
  * This System provider always returns the same instance of the System. The instance

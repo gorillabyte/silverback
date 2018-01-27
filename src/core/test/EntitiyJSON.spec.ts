@@ -52,7 +52,6 @@ describe('Entity unit test', () => {
     });
 
     describe('- Entity JSON', () => {
-
         it('should create an entity object accorind to the given JSON data', () => {
             engine.addEntityJSON(data);
             expect(engine.entities.length).to.deep.equal(1);
@@ -64,14 +63,12 @@ describe('Entity unit test', () => {
             let componentD: Display = new Display('assets/img/bunny.png');
             expect(engine.entities.length).to.deep.equal(1);
             expect(engine.entities[0].name).to.deep.equal('entity01');
-            expect(typeof engine.entities[0].getComponent('Position').pos.x)
-                .to.be.equal('number');
-            expect(engine.entities[0].getComponent('Position').pos.x)
-                .to.be.equal(100);
-            expect(engine.entities[0].getComponent('Display').constructor.name)
-                .to.be.equal(componentD.constructor.name);
-            expect(typeof engine.entities[0].getComponent('Display'))
-                .to.be.equal('object');
+            expect(typeof engine.entities[0].getComponent('Position').pos.x).to.be.equal('number');
+            expect(engine.entities[0].getComponent('Position').pos.x).to.be.equal(100);
+            expect(engine.entities[0].getComponent('Display').constructor.name).to.be.equal(
+                componentD.constructor.name
+            );
+            expect(typeof engine.entities[0].getComponent('Display')).to.be.equal('object');
         });
     });
 });

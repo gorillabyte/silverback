@@ -1,4 +1,4 @@
-export function arrayContains(a, obj):boolean {
+export function arrayContains(a, obj): boolean {
     let i = a.length;
     while (i--) {
         if (a[i] === obj) {

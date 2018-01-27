@@ -21,7 +21,6 @@ describe('System unit test', () => {
     });
 
     describe('- System', () => {
-
         it('should return all the registered systems', () => {
             system1 = new SystemMock();
             engine.addSystem(system1, 1);

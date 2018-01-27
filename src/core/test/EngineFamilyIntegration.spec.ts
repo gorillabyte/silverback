@@ -19,7 +19,6 @@ describe('EngineFamilyIntegration', () => {
     });
 
     describe('- FamilyNode', () => {
-
         it('should be initially empty', () => {
             let nodes: LinkedList = engine.getNodeList(NewNodeMock);
             expect(nodes.item(0)).to.be.null;
@@ -47,7 +46,6 @@ describe('EngineFamilyIntegration', () => {
             expect(nodeList1.size()).to.deep.equal(1);
             expect(nodeList2.size()).to.deep.equal(0);
         });
-
 
         it('should correctly add entity to family, when accessing the family first', () => {
             let entity: Entity = new Entity();

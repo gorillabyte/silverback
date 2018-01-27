@@ -7,7 +7,6 @@ import { LinkedList } from '../utils/LinkedList';
 import { Entity } from './Entity';
 
 export interface IFamily {
-
     /**
      * Returns the NodeList managed by this class. This should be a reference that remains valid always
      * since it is retained and reused by Systems that use the list. i.e. never recreate the list,
@@ -37,7 +36,6 @@ export interface IFamily {
      * NodeList should be modified.
      */
     componentRemovedFromEntity(entity: Entity, componentClass: () => any);
-
 
     /**
      * The family is about to be discarded. Clean up all properties as necessary. Usually, you will

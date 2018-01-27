@@ -1,2 +1,1 @@
-export interface IComponent {
-}
+export interface IComponent {}

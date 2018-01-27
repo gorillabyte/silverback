@@ -2,17 +2,19 @@
  * @module Silverback
  * @class Engine
  */
+// tslint:disable-next-line
 /// <reference path="../../types/mini-signals.d.ts" />
-import { Entity } from './Entity';
-import { Scene } from './Scene';
+import { Display, Group, Position } from '../components';
 import { LinkedList } from '../utils/LinkedList';
 import systemSort from '../utils/SystemSort';
-import { System } from './System';
 import { ComponentsFamily } from './ComponentsFamily';
-import { IFamily } from './IFamily';
+import { Entity } from './Entity';
 import { IComponent } from './IComponent';
-import { Display, Position, Group } from '../components';
+import { IFamily } from './IFamily';
+import { Scene } from './Scene';
+import { System } from './System';
 
+// tslint:disable-next-line
 const MiniSignal = require('mini-signals');
 
 /**
@@ -20,17 +22,10 @@ const MiniSignal = require('mini-signals');
  * entities and systems to the engine, and fetch families of nodes from the engine.
  */
 export class Engine {
-
-    private _systemList: Array<System>;
-    private _sceneList: LinkedList;
-    private _entitiesList: Map<string, Entity>;
-    private _sceneNames: Map<any, any>;
-    private _families: Map<any, any>;
-
     /**
      * Indicates if the engine is currently in its update loop.
      */
-    public updating: boolean = false;
+    public updating = false;
 
     /**
      * Dispatched when the update loop ends. If you want to add and remove systems from the
@@ -56,6 +51,12 @@ export class Engine {
      */
     public componentClasses: Map<string, any> = null;
 
+    private _systemList: System[];
+    private _sceneList: LinkedList;
+    private _entitiesList: Map<string, Entity>;
+    private _sceneNames: Map<any, any>;
+    private _families: Map<any, any>;
+
     constructor() {
         this._systemList = [];
         this._sceneList = new LinkedList();
@@ -74,21 +75,21 @@ export class Engine {
     /**
      * Returns an array containing all the entities in the engine.
      */
-    public get entities(): Array<Entity> {
+    public get entities(): Entity[] {
         return [...this._entitiesList.values()] as any;
     }
 
     /**
      * Returns an array containing all the scenes in the engine.
      */
-    public get scenes(): Array<Scene> {
+    public get scenes(): Scene[] {
         return this._sceneList.toArray();
     }
 
     /**
      * Returns an array containing all the systems in the engine.
      */
-    public get systems(): Array<System> {
+    public get systems(): System[] {
         return this._systemList;
     }
 
@@ -118,25 +119,24 @@ export class Engine {
         });
     }
 
-
-    public addEntityJSON(data):void {
+    public addEntityJSON(data): void {
         const allEntities = JSON.parse(data);
-        allEntities['entities'].forEach((oneEntity) => {
-            let entity = new Entity(oneEntity.name);
+        allEntities['entities'].forEach(oneEntity => {
+            const entity = new Entity(oneEntity.name);
             this.addEntity(entity);
 
             this.addComponenetJSON(oneEntity['components'], entity);
         });
     }
 
-    addComponenetJSON(components, entity: Entity) {
+    public addComponenetJSON(components, entity: Entity) {
         components.forEach((comp: any) => {
             const compClass: any = this.componentClasses.get(comp.type);
             let component = new compClass();
 
-            let compProps = comp.props;
-            let compPropsTypes = comp.propsTypes;
-            for (let prop in compProps) {
+            const compProps = comp.props;
+            const compPropsTypes = comp.propsTypes;
+            for (const prop in compProps) {
                 if (compProps.hasOwnProperty(prop)) {
                     let compValue;
                     if (compPropsTypes[prop] === 'Vec2D') {
@@ -176,7 +176,7 @@ export class Engine {
         } else {
             this._entitiesList.delete(entity.name);
         }
-        this._families.forEach((family: IFamily, nodeObject:Object) => {
+        this._families.forEach((family: IFamily, nodeObject: object) => {
             family.removeEntity(entity);
         });
     }
@@ -198,7 +198,7 @@ export class Engine {
      * Remove all entities from the engine.
      */
     public removeAllEntities(): void {
-        this._families.forEach((family: IFamily, nodeObject:any) => {
+        this._families.forEach((family: IFamily, nodeObject: any) => {
             family.removeEntity(nodeObject.entity);
         });
         this._entitiesList.clear();
@@ -213,7 +213,6 @@ export class Engine {
         this._sceneList.add(scene);
         this._sceneNames.set(scene.name, scene);
         scene.nameChanged.add(this._sceneNameChanged, this);
-
     }
 
     /**
@@ -240,7 +239,7 @@ export class Engine {
      * Remove all scenes from the engine.
      */
     public removeAllScenes(): void {
-        let listSize = this._sceneList.size() - 1;
+        const listSize = this._sceneList.size() - 1;
         for (let i = listSize; i >= 0; i--) {
             this.removeScene(this._sceneList.item(i), i);
         }
@@ -286,7 +285,7 @@ export class Engine {
         if (this._families.has(nodeClass)) {
             return this._families.get(nodeClass).nodeList;
         } else {
-            let family: IFamily = new this.familyClass(nodeClass, this);
+            const family: IFamily = new this.familyClass(nodeClass, this);
             this._families.set(nodeClass, family);
 
             for (const [savedEntityName, savedEntity] of this._entitiesList) {
@@ -423,9 +422,8 @@ export class Engine {
      */
     private _componentAdded(entity: Entity, componentClass: () => any): void {
         this._families.forEach((nodeObject, family: IFamily) => {
-                nodeObject.componentAddedToEntity(entity, componentClass);
-            }
-        );
+            nodeObject.componentAddedToEntity(entity, componentClass);
+        });
     }
 
     /**
@@ -433,8 +431,7 @@ export class Engine {
      */
     private _componentRemoved(entity: Entity, componentClass: () => any): void {
         this._families.forEach((nodeObject, family: IFamily) => {
-                nodeObject.componentRemovedFromEntity(entity, componentClass);
-            }
-        );
+            nodeObject.componentRemovedFromEntity(entity, componentClass);
+        });
     }
 }

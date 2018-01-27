@@ -29,19 +29,18 @@
  * @return {void}
  */
 function swap(items, firstIndex: number, secondIndex: number): void {
-    let temp = items[firstIndex];
+    const temp = items[firstIndex];
     items[firstIndex] = items[secondIndex];
     items[secondIndex] = temp;
 }
 
 function partition(items, left: number, right: number) {
-    let pivot = items[Math.floor((right + left) / 2)].priority;  // pivot value is middle item
-    let i = left;     // starts from left and goes right to pivot index
-    let j = right;    // starts from right and goes left to pivot index
+    const pivot = items[Math.floor((right + left) / 2)].priority; // pivot value is middle item
+    let i = left; // starts from left and goes right to pivot index
+    let j = right; // starts from right and goes left to pivot index
 
     // while the two indices don't match
     while (i <= j) {
-
         // if the item on the left is less than the pivot, continue right
         while (items[i].priority < pivot) {
             i++;
@@ -75,7 +74,6 @@ export default function systemSort(items, left?, right?) {
 
     // performance - don't sort an array with zero or one items
     if (items.length > 1) {
-
         // fix left and right values - might not be provided
         left = typeof left !== 'number' ? 0 : left;
         right = typeof right !== 'number' ? items.length - 1 : right;

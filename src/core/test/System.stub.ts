@@ -3,7 +3,6 @@ import { NodeMock } from './Node.stub';
 import LinkedList = Silverback.LinkedList;
 
 export class SystemMock extends System {
-
     public removeFromEngineCalls = 0;
     public addToEngineCalls = 0;
     public updateCalls = 0;
@@ -26,11 +25,9 @@ export class SystemMock extends System {
     update(time: number) {
         this.updateCalls++;
     }
-
 }
 
 export class SystemMock2 extends System {
-
     public removeFromEngineCalls = 0;
     public addToEngineCalls = 0;
     public updateCalls = 0;
@@ -53,5 +50,4 @@ export class SystemMock2 extends System {
     update(time: number) {
         this.updateCalls++;
     }
-
 }
