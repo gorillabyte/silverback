@@ -3,7 +3,7 @@
         "class-name": true,
         "curly": true,
         "forin": false,
-        "indent": [true, 4],
+        "indent": [true],
         "label-position": true,
         "max-line-length": [true, 120],
         "eofline": true,
@@ -18,13 +18,21 @@
         "no-empty": true,
         "no-eval": true,
         "no-string-literal": false,
-        "no-var-keyword": true,
         "one-line": [true, "check-open-brace", "check-catch", "check-else", "check-whitespace"],
         "quotemark": [true, "single", "jsx-double", "avoid-escape", "avoid-escape"],
         "radix": true,
-        "semicolon": true,
         "triple-equals": [true, "allow-null-check"],
         "variable-name": false,
-        "whitespace": [true, "check-module", "check-decl", "check-operator", "check-separator"]
-    }
+        "whitespace": [true, "check-module", "check-decl", "check-operator", "check-separator"],
+        "no-inferrable-types": true,
+        "no-internal-module": true,
+        "prefer-object-spread": true,
+        "no-var-keyword": true,
+        "no-this-assignment": [true, {"allowed-names": ["^self([A-Z][a-z]+)*$"], "allow-destructuring": true}],
+        "semicolon": [true, "always", "ignore-interfaces"],
+        "arrow-return-shorthand": [true, "multiline"]
+    },
+    "extends": [
+        "tslint-config-prettier"
+    ]
 }
