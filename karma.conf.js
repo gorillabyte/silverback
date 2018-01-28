@@ -52,20 +52,10 @@ module.exports = function (config) {
                 html: { subdir: 'html'}
             },
         },
-        customLaunchers: {
-            chrome_travis_ci: {
-                base: 'Chrome',
-                flags: ['--no-sandbox']
-            }
-        },
         colors: true,
         mime: {
             'text/x-typescript': ['ts','tsx']
         }
     });
-
-    if (process.env.TRAVIS) {
-        config.browsers = ['chrome_travis_ci'];
-    }
 };
 
