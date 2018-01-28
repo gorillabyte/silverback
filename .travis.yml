@@ -2,8 +2,9 @@ language: node_js
 dist: trusty
 sudo: false
 cache:
+  yarn: true
   directories:
-    - ~/.npm
+    - node_modules
 notifications:
   email: false
 node_js:
@@ -11,8 +12,8 @@ node_js:
 addons:
   chrome: stable
 install:
-  - npm install
+  - yarn
 script:
-  - npm run karma
-  - npm run coverage
-  - npm run build:prod
+  - yarn karma
+  - yarn coverage
+  - yarn build:prod
