@@ -1,7 +1,7 @@
 process.env.BABEL_ENV = 'test';
 const webpackConfig = require('./webpack.config.karma.js');
 
-module.exports = function setKarmaConfig(config) {
+module.exports = function (config) {
     config.set({
         basePath: '',
         frameworks: ['mocha', 'chai'],
@@ -20,9 +20,20 @@ module.exports = function setKarmaConfig(config) {
         port: 9876,
         logLevel: config.LOG_INFO,
         autoWatch: true,
-        browsers: ['PhantomJS'],
+        browsers: ['ChromeHeadless'],
         concurrency: Infinity,
-        plugins: [ 'karma-*' ],
+        plugins: [
+            'karma-chrome-launcher',
+            'karma-mocha',
+            'karma-chai',
+            'karma-coverage',
+            'karma-coverage-istanbul-reporter',
+            'karma-webpack',
+            'karma-sourcemap-loader',
+            'karma-mocha-reporter',
+            'karma-spec-reporter',
+            'karma-coverage'
+        ],
         client: {
             captureConsole: true,
             mocha: {
@@ -41,6 +52,20 @@ module.exports = function setKarmaConfig(config) {
                 html: { subdir: 'html'}
             },
         },
-        colors: true
+        customLaunchers: {
+            chrome_travis_ci: {
+                base: 'Chrome',
+                flags: ['--no-sandbox']
+            }
+        },
+        colors: true,
+        mime: {
+            'text/x-typescript': ['ts','tsx']
+        }
     });
+
+    if (process.env.TRAVIS) {
+        config.browsers = ['chrome_travis_ci'];
+    }
 };
+
