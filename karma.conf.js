@@ -20,7 +20,7 @@ module.exports = function (config) {
         port: 9876,
         logLevel: config.LOG_INFO,
         autoWatch: true,
-        browsers: ['ChromeHeadless'],
+        browsers: ['MyHeadlessChrome'],
         concurrency: Infinity,
         plugins: [
             'karma-chrome-launcher',
@@ -51,6 +51,12 @@ module.exports = function (config) {
             'report-config': {
                 html: { subdir: 'html'}
             },
+        },
+        customLaunchers: {
+            MyHeadlessChrome: {
+                base: 'ChromeHeadless',
+                flags: ['--no-sandbox']
+            }
         },
         colors: true,
         mime: {
