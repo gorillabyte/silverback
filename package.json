@@ -8,7 +8,7 @@
     "dev": "webpack --progress --profile --colors --display-error-details --display-cached --watch",
     "test": "./node_modules/mocha/bin/mocha 'src/**/*.spec.{ts,tsx}' --require ts-node/register --require jsdom-global/register",
     "karma": "karma start --single-run",
-    "coverage": "./node_modules/coveralls/bin/coveralls.js ./coverage/lcov.info",
+    "coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "prettier": "find ./src/**/*.ts | xargs ./node_modules/prettier/bin-prettier.js --write --parser typescript --single-quote true --print-width 120 --bracket-spacing true --trailing-comma es5 --tab-width 4",
     "bench": "tsc && node ./js/core/bench/index.js",
     "docs": "typedoc --json typedoc.json --out docs src/**/*.ts --mode modules --target ES6 --tsconfig ./tsconfig.json",
