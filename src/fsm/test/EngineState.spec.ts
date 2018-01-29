@@ -1,4 +1,3 @@
-// tslint:disable-next-line
 import chai = require('chai');
 import { Engine } from '../../';
 import { SystemMock } from '../../core/test/System.stub';

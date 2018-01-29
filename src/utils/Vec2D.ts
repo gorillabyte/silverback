@@ -7,13 +7,7 @@ export class Vec2D {
     public y: number;
     public l: number;
 
-    constructor(x?: number, y?: number) {
-        if (typeof x === 'undefined') {
-            x = 0;
-        }
-        if (typeof y === 'undefined') {
-            y = 0;
-        }
+    constructor(x = 0, y = 0) {
         this.x = x;
         this.y = y;
         this.l = this.getLength();
@@ -46,7 +40,7 @@ export class Vec2D {
         return Math.atan2(this.y, this.x);
     }
 
-    public rotateBy(theta): Vec2D {
+    public rotateBy(theta:number): Vec2D {
         const x = this.x;
         const y = this.y;
         const cos = Math.cos(theta);
@@ -95,7 +89,7 @@ export class Vec2D {
         return this;
     }
 
-    public divide(v): Vec2D {
+    public divide(v: Vec2D): Vec2D {
         if (v.x === 0 || v.y === 0) {
             return this;
         }
@@ -104,7 +98,7 @@ export class Vec2D {
         return this;
     }
 
-    public divideScalar(s): Vec2D {
+    public divideScalar(s: number): Vec2D {
         if (s === 0) {
             return this;
         }
@@ -206,15 +200,13 @@ export class Vec2D {
         return this;
     }
 
-    public reset(x, y): Vec2D {
-        x = x ? x : 0;
-        y = y ? y : 0;
+    public reset(x = 0, y = 0): Vec2D {
         this.x = x;
         this.y = y;
         return this;
     }
 
-    public equals(v): boolean {
+    public equals(v:Vec2D): boolean {
         return this.x === v.x && this.y === v.y;
     }
 
