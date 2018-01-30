@@ -1,5 +1,5 @@
-import { IComponent } from '../core/IComponent';
-import { Vec2D } from '../utils/Vec2D';
+import { IComponent } from './IComponent';
+import { Vec2D } from '../../utils/Vec2D';
 
 export class Position implements IComponent {
     public pos;

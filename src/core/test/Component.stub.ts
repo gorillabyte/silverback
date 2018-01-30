@@ -1,4 +1,4 @@
-import { IComponent } from '../IComponent';
+import { IComponent } from '../components/IComponent';
 
 export class ComponentMock {
     public value: number;

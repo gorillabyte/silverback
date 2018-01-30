@@ -22,13 +22,13 @@
 
     // Setup Silverback engine and add render system
     let engine = new Silverback.Engine();
-    engine.addSystem(new Silverback.systems.RenderSystem(renderer, stage), 2);
+    engine.addSystem(new Silverback.systems.PixiRenderSystem(renderer, stage), 2);
 
     // We need to create a game entity and add it to the engine
     let playerEntity = new Silverback.Entity('playerEntity')
         .addComponent(new Silverback.components.Position(100, 100, 0))
-        .addComponent(new Silverback.components.Display('assets/img/bunny.png'))
-        .addComponent(new Silverback.components.Group());
+        .addComponent(new Silverback.components.PixiDisplay('assets/img/bunny.png'))
+        .addComponent(new Silverback.components.PixiGroup());
     engine.addEntity(playerEntity);
 
     // The animate function is our game loop

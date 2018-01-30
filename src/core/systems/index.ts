@@ -3,4 +3,4 @@
  * @namespace Silverback.systems
  */
 
-export { RenderSystem } from './RenderSystem';
+export { PixiRenderSystem } from './PixiRenderSystem';

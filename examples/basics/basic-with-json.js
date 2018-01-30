@@ -73,19 +73,10 @@
 
     // Setup Silverback engine and add render system
     let engine = new Silverback.Engine();
-    engine.addSystem(new Silverback.systems.RenderSystem(renderer, stage), 2);
+    engine.addSystem(new Silverback.systems.PixiRenderSystem(renderer, stage), 2);
 
-    // To show something on the screen we add the PIXI bunny.
-    //let bunny = PIXI.Sprite.fromImage('assets/img/bunny.png');
-    //let characterContainer = new PIXI.Container();
-
-    // We need to create a game entity and add it to the engine
+    // We parse the data for the entity and the components to the engine
     engine.addEntityJSON(data);
-
-    /*.addComponent(new Silverback.components.Position(100, 100, 0))
-    .addComponent(new Silverback.components.Display(bunny))
-    .addComponent(new Silverback.components.Group(characterContainer));
-    engine.addEntity(playerEntity);*/
 
     // The animate function is our game loop
     function animate(){

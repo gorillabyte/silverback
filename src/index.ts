@@ -18,8 +18,8 @@
 export * from './core';
 
 // Import libs
-import * as components from './components';
-import * as systems from './systems';
+import * as components from './core/components';
+import * as systems from './core/systems';
 
 export { components, systems };
 

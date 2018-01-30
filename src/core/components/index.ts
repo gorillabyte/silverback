@@ -4,5 +4,5 @@
  */
 
 export { Position } from './Position';
-export { Display } from './Display';
-export { Group } from './Group';
+export { PixiDisplay } from './PixiDisplay';
+export { PixiGroup } from './PixiGroup';
