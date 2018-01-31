@@ -281,7 +281,7 @@ export class Engine {
      * @param nodeClass The type of node required.
      * @return A linked list of all nodes of this type from all entities in the engine.
      */
-    public getNodeList(nodeClass): LinkedList {
+    public getNodeList(nodeClass): Set<any> {
         if (this.families.has(nodeClass)) {
             return this.families.get(nodeClass).nodeList;
         } else {

@@ -1,11 +1,10 @@
 import { Entity } from '../Entity';
 import { Engine } from '../Engine';
-import { LinkedList } from '../../';
 import { IFamily } from '../IFamily';
 
 export class FamilyMock implements IFamily {
     public static instances: Array<FamilyMock> = [];
-    private _nodes: LinkedList;
+    private _nodes: Set<any>;
 
     public newEntityCalls = 0;
     public removeEntityCalls = 0;
@@ -15,10 +14,10 @@ export class FamilyMock implements IFamily {
 
     constructor(nodeClass: any, engine: Engine) {
         FamilyMock.instances.push(this);
-        this._nodes = new LinkedList();
+        this._nodes = new Set();
     }
 
-    public get nodeList(): LinkedList {
+    public get nodeList(): Set<any> {
         return this._nodes;
     }
 

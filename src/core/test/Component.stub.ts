@@ -20,7 +20,7 @@ export class Vec2D {
 export class Matrix {
 }
 
-declare namespace MockPIXI {
+export declare namespace PIXI {
     export class Sprite {
     }
     export class Container {

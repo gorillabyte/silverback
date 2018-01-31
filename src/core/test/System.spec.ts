@@ -127,7 +127,7 @@ describe('System unit test', () => {
             engine.addEntity(entity);
             engine.addSystem(system1, 10);
             let fetchedSystem = engine.getSystem(SystemMock) as SystemMock;
-            expect(fetchedSystem.nodes.size()).to.deep.equal(1);
+            expect(fetchedSystem.nodes.size).to.deep.equal(1);
         });
     });
 });

@@ -147,7 +147,7 @@ declare module Silverback {
         removeAllScenes():void;
         getSceneByName(name:string):Scene;
         getScene(type:any):Scene;
-        getNodeList(nodeClass:any):LinkedList;
+        getNodeList(nodeClass:any):Set<any>;
         releaseNodeList(nodeClass:any):void;
         addSystem(system:System, priority?:number):void;
         getSystem(type:any):System;

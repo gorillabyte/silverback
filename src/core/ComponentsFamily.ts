@@ -5,14 +5,13 @@
  * It uses the basic entity matching pattern of an entity system - entities are added to the list if
  * they contain components matching all the public properties of the node class.
  */
-import { LinkedList } from '../utils/LinkedList';
 import { Engine } from './Engine';
 import { Entity } from './Entity';
 import { IFamily } from './IFamily';
 import { NodePool } from './NodePool';
 
 export class ComponentsFamily implements IFamily {
-    private nodes: LinkedList;
+    private nodes: Set<any>;
     private entities: Map<any, any>;
     private nodeClass;
     private components: Map<any, any>;
@@ -38,7 +37,7 @@ export class ComponentsFamily implements IFamily {
      * since it is retained and reused by Systems that use the list. i.e. we never recreate the list,
      * we always modify it in place.
      */
-    public get nodeList(): LinkedList {
+    public get nodeList(): Set<any> {
         return this.nodes;
     }
 
@@ -115,20 +114,20 @@ export class ComponentsFamily implements IFamily {
      */
     public removeIfMatch(entity: Entity) {
         if (this.entities.get(entity)) {
-            const node = this.entities.get(entity);
+            const entityNode = this.entities.get(entity);
             this.entities.delete(entity);
 
-            for (let i = 0; i < this.nodes.size(); i++) {
-                if (this.nodes.item(i) === node) {
-                    this.nodes.remove(i);
+            this.nodes.forEach((node) => {
+                if(node === entityNode) {
+                    this.nodes.delete(node);
                 }
-            }
+            });
 
             if (this.engine.updating) {
-                this.nodePool.cache(node);
+                this.nodePool.cache(entityNode);
                 this.engine.updateComplete.add(this._releaseNodePoolCache, this);
             } else {
-                this.nodePool.dispose(node);
+                this.nodePool.dispose(entityNode);
             }
         }
     }
@@ -137,10 +136,7 @@ export class ComponentsFamily implements IFamily {
      * Removes all nodes from the NodeList.
      */
     public cleanUp() {
-        for (let i = 0; i < this.nodes.size(); i++) {
-            this.entities.delete(this.nodes.item(i).entity);
-            this.nodes.remove(i);
-        }
+        this.nodes.clear();
     }
 
     /**
@@ -157,7 +153,7 @@ export class ComponentsFamily implements IFamily {
      * what component types the node requires.
      */
     private _init() {
-        this.nodes = new LinkedList();
+        this.nodes = new Set();
         this.entities = new Map(); // <Entity, Node>
         this.components = new Map(); // <Type, string>
 
