@@ -1,7 +1,7 @@
-import { System } from '../index';
+import { System } from '../core';
 import { RenderNode } from '../nodes';
-import { arrayContains } from '../../utils/Array';
-import { Vec2D } from '../../utils/Vec2D';
+import { arrayContains } from '../utils/Array';
+import { Vec2D } from '../utils/Vec2D';
 
 export class PixiRenderSystem extends System {
     private static stage:PIXI.Container;

@@ -6,7 +6,7 @@ interface Window {
 }
 //declare const Silverback: any;
 
-declare module Silverback {
+declare namespace Silverback {
 
     export function systemSort(items: any, left?: any, right?: any): any;
 

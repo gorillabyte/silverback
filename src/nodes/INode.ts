@@ -7,7 +7,7 @@
  * to the list obtained by the system. The engine keeps the list up to date as entities are added
  * to and removed from the engine and as the components on entities change.</p>
  */
-import { Entity } from '../index';
+import { Entity } from '../core/index';
 
 export interface INode {
     /**

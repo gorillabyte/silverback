@@ -4,12 +4,12 @@
  */
 // tslint:disable-next-line
 /// <reference path="../../types/mini-signals.d.ts" />
-import { PixiDisplay, PixiGroup, Position } from './components';
+import { PixiDisplay, PixiGroup, Position } from '../components';
 import { LinkedList } from '../utils/LinkedList';
 import systemSort from '../utils/SystemSort';
 import { ComponentsFamily } from './ComponentsFamily';
 import { Entity } from './Entity';
-import { IComponent } from './components/IComponent';
+import { IComponent } from '../components/IComponent';
 import { IFamily } from './IFamily';
 import { Scene } from './Scene';
 import { System } from './System';

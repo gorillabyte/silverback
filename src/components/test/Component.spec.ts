@@ -1,5 +1,5 @@
 import chai = require('chai');
-import { Position } from '../components';
+import { Position } from '..';
 
 const expect = chai.expect;
 

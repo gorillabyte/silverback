@@ -17,7 +17,7 @@
  * position component. Systems operate on entities based on the components they have.</p>
  */
 
-import { IComponent } from './components/IComponent';
+import { IComponent } from '../components/IComponent';
 import { Scene } from './Scene';
 // tslint:disable-next-line
 const MiniSignal = require('mini-signals');
