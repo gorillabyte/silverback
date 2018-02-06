@@ -88,16 +88,16 @@ export class ComponentsFamily implements IFamily {
             // If the entity has not components, don't add it.
             if (entity.getAll().length > 0) {
                 const node = this.nodePool.get();
-                const types = node.types;
+                const schema = node.schema;
 
-                for (const prop in types) {
-                    if (types.hasOwnProperty(prop)) {
-                        if (!entity.hasComponent(types[prop].name)) {
+                for (const prop in schema) {
+                    if (schema.hasOwnProperty(prop)) {
+                        if (!entity.hasComponent(schema[prop].name)) {
                             // Node prop was not found in the entity
                             return;
                         } else {
                             // Add entity value to node
-                            node[prop] = entity.getComponent(types[prop].name);
+                            node[prop] = entity.getComponent(schema[prop].name);
                         }
                     }
                 }
@@ -150,18 +150,18 @@ export class ComponentsFamily implements IFamily {
 
     /**
      * Initialises the class. Creates the nodelist and other tools. Analyses the node to determine
-     * what component types the node requires.
+     * what component schema the node requires.
      */
     private _init() {
         this.nodes = new Set();
         this.entities = new Map(); // <Entity, Node>
         this.components = new Map(); // <Type, string>
 
-        const types = this.nodeClass['types'];
+        const schema = this.nodeClass['schema'];
 
-        for (const prop in types) {
-            if (types.hasOwnProperty(prop)) {
-                this.components.set(prop, types[prop]);
+        for (const prop in schema) {
+            if (schema.hasOwnProperty(prop)) {
+                this.components.set(prop, schema[prop]);
             }
         }
         this.nodePool = new NodePool(this.nodeClass, this.components);

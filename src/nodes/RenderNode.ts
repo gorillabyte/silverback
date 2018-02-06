@@ -1,4 +1,4 @@
-import { PixiDisplay, PixiGroup, Position } from '../components/index';
+import { PixiDisplay, PixiGroup, Position } from '../components';
 import { INode } from './INode';
 
 export const RenderNode = <INode>{
@@ -6,9 +6,7 @@ export const RenderNode = <INode>{
     display: null,
     entity: null,
     name: 'RenderNode',
-    next: null,
     position: null,
-    previous: null,
     types: {
         container: PixiGroup,
         display: PixiDisplay,
