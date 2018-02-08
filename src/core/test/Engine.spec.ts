@@ -262,7 +262,7 @@ describe('Engine', () => {
         it('should get a scene by its type from the engine', () => {
             let scene: Scene = new Scene();
             engine.addScene(scene);
-            expect(engine.getScene(Scene)).to.deep.equal(scene);
+            expect(engine.getSceneByName(scene.name)).to.deep.equal(scene);
         });
 
         it('should return the correct scene by name', () => {

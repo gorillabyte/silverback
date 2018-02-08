@@ -2,10 +2,7 @@
  * @module Silverback
  * @class Engine
  */
-// tslint:disable-next-line
-/// <reference path="../../types/mini-signals.d.ts" />
 import { PixiDisplay, PixiGroup, Position } from '../components';
-import { LinkedList } from '../utils/LinkedList';
 import systemSort from '../utils/SystemSort';
 import { ComponentsFamily } from './ComponentsFamily';
 import { Entity } from './Entity';
@@ -16,6 +13,7 @@ import { System } from './System';
 import { GameLoop } from './GameLoop';
 
 // tslint:disable-next-line
+/// <reference path="../../types/mini-signals.d.ts" />
 const MiniSignal = require('mini-signals');
 
 /**
@@ -55,16 +53,14 @@ export class Engine {
     public gameLoop: GameLoop;
 
     private systemList: System[];
-    private sceneList: LinkedList;
     private entitiesList: Map<string, Entity>;
-    private sceneNames: Map<any, any>;
+    private sceneList: Map<string, Scene>;
     private families: Map<any, any>;
 
     constructor() {
         this.systemList = [];
-        this.sceneList = new LinkedList();
         this.entitiesList = new Map();
-        this.sceneNames = new Map();
+        this.sceneList = new Map();
         this.families = new Map();
         this.updateComplete = new MiniSignal();
 
@@ -88,7 +84,7 @@ export class Engine {
      * Returns an array containing all the scenes in the engine.
      */
     public get scenes(): Scene[] {
-        return this.sceneList.toArray();
+        return [...this.sceneList.values()] as any;
     }
 
     /**
@@ -215,8 +211,7 @@ export class Engine {
      * @param scene The scene to add.
      */
     public addScene(scene: Scene): void {
-        this.sceneList.add(scene);
-        this.sceneNames.set(scene.name, scene);
+        this.sceneList.set(scene.name, scene);
         scene.nameChanged.add(this._sceneNameChanged, this);
     }
 
@@ -224,19 +219,11 @@ export class Engine {
      * Remove an scene from the engine.
      *
      * @param scene The scene to remove.
-     * @param index The scene index in the sceneList
      */
-    public removeScene(scene: Scene, index?: number): void {
-        if (typeof index === 'undefined') {
-            for (let i = 0; i < this.sceneList.size(); i++) {
-                if (this.sceneList.item(i) === scene) {
-                    this.sceneList.remove(i);
-                }
-            }
-        } else {
-            this.sceneList.remove(index);
+    public removeScene(scene: Scene): void {
+        if(this.sceneList.has(scene.name)) {
+            this.sceneList.delete(scene.name);
         }
-        this.sceneNames.delete(scene.name);
         scene.nameChanged.detachAll();
     }
 
@@ -244,10 +231,7 @@ export class Engine {
      * Remove all scenes from the engine.
      */
     public removeAllScenes(): void {
-        const listSize = this.sceneList.size() - 1;
-        for (let i = listSize; i >= 0; i--) {
-            this.removeScene(this.sceneList.item(i), i);
-        }
+        this.sceneList.clear();
     }
 
     /**
@@ -257,21 +241,10 @@ export class Engine {
      * @return The scene, or null if no scene with that name exists on the engine
      */
     public getSceneByName(name: string): Scene {
-        if (this.sceneNames.has(name)) {
-            return this.sceneNames.get(name);
+        if (this.sceneList.has(name)) {
+            return this.sceneList.get(name);
         }
         return null;
-    }
-
-    /**
-     * Get the scene instance of a particular type from within the engine.
-     *
-     * @param type The type of scene
-     * @return The instance of the scene type that is in the engine, or
-     * null if no scene of this type are in the engine.
-     */
-    public getScene(type): Scene {
-        return this.sceneList.get(type);
     }
 
     /**
@@ -414,9 +387,9 @@ export class Engine {
      * @private
      */
     private _sceneNameChanged(scene: Scene, oldName: string): void {
-        if (this.sceneNames.has(oldName)) {
-            this.sceneNames.delete(oldName);
-            this.sceneNames.set(scene.name, scene);
+        if (this.sceneList.has(oldName)) {
+            this.sceneList.delete(oldName);
+            this.sceneList.set(scene.name, scene);
         } else {
             throw new Error('The given name was not found in the scene list.');
         }

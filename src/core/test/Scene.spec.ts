@@ -57,7 +57,7 @@ describe('Scene unit test', () => {
             scene = new Scene('anything');
             let entity = new Entity();
             scene.addEntity(entity);
-            scene.removeEntity(entity, 0);
+            scene.removeEntity(entity);
             expect(scene.getAllEntities().length).to.deep.equal(0);
         });
 

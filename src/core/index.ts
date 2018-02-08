@@ -2,9 +2,6 @@
  * @namespace Silverback
  */
 
-// Utility libraries
-export { LinkedList } from '../utils/LinkedList';
-
 // Core libraries
 export { Engine } from './Engine';
 export { Entity } from './Entity';
