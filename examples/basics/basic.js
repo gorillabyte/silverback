@@ -1,10 +1,20 @@
-(function () {
+/*
+ * Copyright 2015-2018 Gorillabyte and Silverback Project Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-    // Add stats display on the screen
-    let stats = new Stats();
-    stats.setMode(0);
-    stats.domElement.id = 'stats';
-    document.body.appendChild(stats.domElement);
+(function () {
 
     // Add canvas element to the body
     let gameCanvas = document.createElement("canvas");
@@ -31,14 +41,9 @@
         .addComponent(new Silverback.components.PixiGroup());
     engine.addEntity(playerEntity);
 
+    // Add stats display on the screen
+    engine.gameLoop.showStats = true;
     // The animate function is our game loop
-    function animate(){
-        requestAnimationFrame(animate);
-        stats.begin();
-        engine.update(Date.now());
-        stats.end();
-    }
-
-    animate();
+    engine.gameLoop.run();
 
 })();

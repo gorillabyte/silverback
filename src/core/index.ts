@@ -13,3 +13,4 @@ export { NodePool } from './NodePool';
 export { Scene } from './Scene';
 export { IFamily } from './IFamily';
 export { ComponentsFamily } from './ComponentsFamily';
+export { GameLoop } from './GameLoop';

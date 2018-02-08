@@ -16,12 +16,6 @@
 
 (function () {
 
-    // Add stats display on the screen
-    let stats = new Stats();
-    stats.setMode(0);
-    stats.domElement.id = 'stats';
-    document.body.appendChild(stats.domElement);
-
     // Add canvas element to the body
     let gameCanvas = document.createElement("canvas");
     gameCanvas.id = 'gameCanvas';
@@ -77,15 +71,9 @@
 
     // We parse the data for the entity and the components to the engine
     engine.addEntityJSON(data);
-
+    // Add stats display on the screen
+    engine.gameLoop.showStats = true;
     // The animate function is our game loop
-    function animate(){
-        requestAnimationFrame(animate);
-        stats.begin();
-        engine.update(Date.now());
-        stats.end();
-    }
-
-    animate();
+    engine.gameLoop.run();
 
 })();

@@ -13,6 +13,7 @@ import { IComponent } from '../components/IComponent';
 import { IFamily } from './IFamily';
 import { Scene } from './Scene';
 import { System } from './System';
+import { GameLoop } from './GameLoop';
 
 // tslint:disable-next-line
 const MiniSignal = require('mini-signals');
@@ -51,6 +52,8 @@ export class Engine {
      */
     public componentClasses: Map<string, any> = null;
 
+    public gameLoop: GameLoop;
+
     private systemList: System[];
     private sceneList: LinkedList;
     private entitiesList: Map<string, Entity>;
@@ -70,6 +73,8 @@ export class Engine {
         this.componentClasses.set('Position', Position);
         this.componentClasses.set('Display', PixiDisplay);
         this.componentClasses.set('Group', PixiGroup);
+
+        this.gameLoop = new GameLoop(this);
     }
 
     /**
@@ -288,7 +293,7 @@ export class Engine {
             const family: IFamily = new this.familyClass(nodeClass, this);
             this.families.set(nodeClass, family);
 
-            for (const [savedEntityName, savedEntity] of this.entitiesList) {
+            for (const savedEntity of this.entitiesList.values()) {
                 family.newEntity(savedEntity);
             }
             return family.nodeList;
