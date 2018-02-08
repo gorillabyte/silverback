@@ -46,6 +46,10 @@ module.exports = {
         modules: ['node_modules', 'src']
     },
     plugins: [
+        new webpack.LoaderOptionsPlugin({
+            minimize: true,
+            debug: false,
+        }),
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.DefinePlugin({
             'process.env': {
@@ -53,9 +57,16 @@ module.exports = {
             }
         }),
         new webpack.optimize.UglifyJsPlugin({
+            sourceMap: true,
+            beautify: false,
+            mangle: {
+              screw_ie8: true,
+              keep_fnames: true,
+            },
             compress: {
-                warnings: false
-            }
+              screw_ie8: true,
+            },
+            comments: false,
         }),
         new webpack.BannerPlugin({
             banner: banner,

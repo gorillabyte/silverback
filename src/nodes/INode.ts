@@ -18,5 +18,5 @@ export interface INode {
     /**
      * Used by the componentFamily class to filter out the right components
      */
-    types: object
+    schema: object
 }

@@ -7,7 +7,7 @@ export const RenderNode = <INode>{
     entity: null,
     name: 'RenderNode',
     position: null,
-    types: {
+    schema: {
         container: PixiGroup,
         display: PixiDisplay,
         position: Position,
