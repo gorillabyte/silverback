@@ -82,7 +82,7 @@ export class Scene {
      * @param entity The entity to be removed.
      */
     public removeEntity(entity: Entity): void {
-        if(this.entityList.has(entity.name)) {
+        if (this.entityList.has(entity.name)) {
             this.entityList.delete(entity.name);
         }
     }
@@ -94,7 +94,7 @@ export class Scene {
      * @return The entity, or null if none was found.
      */
     public getEntityWithName(entityName: any): Entity {
-        if(this.entityList.has(entityName)) {
+        if (this.entityList.has(entityName)) {
             return this.entityList.get(entityName);
         } else {
             return null;

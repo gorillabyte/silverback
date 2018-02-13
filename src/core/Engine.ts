@@ -132,10 +132,10 @@ export class Engine {
 
     public addComponenetJSON(components, entity: Entity) {
         components.forEach((comp: any) => {
-            if(!this.componentClasses.has(comp.type)) {
+            if (!this.componentClasses.has(comp.type)) {
                 throw new Error('The component class: "' + comp.type + '" is not registered in the engine.');
             }
-            if(!comp.hasOwnProperty('args') || !comp.hasOwnProperty('type')) {
+            if (!comp.hasOwnProperty('args') || !comp.hasOwnProperty('type')) {
                 throw new Error('The component has not all needed properties specified.');
             }
             const compClass: any = this.componentClasses.get(comp.type);
@@ -208,7 +208,7 @@ export class Engine {
      * @param scene The scene to remove.
      */
     public removeScene(scene: Scene): void {
-        if(this.sceneList.has(scene.name)) {
+        if (this.sceneList.has(scene.name)) {
             this.sceneList.delete(scene.name);
         }
         scene.nameChanged.detachAll();

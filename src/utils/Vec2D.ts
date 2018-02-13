@@ -40,7 +40,7 @@ export class Vec2D {
         return Math.atan2(this.y, this.x);
     }
 
-    public rotateBy(theta:number): Vec2D {
+    public rotateBy(theta: number): Vec2D {
         const x = this.x;
         const y = this.y;
         const cos = Math.cos(theta);
@@ -206,7 +206,7 @@ export class Vec2D {
         return this;
     }
 
-    public equals(v:Vec2D): boolean {
+    public equals(v: Vec2D): boolean {
         return this.x === v.x && this.y === v.y;
     }
 

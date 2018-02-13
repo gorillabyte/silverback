@@ -23,10 +23,14 @@ export class Stats {
         this.mode = 0;
         this.container = document.createElement('div');
         this.container.style.cssText = 'position:fixed;top:0;left:0;cursor:pointer;opacity:0.9;z-index:10000';
-        this.container.addEventListener('click', (event) => {
-            event.preventDefault();
-            this.showPanel(++this.mode % this.container.children.length);
-        }, false);
+        this.container.addEventListener(
+            'click',
+            event => {
+                event.preventDefault();
+                this.showPanel(++this.mode % this.container.children.length);
+            },
+            false
+        );
 
         this.beginTime = (performance || Date).now();
         this.prevTime = this.beginTime;
@@ -67,7 +71,7 @@ export class Stats {
         this.msPanel.update(time - this.beginTime, 200);
 
         if (time >= this.prevTime + 1000) {
-            this.fpsPanel.update((this.frames * 1000) / (time - this.prevTime), 100);
+            this.fpsPanel.update(this.frames * 1000 / (time - this.prevTime), 100);
             this.prevTime = time;
             this.frames = 0;
 
@@ -106,7 +110,7 @@ class Panel {
         this.canvas.style.cssText = 'width:80px;height:48px';
 
         this.context = this.canvas.getContext('2d');
-        this.context.font = 'bold ' + (9 * Stats.PR) + 'px Helvetica,Arial,sans-serif';
+        this.context.font = 'bold ' + 9 * Stats.PR + 'px Helvetica,Arial,sans-serif';
         this.context.textBaseline = 'top';
 
         this.context.fillStyle = bg;
@@ -133,15 +137,35 @@ class Panel {
         this.context.globalAlpha = 1;
         this.context.fillRect(0, 0, Stats.WIDTH, Stats.GRAPH_Y);
         this.context.fillStyle = this.fg;
-        this.context.fillText(Math.round(value) + ' ' + name + ' (' + Math.round(this.min) + '-'
-            + Math.round(this.max) + ')', Stats.TEXT_X, Stats.TEXT_Y);
-        this.context.drawImage(this.canvas, Stats.GRAPH_X + Stats.PR, Stats.GRAPH_Y, Stats.GRAPH_WIDTH - Stats.PR,
-            Stats.GRAPH_HEIGHT, Stats.GRAPH_X, Stats.GRAPH_Y, Stats.GRAPH_WIDTH - Stats.PR, Stats.GRAPH_HEIGHT);
-        this.context.fillRect(Stats.GRAPH_X + Stats.GRAPH_WIDTH - Stats.PR, Stats.GRAPH_Y,
-            Stats.PR, Stats.GRAPH_HEIGHT);
+        this.context.fillText(
+            Math.round(value) + ' ' + name + ' (' + Math.round(this.min) + '-' + Math.round(this.max) + ')',
+            Stats.TEXT_X,
+            Stats.TEXT_Y
+        );
+        this.context.drawImage(
+            this.canvas,
+            Stats.GRAPH_X + Stats.PR,
+            Stats.GRAPH_Y,
+            Stats.GRAPH_WIDTH - Stats.PR,
+            Stats.GRAPH_HEIGHT,
+            Stats.GRAPH_X,
+            Stats.GRAPH_Y,
+            Stats.GRAPH_WIDTH - Stats.PR,
+            Stats.GRAPH_HEIGHT
+        );
+        this.context.fillRect(
+            Stats.GRAPH_X + Stats.GRAPH_WIDTH - Stats.PR,
+            Stats.GRAPH_Y,
+            Stats.PR,
+            Stats.GRAPH_HEIGHT
+        );
         this.context.fillStyle = this.bg;
         this.context.globalAlpha = 0.9;
-        this.context.fillRect(Stats.GRAPH_X + Stats.GRAPH_WIDTH - Stats.PR, Stats.GRAPH_Y,
-            Stats.PR, Math.round((1 - (value / maxValue)) * Stats.GRAPH_HEIGHT));
+        this.context.fillRect(
+            Stats.GRAPH_X + Stats.GRAPH_WIDTH - Stats.PR,
+            Stats.GRAPH_Y,
+            Stats.PR,
+            Math.round((1 - value / maxValue) * Stats.GRAPH_HEIGHT)
+        );
     }
 }

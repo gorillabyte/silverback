@@ -4,12 +4,12 @@ import { arrayContains } from '../utils/Array';
 import { Vec2D } from '../utils/Vec2D';
 
 export class PixiRenderSystem extends System {
-    private static stage:PIXI.Container;
-    private static renderer:PIXI.CanvasRenderer;
+    private static stage: PIXI.Container;
+    private static renderer: PIXI.CanvasRenderer;
     private nodes: Set<any>;
     private engine;
 
-    constructor(renderer:PIXI.CanvasRenderer, canvasStage:PIXI.Container) {
+    constructor(renderer: PIXI.CanvasRenderer, canvasStage: PIXI.Container) {
         super();
 
         PixiRenderSystem.renderer = renderer;
@@ -18,7 +18,7 @@ export class PixiRenderSystem extends System {
 
     public addToEngine(engine: Silverback.Engine): void {
         this.nodes = engine.getNodeList(RenderNode);
-        this.nodes.forEach((node) => {
+        this.nodes.forEach(node => {
             PixiRenderSystem.addToDisplay(node);
         });
         this.engine = engine;
@@ -29,7 +29,7 @@ export class PixiRenderSystem extends System {
     }
 
     public update(time: number): void {
-        this.nodes.forEach((node) => {
+        this.nodes.forEach(node => {
             const display: PIXI.DisplayObject = node.display.sprite;
             const position: Vec2D = node.position.pos;
 

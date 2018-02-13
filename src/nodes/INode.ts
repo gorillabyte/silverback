@@ -13,10 +13,10 @@ export interface INode {
     /**
      * The entity whose components are included in the node.
      */
-    entity: Entity,
+    entity: Entity;
 
     /**
      * Used by the componentFamily class to filter out the right components
      */
-    schema: object
+    schema: object;
 }

@@ -5,7 +5,7 @@ export class Position implements IComponent {
     public pos;
     public rot;
 
-    constructor(args:string) {
+    constructor(args: string) {
         const argsElements = args.split(' ');
         const x = parseFloat(argsElements[0]);
         const y = parseFloat(argsElements[1]);

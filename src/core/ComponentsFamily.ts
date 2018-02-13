@@ -117,8 +117,8 @@ export class ComponentsFamily implements IFamily {
             const entityNode = this.entities.get(entity);
             this.entities.delete(entity);
 
-            this.nodes.forEach((node) => {
-                if(node === entityNode) {
+            this.nodes.forEach(node => {
+                if (node === entityNode) {
                     this.nodes.delete(node);
                 }
             });

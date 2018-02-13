@@ -21,13 +21,12 @@ export class GameLoop {
         GameLoop.showStats = value;
         const domElement = document.getElementById('stats');
 
-        if(!domElement && value) {
+        if (!domElement && value) {
             GameLoop.stats = new Stats();
             GameLoop.stats.showPanel(0);
             GameLoop.stats.dom.id = 'stats';
             document.body.appendChild(GameLoop.stats.dom);
-
-        } else if(domElement && !value) {
+        } else if (domElement && !value) {
             document.body.removeChild(GameLoop.stats.dom);
             GameLoop.stats = undefined;
         }
@@ -53,5 +52,3 @@ export class GameLoop {
         }
     }
 }
-
-
