@@ -1,4 +1,6 @@
 import { IComponent } from '../../components/IComponent';
+import { PIXI } from '../../systems/test/Pixi.stub';
+
 
 export class ComponentMock {
     public value: number;
@@ -20,13 +22,6 @@ export class Vec2D {
 export class Matrix {
 }
 
-export declare namespace PIXI {
-    export class Sprite {
-    }
-    export class Container {
-    }
-}
-
 export class Position implements IComponent {
     public pos: Vec2D;
     public rot:number;
@@ -42,13 +37,17 @@ export class Position implements IComponent {
 }
 
 export class PixiDisplay implements IComponent {
+    public sprite: any;
+
     constructor(args:string) {
-        /* mocking object */
+        this.sprite = new PIXI.Sprite(args);
     }
 }
 
-export class Group implements IComponent {
+export class PixiGroup implements IComponent {
+    public group: any;
+
     constructor() {
-        /* mocking object */
+        this.group = new PIXI.Container();
     }
 }

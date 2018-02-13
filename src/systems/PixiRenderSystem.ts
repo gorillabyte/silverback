@@ -12,6 +12,13 @@ export class PixiRenderSystem extends System {
     constructor(renderer: PIXI.CanvasRenderer, canvasStage: PIXI.Container) {
         super();
 
+        if (!renderer || !canvasStage) {
+            throw new Error('PixiRenderSystem - Missing argument');
+        }
+        if (!(renderer.constructor.name === 'CanvasRenderer') || !(canvasStage.constructor.name === 'Container')) {
+            throw new Error('PixiRenderSystem - Wrong argument type');
+        }
+
         PixiRenderSystem.renderer = renderer;
         PixiRenderSystem.stage = canvasStage;
     }
@@ -46,17 +53,11 @@ export class PixiRenderSystem extends System {
     }
 
     private static addToDisplay(node: any): void {
-        if (node.container !== null) {
-            if (!arrayContains(PixiRenderSystem.stage.children, node.container.group)) {
-                PixiRenderSystem.stage.addChild(node.container.group);
-                node.container.group.addChild(node.display.sprite);
-            } else {
-                node.container.group.addChild(node.display.sprite);
-            }
+        if (!arrayContains(PixiRenderSystem.stage.children, node.container.group)) {
+            PixiRenderSystem.stage.addChild(node.container.group);
+            node.container.group.addChild(node.display.sprite);
         } else {
-            if (typeof node !== 'undefined') {
-                PixiRenderSystem.stage.addChild(node.display.obj);
-            }
+            node.container.group.addChild(node.display.sprite);
         }
     }
 }

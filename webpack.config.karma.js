@@ -9,7 +9,7 @@ webpackConfig.module.rules = [
     {
         enforce: 'post',
         test: /src\/.+\.ts$/,
-        exclude: /(node_modules|\.spec\.ts$)/,
+        exclude: /(node_modules|\.spec\.ts$|\.stub\.ts$)/,
         loader: 'istanbul-instrumenter-loader',
         options: {
             esModules: true

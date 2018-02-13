@@ -10,11 +10,11 @@ module.exports = function (config) {
             'src/**/*.spec.ts'
         ],
         exclude: [
-            'src/**/*.bench.ts'
+            'src/**/*.bench.ts',
+            'src/**/*.stub.ts'
         ],
         preprocessors: {
-            'src/**/*!(spec|stub).ts': ['webpack', 'sourcemap',],
-            'src/**/*.spec.ts': ['webpack','sourcemap']
+            'src/**/*!(spec|stub).ts': ['webpack', 'sourcemap']
         },
         reporters: ['spec', 'coverage-istanbul'],
         port: 9876,
