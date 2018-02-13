@@ -1,4 +1,4 @@
-import { Vec2D, Matrix, Position, Display } from './Component.stub';
+import { Vec2D, Matrix, Position, PixiDisplay } from './Component.stub';
 
 export const NodeMock = {
     name: 'NodeMock',
@@ -29,6 +29,6 @@ export const NodeMock2 = {
     display: null,
     schema: {
         position: Position,
-        display: Display
+        display: PixiDisplay
     }
 };

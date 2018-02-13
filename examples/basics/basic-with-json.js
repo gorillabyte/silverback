@@ -37,28 +37,15 @@
             "components":[
                 {
                     "type":"Position",
-                    "props":{
-                        "pos": "100 100"
-                    },
-                    "propsTypes":{
-                        "pos":"Vec2D"
-                    }
+                    "args":"100 100"
                 },
                 {
-                    "type":"Display",
-                    "props":{
-                        "obj":"assets/img/bunny.png"
-                    },
-                    "propsTypes":{
-                        "obj":"PIXI.Sprite"
-                    }
+                    "type":"PixiDisplay",
+                    "args":"assets/img/bunny.png"
                 },
                 {
-                    "type":"Group",
-                    "props":{},
-                    "propsTypes":{
-                        "obj":"PIXI.Container"
-                    }
+                    "type":"PixiGroup",
+                    "args":""
                 }
             ]
         }

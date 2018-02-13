@@ -31,14 +31,18 @@ export class Position implements IComponent {
     public pos: Vec2D;
     public rot:number;
 
-    constructor(x: number, y: number, rotation = 0) {
+    constructor(args:string) {
+        const argsElements = args.split(' ');
+        const x = parseFloat(argsElements[0]);
+        const y = parseFloat(argsElements[1]);
+        const rot = parseFloat(argsElements[2]) || 0;
         this.pos = new Vec2D(x, y);
-        this.rot = rotation;
+        this.rot = rot;
     }
 }
 
-export class Display implements IComponent {
-    constructor(path:string) {
+export class PixiDisplay implements IComponent {
+    constructor(args:string) {
         /* mocking object */
     }
 }

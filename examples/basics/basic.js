@@ -36,7 +36,7 @@
 
     // We need to create a game entity and add it to the engine
     let playerEntity = new Silverback.Entity('playerEntity')
-        .addComponent(new Silverback.components.Position(100, 100, 0))
+        .addComponent(new Silverback.components.Position('100 100 0'))
         .addComponent(new Silverback.components.PixiDisplay('assets/img/bunny.png'))
         .addComponent(new Silverback.components.PixiGroup());
     engine.addEntity(playerEntity);

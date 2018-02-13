@@ -177,19 +177,13 @@ describe('Engine', () => {
         });
 
         it('should parse a component, create the class and add it to the entity', () => {
-            const writtenComponenet = JSON.parse('{ "type": "Position", "props": { "x": "0", "y": "0" } }');
+            const writtenComponenet = JSON.parse('{ "type": "Position", "args": "0 0 0" }');
             engine.getNodeList(NodeMock2);
-            let entity: Entity = new Entity();
+            const entity: Entity = new Entity();
             engine.addEntity(entity);
-            let allComponent = new Map([['Position', Position]]);
-            let testClass: any = allComponent.get(writtenComponenet.type);
-            let testProps = writtenComponenet.props;
-            let test = new testClass();
-            for (let pro in testProps) {
-                if (testProps.hasOwnProperty(pro)) {
-                    test[pro] = testProps[pro];
-                }
-            }
+            const allComponent = new Map([['Position', Position]]);
+            const testClass: any = allComponent.get(writtenComponenet.type);
+            const test = new testClass(writtenComponenet.args);
             entity.addComponent(test);
             expect(FamilyMock.instances[0].componentAddedCalls).to.deep.equal(1);
         });

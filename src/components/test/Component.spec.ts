@@ -15,14 +15,14 @@ describe('Components', () => {
 
     describe('- Position', () => {
         it('should create a Position component instance with pos parameter', () => {
-            const pos = new Position(10, 10);
+            const pos = new Position('10 10');
             expect(pos.pos.x).to.deep.equal(10);
             expect(pos.pos.y).to.deep.equal(10);
             expect(pos.rot).to.deep.equal(0);
         });
 
         it('should create a Position component instance with all parameter', () => {
-            const pos = new Position(10, 10, 10);
+            const pos = new Position('10 10 10');
             expect(pos.pos.x).to.deep.equal(10);
             expect(pos.pos.y).to.deep.equal(10);
             expect(pos.rot).to.deep.equal(10);

@@ -67,8 +67,8 @@ export class Engine {
         this.familyClass = ComponentsFamily;
         this.componentClasses = new Map();
         this.componentClasses.set('Position', Position);
-        this.componentClasses.set('Display', PixiDisplay);
-        this.componentClasses.set('Group', PixiGroup);
+        this.componentClasses.set('PixiDisplay', PixiDisplay);
+        this.componentClasses.set('PixiGroup', PixiGroup);
 
         this.gameLoop = new GameLoop(this);
     }
@@ -132,27 +132,14 @@ export class Engine {
 
     public addComponenetJSON(components, entity: Entity) {
         components.forEach((comp: any) => {
-            const compClass: any = this.componentClasses.get(comp.type);
-            let component = new compClass();
-
-            const compProps = comp.props;
-            const compPropsTypes = comp.propsTypes;
-            for (const prop in compProps) {
-                if (compProps.hasOwnProperty(prop)) {
-                    let compValue;
-                    if (compPropsTypes[prop] === 'Vec2D') {
-                        compValue = compProps[prop].split(' ');
-                        component = new compClass(parseFloat(compValue[0]), parseFloat(compValue[0]));
-                    } else if (compPropsTypes[prop] === 'PIXI.Sprite') {
-                        component = new compClass(compProps[prop]);
-                    } else if (compPropsTypes[prop] === 'PIXI.Container') {
-                        component = new compClass();
-                    } else if (compPropsTypes[prop] === 'string') {
-                        compValue = compProps[prop].toString();
-                        component.props[prop] = compValue;
-                    }
-                }
+            if(!this.componentClasses.has(comp.type)) {
+                throw new Error('The component class: "' + comp.type + '" is not registered in the engine.');
             }
+            if(!comp.hasOwnProperty('args') || !comp.hasOwnProperty('type')) {
+                throw new Error('The component has not all needed properties specified.');
+            }
+            const compClass: any = this.componentClasses.get(comp.type);
+            const component = new compClass(comp.args);
             entity.addComponent(component);
         });
     }
