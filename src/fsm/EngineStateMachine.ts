@@ -74,15 +74,14 @@ export class EngineStateMachine {
                 const other: ISystemProvider = toAdd.get(id);
 
                 if (other) {
-                    // TODO: disable because of error TS2703, need further investigation
-                    // delete toAdd.get(id);
+                    toAdd.delete(id);
                 } else {
                     this.engine.removeSystem(provider.getSystem());
                 }
             });
         }
         toAdd.forEach(provider => {
-            this.engine.addSystem(provider, provider.priority);
+            this.engine.addSystem(provider.instance, provider.priority);
         });
         this.currentState = newState;
     }
