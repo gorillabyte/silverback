@@ -12,6 +12,10 @@ function mockPIXI() {
                 y: 0
             };
         }
+
+        static fromImage(path) {
+            return new Sprite(path);
+        }
     }
     class Container {
         public children = [];

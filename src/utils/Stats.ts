@@ -12,9 +12,11 @@ export class Stats {
     public static GRAPH_WIDTH = 74 * Stats.PR;
     public static GRAPH_HEIGHT = 30 * Stats.PR;
 
+    // make beginTime public for testing purpose
+    public beginTime: number;
+    public prevTime: number;
+
     private frames: number;
-    private beginTime: number;
-    private prevTime: number;
     private fpsPanel: Panel;
     private msPanel: Panel;
     private memPanel: Panel;
@@ -32,7 +34,7 @@ export class Stats {
             false
         );
 
-        this.beginTime = (performance || Date).now();
+        this.beginTime = (window.performance || Date).now();
         this.prevTime = this.beginTime;
         this.frames = 0;
         this.fpsPanel = this.addPanel(new Panel('FPS', '#0ff', '#002'));
@@ -62,12 +64,12 @@ export class Stats {
     }
 
     begin() {
-        this.beginTime = (performance || Date).now();
+        this.beginTime = (window.performance || Date).now();
     }
 
     end() {
         this.frames++;
-        let time = (performance || Date).now();
+        let time = (window.performance || Date).now();
         this.msPanel.update(time - this.beginTime, 200);
 
         if (time >= this.prevTime + 1000) {

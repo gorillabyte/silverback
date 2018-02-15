@@ -3,6 +3,7 @@
 
 interface Window {
     Silverback: any;
+    PIXI:any;
 }
 //declare const Silverback: any;
 

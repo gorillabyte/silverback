@@ -1,15 +1,32 @@
 import chai = require('chai');
-import { Position } from '..';
+import { Position, PixiDisplay, PixiGroup } from '..';
+import { PIXI } from '../../systems/test/Pixi.stub';
 
 const expect = chai.expect;
 
-
-
 describe('Components', () => {
+
+    before(function () {
+        this.jsdom = require('jsdom-global')();
+    });
+
+    after(function () {
+        this.jsdom();
+    });
 
     describe('- PixiDisplay', () => {
         it('should create a PixiDisplay instance with path as parameter', () => {
-            /* need a PIXI object */
+            window.PIXI = PIXI;
+            const display = new PixiDisplay('10 10');
+            expect(display.sprite).to.be.instanceOf(PIXI.Sprite);
+        });
+    });
+
+    describe('- PixiGroup', () => {
+        it('should create a PixiGroup instance with path as parameter', () => {
+            window.PIXI = PIXI;
+            const display = new PixiGroup();
+            expect(display.group).to.be.instanceOf(PIXI.Container);
         });
     });
 

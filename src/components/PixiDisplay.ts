@@ -5,7 +5,7 @@ export class PixiDisplay implements IComponent {
 
     constructor(path) {
         if (path) {
-            this.sprite = PIXI.Sprite.fromImage(path, true);
+            this.sprite = window.PIXI.Sprite.fromImage(path, true);
         }
     }
 }
