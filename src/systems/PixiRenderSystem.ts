@@ -15,7 +15,10 @@ export class PixiRenderSystem extends System {
         if (!renderer || !canvasStage) {
             throw new Error('PixiRenderSystem - Missing argument');
         }
-        if (!(renderer.constructor.name === 'CanvasRenderer') || !(canvasStage.constructor.name === 'Container')) {
+        if (
+            !(renderer.constructor.name === 'CanvasRenderer' || renderer.constructor.name === 'WebGLRenderer') ||
+            !(canvasStage.constructor.name === 'Container')
+        ) {
             throw new Error('PixiRenderSystem - Wrong argument type');
         }
 
