@@ -4,3 +4,4 @@
  */
 
 export { PixiRenderSystem } from './PixiRenderSystem';
+export { PreactRenderSystem } from './PreactRenderSystem';

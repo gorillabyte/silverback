@@ -11,7 +11,9 @@
         "importHelpers": true,
         "experimentalDecorators": true,
         "declaration": false,
-        "suppressImplicitAnyIndexErrors": true
+        "suppressImplicitAnyIndexErrors": true,
+        "jsx": "react",
+        "jsxFactory": "h"
     },
     "exclude": [
         "node_modules",

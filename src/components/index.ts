@@ -6,3 +6,4 @@
 export { Position } from './Position';
 export { PixiDisplay } from './PixiDisplay';
 export { PixiGroup } from './PixiGroup';
+export { PreactDisplay } from './PreactDisplay';

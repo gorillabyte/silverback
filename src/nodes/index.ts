@@ -4,3 +4,4 @@
  */
 
 export { RenderNode } from './RenderNode';
+export { PreactRenderNode } from './PreactRenderNode';
